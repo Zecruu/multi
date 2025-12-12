@@ -32,6 +32,7 @@ interface Order {
   shipping: number;
   total: number;
   status: string;
+  paymentStatus: string;
   shippingAddress: {
     street: string;
     city: string;
@@ -111,9 +112,22 @@ export default function OrderConfirmationPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Order #{order.orderNumber}</CardTitle>
-            <Badge className="bg-yellow-500/10 text-yellow-500">
-              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-            </Badge>
+            <div className="flex gap-2">
+              <Badge 
+                className={
+                  order.paymentStatus === "paid" 
+                    ? "bg-green-500/10 text-green-500" 
+                    : order.paymentStatus === "failed"
+                    ? "bg-red-500/10 text-red-500"
+                    : "bg-yellow-500/10 text-yellow-500"
+                }
+              >
+                {order.paymentStatus === "paid" ? "Paid" : order.paymentStatus === "failed" ? "Payment Failed" : "Payment Pending"}
+              </Badge>
+              <Badge className="bg-blue-500/10 text-blue-500">
+                {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+              </Badge>
+            </div>
           </div>
           <p className="text-sm text-muted-foreground">
             Placed on {new Date(order.createdAt).toLocaleDateString("en-US", {

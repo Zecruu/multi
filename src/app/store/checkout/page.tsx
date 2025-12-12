@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,8 +13,9 @@ import { useSession } from "next-auth/react";
 import { ArrowLeft, Package, Loader2, CreditCard, Lock } from "lucide-react";
 import { toast } from "sonner";
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session } = useSession();
   const { items, subtotal, tax, taxRate, total, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,8 +24,8 @@ export default function CheckoutPage() {
   const grandTotal = total + shipping;
 
   const [formData, setFormData] = useState({
-    email: session?.user?.email || "",
-    name: session?.user?.name || "",
+    email: "",
+    name: "",
     phone: "",
     street: "",
     city: "",
@@ -32,6 +33,25 @@ export default function CheckoutPage() {
     zipCode: "",
     country: "USA",
   });
+
+  // Pre-fill form with session data if available
+  useEffect(() => {
+    if (session?.user) {
+      setFormData((prev) => ({
+        ...prev,
+        email: session.user?.email || prev.email,
+        name: session.user?.name || prev.name,
+      }));
+    }
+  }, [session]);
+
+  // Handle cancelled payment
+  useEffect(() => {
+    const payment = searchParams.get("payment");
+    if (payment === "cancelled") {
+      toast.error("Payment was cancelled. Please try again.");
+    }
+  }, [searchParams]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -54,14 +74,14 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      // Create order
+      // Create checkout session with Stripe
       const orderData = {
         customer: {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
         },
-        userId: session?.user?.id,
+        userId: session?.user?.id || null,
         items: items.map((item) => ({
           product: item.productId,
           productName: item.name,
@@ -83,11 +103,9 @@ export default function CheckoutPage() {
           zipCode: formData.zipCode,
           country: formData.country,
         },
-        status: "pending",
-        paymentStatus: "pending",
       };
 
-      const response = await fetch("/api/orders/store", {
+      const response = await fetch("/api/checkout/create-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData),
@@ -95,15 +113,20 @@ export default function CheckoutPage() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || "Failed to create order");
+        throw new Error(error.error || "Failed to create checkout session");
       }
 
-      const { order } = await response.json();
+      const { sessionUrl } = await response.json();
 
-      // Clear cart and redirect to success page
+      // Clear cart before redirecting to Stripe
       clearCart();
-      toast.success("Order placed successfully!");
-      router.push(`/store/order-confirmation/${order.orderNumber}`);
+      
+      // Redirect to Stripe Checkout
+      if (sessionUrl) {
+        window.location.href = sessionUrl;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
     } catch (error) {
       console.error("Checkout error:", error);
       toast.error(error instanceof Error ? error.message : "Failed to process order");
@@ -303,19 +326,19 @@ export default function CheckoutPage() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Processing...
+                      Redirecting to Payment...
                     </>
                   ) : (
                     <>
                       <CreditCard className="h-4 w-4 mr-2" />
-                      Place Order
+                      Proceed to Payment
                     </>
                   )}
                 </Button>
 
                 <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                   <Lock className="w-3 h-3" />
-                  Secure checkout
+                  Secure payment powered by Stripe
                 </div>
               </CardContent>
             </Card>
@@ -323,5 +346,17 @@ export default function CheckoutPage() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-16 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,17 @@
 import Stripe from "stripe";
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-11-17.clover",
-  typescript: true,
-});
+let stripeInstance: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (!stripeInstance) {
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    if (!secretKey) {
+      throw new Error("STRIPE_SECRET_KEY is not defined");
+    }
+    stripeInstance = new Stripe(secretKey, {
+      apiVersion: "2025-11-17.clover",
+      typescript: true,
+    });
+  }
+  return stripeInstance;
+}

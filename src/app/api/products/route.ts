@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 
 export async function GET(request: NextRequest) {
   try {
@@ -95,6 +95,7 @@ export async function POST(request: NextRequest) {
 
     if (body.status === "active") {
       try {
+        const stripe = getStripe();
         const stripeProduct = await stripe.products.create({
           name: body.name,
           description: body.description,
