@@ -52,7 +52,7 @@ const ClientSchema = new Schema<IClient>(
   }
 );
 
-ClientSchema.index({ email: 1 });
+// Note: email already has index via unique: true
 ClientSchema.index({ name: "text", company: "text" });
 ClientSchema.index({ status: 1 });
 

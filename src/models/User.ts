@@ -71,7 +71,7 @@ UserSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-UserSchema.index({ email: 1 });
+// Note: email already has index via unique: true
 UserSchema.index({ role: 1 });
 
 const User: Model<IUser> =

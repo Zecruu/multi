@@ -30,7 +30,7 @@ const CategorySchema = new Schema<ICategory>(
   }
 );
 
-CategorySchema.index({ slug: 1 });
+// Note: slug already has index via unique: true
 CategorySchema.index({ parentId: 1 });
 CategorySchema.index({ isActive: 1 });
 

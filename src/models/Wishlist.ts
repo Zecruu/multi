@@ -31,7 +31,7 @@ const WishlistSchema = new Schema<IWishlist>(
   }
 );
 
-WishlistSchema.index({ userId: 1 });
+// Note: userId already has index via unique: true
 
 const Wishlist: Model<IWishlist> =
   mongoose.models.Wishlist || mongoose.model<IWishlist>("Wishlist", WishlistSchema);

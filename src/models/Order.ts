@@ -135,7 +135,7 @@ const OrderSchema = new Schema<IOrder>(
   }
 );
 
-OrderSchema.index({ orderNumber: 1 });
+// Note: orderNumber already has index via unique: true
 OrderSchema.index({ client: 1 });
 OrderSchema.index({ userId: 1 });
 OrderSchema.index({ "customer.email": 1 });
