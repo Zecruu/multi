@@ -30,19 +30,49 @@ interface Notification {
   read: boolean;
 }
 
+interface AdminUser {
+  id?: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+const roleLabels: Record<string, string> = {
+  admin: "Administrador",
+  manager: "Gerente",
+  staff: "Empleado",
+};
+
 export function AdminHeader() {
   const router = useRouter();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [showBanner, setShowBanner] = useState(false);
   const [latestNotification, setLatestNotification] = useState<Notification | null>(null);
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
 
   useEffect(() => {
+    fetchAdminUser();
     fetchNotifications();
     // Poll for new notifications every 30 seconds
     const interval = setInterval(fetchNotifications, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  const fetchAdminUser = async () => {
+    try {
+      const response = await fetch("/api/admin/me");
+      if (response.ok) {
+        const data = await response.json();
+        setAdminUser(data.user);
+      } else {
+        // Redirect to login if not authenticated
+        router.push("/admin/login");
+      }
+    } catch (error) {
+      console.error("Failed to fetch admin user:", error);
+    }
+  };
 
   const fetchNotifications = async () => {
     try {
@@ -223,24 +253,38 @@ export function AdminHeader() {
               <Button variant="ghost" className="flex items-center gap-2 px-2">
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                    AD
+                    {adminUser?.name
+                      ? adminUser.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase()
+                          .slice(0, 2)
+                      : "AD"}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:flex flex-col items-start">
-                  <span className="text-sm font-medium">Admin User</span>
-                  <span className="text-xs text-muted-foreground">Administrator</span>
+                  <span className="text-sm font-medium">{adminUser?.name || "Admin User"}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {adminUser?.role ? (roleLabels[adminUser.role] || adminUser.role) : "Administrator"}
+                  </span>
                 </div>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>
+                <div className="flex flex-col">
+                  <span>{adminUser?.name || "Admin User"}</span>
+                  <span className="text-xs font-normal text-muted-foreground">{adminUser?.email}</span>
+                </div>
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <User className="w-4 h-4 mr-2" />
-                Profile
+                Perfil
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => router.push("/admin/settings")}>
-                Settings
+                Configuración
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem 
@@ -251,7 +295,7 @@ export function AdminHeader() {
                   router.refresh();
                 }}
               >
-                Log out
+                Cerrar Sesión
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -1,0 +1,23 @@
+[Cursor] Add Resend email integration with branded templates
+
+- Install Resend package for email delivery
+- Create branded Multi Electric email templates:
+  - Welcome email for new customer registrations
+  - Password reset email with secure token
+  - Order confirmation email with order details
+  - Order status update emails (processing, shipped, ready for pickup, delivered, cancelled)
+  - Team member welcome email with temporary credentials
+- Implement user registration API with welcome email
+- Add forgot password and reset password functionality
+- Integrate order confirmation email in Stripe webhook
+- Add order status email notifications when orders are updated
+- Create admin team management page with email invitations
+- Add Team navigation item to admin sidebar
+- Update User model with password reset token fields and customer role
+
+Email Features:
+- Dark themed, mobile-responsive HTML email templates
+- Multi Electric branding with logo and colors
+- Spanish language content for Puerto Rico market
+- Proper email fallbacks and error handling
+
