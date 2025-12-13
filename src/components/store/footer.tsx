@@ -1,16 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
-
-const quickLinks = [
-  { name: "Home", href: "/store" },
-  { name: "Services", href: "/store/products" },
-  { name: "About", href: "/store/about" },
-  { name: "Products", href: "/store/products" },
-  { name: "My Account", href: "/store/account" },
-];
+import { useLanguage } from "@/lib/language-context";
 
 export function StoreFooter() {
+  const { language } = useLanguage();
+
+  const quickLinks = [
+    { name: language === "es" ? "Inicio" : "Home", href: "/store" },
+    { name: language === "es" ? "Servicios" : "Services", href: "/store/products" },
+    { name: language === "es" ? "Nosotros" : "About", href: "/store/about" },
+    { name: language === "es" ? "Productos" : "Products", href: "/store/products" },
+    { name: language === "es" ? "Mi Cuenta" : "My Account", href: "/store/account" },
+  ];
+
+  const t = {
+    contact: language === "es" ? "Contacto" : "Contact",
+    quickLinks: language === "es" ? "Enlaces Rápidos" : "Quick Links",
+    viewOnMap: language === "es" ? "Ver en Google Maps" : "View on Google Maps",
+    allRightsReserved: language === "es" ? "Todos los derechos reservados." : "All rights reserved.",
+  };
+
   return (
     <footer className="bg-background border-t border-border/40">
       {/* Main Footer */}
@@ -29,13 +41,13 @@ export function StoreFooter() {
               <span className="text-lg font-semibold text-amber-500">Multi Electric Supply</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              All rights reserved.
+              {t.allRightsReserved}
             </p>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="text-amber-500 font-semibold mb-4">Contact</h3>
+            <h3 className="text-amber-500 font-semibold mb-4">{t.contact}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
@@ -45,7 +57,7 @@ export function StoreFooter() {
                   <span>Carolina, PR 00923</span>
                   <br />
                   <Link href="https://maps.google.com" className="text-primary hover:underline text-xs">
-                    View on Google Maps
+                    {t.viewOnMap}
                   </Link>
                 </div>
               </li>
@@ -62,7 +74,7 @@ export function StoreFooter() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-cyan-400 font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-cyan-400 font-semibold mb-4">{t.quickLinks}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>

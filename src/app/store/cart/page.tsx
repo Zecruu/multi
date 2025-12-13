@@ -8,9 +8,32 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Package } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/lib/language-context";
 
 export default function CartPage() {
   const { items, itemCount, subtotal, tax, taxRate, total, updateQuantity, removeItem, clearCart } = useCart();
+  const { language } = useLanguage();
+
+  const t = {
+    emptyCart: language === "es" ? "Tu Carrito está Vacío" : "Your Cart is Empty",
+    emptyCartDesc: language === "es" ? "Parece que aún no has agregado ningún artículo a tu carrito." : "Looks like you haven't added any items to your cart yet.",
+    continueShopping: language === "es" ? "Continuar Comprando" : "Continue Shopping",
+    shoppingCart: language === "es" ? "Carrito de Compras" : "Shopping Cart",
+    cartItems: language === "es" ? "Artículos del Carrito" : "Cart Items",
+    clearCart: language === "es" ? "Vaciar Carrito" : "Clear Cart",
+    remove: language === "es" ? "Eliminar" : "Remove",
+    subtotalLabel: language === "es" ? "Subtotal" : "Subtotal",
+    orderSummary: language === "es" ? "Resumen del Pedido" : "Order Summary",
+    shipping: language === "es" ? "Envío" : "Shipping",
+    free: language === "es" ? "GRATIS" : "FREE",
+    addMoreForFreeShipping: language === "es" ? "Agrega ${amount} más para envío gratis" : "Add ${amount} more for free shipping",
+    salesTax: language === "es" ? "Impuesto PR" : "PR Sales Tax",
+    total: language === "es" ? "Total" : "Total",
+    proceedToCheckout: language === "es" ? "Proceder al Pago" : "Proceed to Checkout",
+    secureCheckout: language === "es" ? "Pago seguro con Stripe" : "Secure checkout powered by Stripe",
+    cartCleared: language === "es" ? "Carrito vaciado" : "Cart cleared",
+    itemRemoved: language === "es" ? "Artículo eliminado del carrito" : "Item removed from cart",
+  };
 
   const shipping = subtotal >= 99 ? 0 : 9.99;
   const grandTotal = total + shipping;
@@ -20,13 +43,13 @@ export default function CartPage() {
       <div className="container mx-auto px-4 py-16">
         <Card className="max-w-md mx-auto text-center p-8">
           <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-          <h1 className="text-2xl font-bold mb-2">Your Cart is Empty</h1>
+          <h1 className="text-2xl font-bold mb-2">{t.emptyCart}</h1>
           <p className="text-muted-foreground mb-6">
-            Looks like you haven&apos;t added any items to your cart yet.
+            {t.emptyCartDesc}
           </p>
           <Link href="/store/products">
             <Button className="gap-2">
-              Continue Shopping
+              {t.continueShopping}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -37,24 +60,24 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+      <h1 className="text-3xl font-bold mb-8">{t.shoppingCart}</h1>
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Cart Items ({itemCount})</CardTitle>
+              <CardTitle>{t.cartItems} ({itemCount})</CardTitle>
               <Button
                 variant="ghost"
                 size="sm"
                 className="text-destructive hover:text-destructive"
                 onClick={() => {
                   clearCart();
-                  toast.success("Cart cleared");
+                  toast.success(t.cartCleared);
                 }}
               >
-                Clear Cart
+                {t.clearCart}
               </Button>
             </CardHeader>
             <CardContent className="divide-y">
@@ -123,11 +146,11 @@ export default function CartPage() {
                         className="text-destructive hover:text-destructive h-8"
                         onClick={() => {
                           removeItem(item.productId);
-                          toast.success("Item removed from cart");
+                          toast.success(t.itemRemoved);
                         }}
                       >
                         <Trash2 className="h-4 w-4 mr-1" />
-                        Remove
+                        {t.remove}
                       </Button>
                     </div>
                   </div>
@@ -148,7 +171,7 @@ export default function CartPage() {
             <Link href="/store/products">
               <Button variant="outline" className="gap-2">
                 <ArrowRight className="w-4 h-4 rotate-180" />
-                Continue Shopping
+                {t.continueShopping}
               </Button>
             </Link>
           </div>
@@ -158,38 +181,40 @@ export default function CartPage() {
         <div className="lg:col-span-1">
           <Card className="sticky top-24">
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>{t.orderSummary}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-muted-foreground">{t.subtotalLabel}</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Shipping</span>
-                <span>{shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}</span>
+                <span className="text-muted-foreground">{t.shipping}</span>
+                <span>{shipping === 0 ? t.free : `$${shipping.toFixed(2)}`}</span>
               </div>
               {shipping > 0 && (
                 <p className="text-xs text-muted-foreground">
-                  Add ${(99 - subtotal).toFixed(2)} more for free shipping
+                  {language === "es" 
+                    ? `Agrega $${(99 - subtotal).toFixed(2)} más para envío gratis`
+                    : `Add $${(99 - subtotal).toFixed(2)} more for free shipping`}
                 </p>
               )}
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  PR Sales Tax ({(taxRate * 100).toFixed(1)}%)
+                  {t.salesTax} ({(taxRate * 100).toFixed(1)}%)
                 </span>
                 <span>${tax.toFixed(2)}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-lg font-bold">
-                <span>Total</span>
+                <span>{t.total}</span>
                 <span>${grandTotal.toFixed(2)}</span>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
               <Link href="/store/checkout" className="w-full">
                 <Button className="w-full" size="lg">
-                  Proceed to Checkout
+                  {t.proceedToCheckout}
                 </Button>
               </Link>
               <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
@@ -197,7 +222,7 @@ export default function CartPage() {
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
-                Secure checkout powered by Stripe
+                {t.secureCheckout}
               </div>
             </CardFooter>
           </Card>

@@ -17,6 +17,7 @@ import {
   Star,
   Zap,
 } from "lucide-react";
+import { useLanguage } from "@/lib/language-context";
 
 interface Product {
   _id: string;
@@ -57,6 +58,28 @@ export default function StorePage() {
   const [hotProducts, setHotProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { language } = useLanguage();
+
+  // Translations
+  const t = {
+    professionalGrade: language === "es" ? "Suministros de Grado Profesional" : "Professional Grade Supplies",
+    heroTitle1: language === "es" ? "Potencia Tus Proyectos con " : "Power Your Projects with ",
+    heroTitle2: language === "es" ? "Suministros Eléctricos de Calidad" : "Quality Electrical Supplies",
+    heroDescription: language === "es" 
+      ? "Desde cableado hasta paneles, tenemos todo lo que necesitas para tus proyectos eléctricos. Productos de grado profesional a precios competitivos."
+      : "From wiring to panels, we have everything you need for your electrical projects. Professional-grade products at competitive prices.",
+    shopAllProducts: language === "es" ? "Ver Todos los Productos" : "Shop All Products",
+    shopByCategory: language === "es" ? "Comprar por Categoría" : "Shop by Category",
+    findWhatYouNeed: language === "es" ? "Encuentra exactamente lo que necesitas" : "Find exactly what you need",
+    viewAll: language === "es" ? "Ver Todo" : "View All",
+    hotProducts: language === "es" ? "Productos Populares" : "Hot Products",
+    bestSellers: language === "es" ? "Los más vendidos esta semana" : "Best sellers this week",
+    viewAllProducts: language === "es" ? "Ver Todos los Productos" : "View All Products",
+    featuredProducts: language === "es" ? "Productos Destacados" : "Featured Products",
+    handPicked: language === "es" ? "Seleccionados para ti" : "Hand-picked for you",
+    noCategories: language === "es" ? "No hay categorías disponibles aún." : "No categories available yet.",
+    noProducts: language === "es" ? "No hay productos disponibles aún. ¡Vuelve pronto!" : "No products available yet. Check back soon!",
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -107,20 +130,20 @@ export default function StorePage() {
             <div className="space-y-6">
               <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
                 <Zap className="w-3 h-3 mr-1" />
-                Professional Grade Supplies
+                {t.professionalGrade}
               </Badge>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Power Your Projects with{" "}
-                <span className="text-primary">Quality Electrical</span> Supplies
+                {t.heroTitle1}
+                <span className="text-primary">{language === "es" ? "Eléctricos " : "Quality Electrical"}</span> 
+                {language === "es" ? "de Calidad" : " Supplies"}
               </h1>
               <p className="text-lg text-muted-foreground max-w-lg">
-                From wiring to panels, we have everything you need for your electrical projects. 
-                Professional-grade products at competitive prices.
+                {t.heroDescription}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/store/products">
                   <Button size="lg" className="gap-2">
-                    Shop All Products
+                    {t.shopAllProducts}
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
@@ -158,12 +181,12 @@ export default function StorePage() {
       <section className="container mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold">Shop by Category</h2>
-            <p className="text-muted-foreground">Find exactly what you need</p>
+            <h2 className="text-2xl font-bold">{t.shopByCategory}</h2>
+            <p className="text-muted-foreground">{t.findWhatYouNeed}</p>
           </div>
           <Link href="/store/categories">
             <Button variant="ghost" className="gap-1">
-              View All
+              {t.viewAll}
               <ChevronRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -171,7 +194,7 @@ export default function StorePage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
           {categories.length === 0 ? (
             <p className="col-span-full text-center text-muted-foreground py-8">
-              No categories available yet.
+              {t.noCategories}
             </p>
           ) : (
             categories.map((category, index) => (
@@ -196,13 +219,13 @@ export default function StorePage() {
               <Flame className="w-5 h-5 text-red-500" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Hot Products</h2>
-              <p className="text-muted-foreground">Best sellers this week</p>
+              <h2 className="text-2xl font-bold">{t.hotProducts}</h2>
+              <p className="text-muted-foreground">{t.bestSellers}</p>
             </div>
           </div>
           <Link href="/store/products">
             <Button className="gap-1">
-              View All Products
+              {t.viewAllProducts}
               <ArrowRight className="w-4 h-4" />
             </Button>
           </Link>
@@ -233,7 +256,7 @@ export default function StorePage() {
           </div>
         ) : (
           <Card className="p-12 text-center">
-            <p className="text-muted-foreground">No products available yet. Check back soon!</p>
+            <p className="text-muted-foreground">{t.noProducts}</p>
           </Card>
         )}
       </section>
@@ -247,8 +270,8 @@ export default function StorePage() {
                 <Star className="w-5 h-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Featured Products</h2>
-                <p className="text-muted-foreground">Hand-picked for you</p>
+                <h2 className="text-2xl font-bold">{t.featuredProducts}</h2>
+                <p className="text-muted-foreground">{t.handPicked}</p>
               </div>
             </div>
           </div>

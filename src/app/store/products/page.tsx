@@ -34,6 +34,7 @@ import {
   X,
   ChevronDown,
 } from "lucide-react";
+import { useLanguage } from "@/lib/language-context";
 
 interface Product {
   _id: string;
@@ -58,27 +59,44 @@ interface Category {
   isActive: boolean;
 }
 
-const priceRanges = [
-  { label: "Under $25", min: 0, max: 25 },
-  { label: "$25 - $50", min: 25, max: 50 },
-  { label: "$50 - $100", min: 50, max: 100 },
-  { label: "$100 - $250", min: 100, max: 250 },
-  { label: "Over $250", min: 250, max: Infinity },
-];
-
-const sortOptions = [
-  { value: "featured", label: "Featured" },
-  { value: "newest", label: "Newest" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
-  { value: "name-asc", label: "Name: A to Z" },
-  { value: "name-desc", label: "Name: Z to A" },
-];
-
 function ProductsContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "";
   const initialSearch = searchParams.get("search") || "";
+  const { language } = useLanguage();
+
+  const t = {
+    allProducts: language === "es" ? "Todos los Productos" : "All Products",
+    browseSelection: language === "es" ? "Explora nuestra selección completa de suministros eléctricos" : "Browse our complete selection of electrical supplies",
+    searchProducts: language === "es" ? "Buscar productos..." : "Search products...",
+    filters: language === "es" ? "Filtros" : "Filters",
+    sortBy: language === "es" ? "Ordenar por" : "Sort by",
+    categories: language === "es" ? "Categorías" : "Categories",
+    priceRange: language === "es" ? "Rango de Precio" : "Price Range",
+    availability: language === "es" ? "Disponibilidad" : "Availability",
+    inStockOnly: language === "es" ? "Solo en Stock" : "In Stock Only",
+    clearFilters: language === "es" ? "Limpiar Filtros" : "Clear Filters",
+    noProducts: language === "es" ? "No se encontraron productos con tus criterios." : "No products found matching your criteria.",
+    showing: language === "es" ? "Mostrando" : "Showing",
+    products: language === "es" ? "productos" : "products",
+  };
+
+  const priceRanges = [
+    { label: language === "es" ? "Menos de $25" : "Under $25", min: 0, max: 25 },
+    { label: "$25 - $50", min: 25, max: 50 },
+    { label: "$50 - $100", min: 50, max: 100 },
+    { label: "$100 - $250", min: 100, max: 250 },
+    { label: language === "es" ? "Más de $250" : "Over $250", min: 250, max: Infinity },
+  ];
+
+  const sortOptions = [
+    { value: "featured", label: language === "es" ? "Destacados" : "Featured" },
+    { value: "newest", label: language === "es" ? "Más Recientes" : "Newest" },
+    { value: "price-asc", label: language === "es" ? "Precio: Menor a Mayor" : "Price: Low to High" },
+    { value: "price-desc", label: language === "es" ? "Precio: Mayor a Menor" : "Price: High to Low" },
+    { value: "name-asc", label: language === "es" ? "Nombre: A-Z" : "Name: A to Z" },
+    { value: "name-desc", label: language === "es" ? "Nombre: Z-A" : "Name: Z to A" },
+  ];
 
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -214,10 +232,10 @@ function ProductsContent() {
     <div className="space-y-6">
       {/* Categories */}
       <div>
-        <h3 className="font-semibold mb-3">Categories</h3>
+        <h3 className="font-semibold mb-3">{t.categories}</h3>
         <div className="space-y-2">
           {categories.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No categories available</p>
+            <p className="text-sm text-muted-foreground">{language === "es" ? "No hay categorías disponibles" : "No categories available"}</p>
           ) : (
             categories.map((category) => (
               <div key={category._id} className="flex items-center space-x-2">
@@ -242,7 +260,7 @@ function ProductsContent() {
 
       {/* Price Range */}
       <div>
-        <h3 className="font-semibold mb-3">Price Range</h3>
+        <h3 className="font-semibold mb-3">{t.priceRange}</h3>
         <div className="space-y-2">
           {priceRanges.map((range, index) => (
             <div key={range.label} className="flex items-center space-x-2">
@@ -266,7 +284,7 @@ function ProductsContent() {
 
       {/* Availability */}
       <div>
-        <h3 className="font-semibold mb-3">Availability</h3>
+        <h3 className="font-semibold mb-3">{t.availability}</h3>
         <div className="flex items-center space-x-2">
           <Checkbox
             id="in-stock"
@@ -274,7 +292,7 @@ function ProductsContent() {
             onCheckedChange={(checked) => setInStockOnly(checked as boolean)}
           />
           <Label htmlFor="in-stock" className="text-sm cursor-pointer">
-            In Stock Only
+            {t.inStockOnly}
           </Label>
         </div>
       </div>
@@ -283,7 +301,7 @@ function ProductsContent() {
         <>
           <Separator />
           <Button variant="outline" className="w-full" onClick={clearFilters}>
-            Clear All Filters
+            {t.clearFilters}
           </Button>
         </>
       )}
@@ -294,9 +312,9 @@ function ProductsContent() {
     <div className="container mx-auto px-4 py-8">
       {/* Page Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">All Products</h1>
+        <h1 className="text-3xl font-bold mb-2">{t.allProducts}</h1>
         <p className="text-muted-foreground">
-          Browse our complete selection of electrical supplies
+          {t.browseSelection}
         </p>
       </div>
 
@@ -319,7 +337,7 @@ function ProductsContent() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder={t.searchProducts}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -332,7 +350,7 @@ function ProductsContent() {
                 <SheetTrigger asChild>
                   <Button variant="outline" className="lg:hidden">
                     <SlidersHorizontal className="h-4 w-4 mr-2" />
-                    Filters
+                    {t.filters}
                     {hasActiveFilters && (
                       <Badge className="ml-2" variant="secondary">
                         {selectedCategories.length +
@@ -344,7 +362,7 @@ function ProductsContent() {
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80">
                   <SheetHeader>
-                    <SheetTitle>Filters</SheetTitle>
+                    <SheetTitle>{t.filters}</SheetTitle>
                   </SheetHeader>
                   <div className="mt-6">
                     <FilterSidebar />
@@ -355,7 +373,7 @@ function ProductsContent() {
               {/* Sort */}
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Sort by" />
+                  <SelectValue placeholder={t.sortBy} />
                 </SelectTrigger>
                 <SelectContent>
                   {sortOptions.map((option) => (
@@ -391,7 +409,7 @@ function ProductsContent() {
             <div className="flex flex-wrap gap-2 mb-6">
               {searchQuery && (
                 <Badge variant="secondary" className="gap-1">
-                  Search: {searchQuery}
+                  {language === "es" ? "Búsqueda" : "Search"}: {searchQuery}
                   <X
                     className="h-3 w-3 cursor-pointer"
                     onClick={() => setSearchQuery("")}
@@ -421,7 +439,7 @@ function ProductsContent() {
               ))}
               {inStockOnly && (
                 <Badge variant="secondary" className="gap-1">
-                  In Stock
+                  {t.inStockOnly}
                   <X
                     className="h-3 w-3 cursor-pointer"
                     onClick={() => setInStockOnly(false)}
@@ -434,14 +452,14 @@ function ProductsContent() {
                 className="h-6 text-xs"
                 onClick={clearFilters}
               >
-                Clear all
+                {language === "es" ? "Limpiar todo" : "Clear all"}
               </Button>
             </div>
           )}
 
           {/* Results Count */}
           <p className="text-sm text-muted-foreground mb-4">
-            Showing {filteredProducts.length} of {products.length} products
+            {t.showing} {filteredProducts.length} {language === "es" ? "de" : "of"} {products.length} {t.products}
           </p>
 
           {/* Products Grid */}
@@ -483,10 +501,10 @@ function ProductsContent() {
           ) : (
             <Card className="p-12 text-center">
               <p className="text-muted-foreground mb-4">
-                No products found matching your criteria.
+                {t.noProducts}
               </p>
               <Button variant="outline" onClick={clearFilters}>
-                Clear Filters
+                {t.clearFilters}
               </Button>
             </Card>
           )}

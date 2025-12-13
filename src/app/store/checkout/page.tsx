@@ -12,6 +12,7 @@ import { useCart } from "@/lib/cart-context";
 import { useSession } from "next-auth/react";
 import { ArrowLeft, Package, Loader2, CreditCard, Lock } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/lib/language-context";
 
 function CheckoutContent() {
   const router = useRouter();
@@ -19,6 +20,37 @@ function CheckoutContent() {
   const { data: session } = useSession();
   const { items, subtotal, tax, taxRate, total, clearCart } = useCart();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { language } = useLanguage();
+
+  const t = {
+    checkout: language === "es" ? "Pago" : "Checkout",
+    contactInfo: language === "es" ? "Información de Contacto" : "Contact Information",
+    fullName: language === "es" ? "Nombre Completo" : "Full Name",
+    email: language === "es" ? "Correo Electrónico" : "Email",
+    phone: language === "es" ? "Número de Teléfono" : "Phone Number",
+    shippingAddress: language === "es" ? "Dirección de Envío" : "Shipping Address",
+    street: language === "es" ? "Dirección" : "Street Address",
+    city: language === "es" ? "Ciudad" : "City",
+    state: language === "es" ? "Estado" : "State",
+    zipCode: language === "es" ? "Código Postal" : "ZIP Code",
+    country: language === "es" ? "País" : "Country",
+    orderSummary: language === "es" ? "Resumen del Pedido" : "Order Summary",
+    subtotal: language === "es" ? "Subtotal" : "Subtotal",
+    shipping: language === "es" ? "Envío" : "Shipping",
+    free: language === "es" ? "GRATIS" : "FREE",
+    tax: language === "es" ? "Impuesto" : "Tax",
+    total: language === "es" ? "Total" : "Total",
+    proceedToPayment: language === "es" ? "Proceder al Pago" : "Proceed to Payment",
+    processing: language === "es" ? "Procesando..." : "Processing...",
+    securePayment: language === "es" ? "Pago seguro con Stripe" : "Secure payment powered by Stripe",
+    emptyCart: language === "es" ? "Tu Carrito está Vacío" : "Your Cart is Empty",
+    emptyCartDesc: language === "es" ? "Agrega algunos productos a tu carrito antes de pagar." : "Add some items to your cart before checking out.",
+    browseProducts: language === "es" ? "Ver Productos" : "Browse Products",
+    paymentCancelled: language === "es" ? "Pago cancelado. Por favor intenta de nuevo." : "Payment was cancelled. Please try again.",
+    fillAllFields: language === "es" ? "Por favor llena todos los campos requeridos" : "Please fill in all required fields",
+    cartEmpty: language === "es" ? "Tu carrito está vacío" : "Your cart is empty",
+    qty: language === "es" ? "Cant" : "Qty",
+  };
   
   const shipping = subtotal >= 99 ? 0 : 9.99;
   const grandTotal = total + shipping;
@@ -49,9 +81,9 @@ function CheckoutContent() {
   useEffect(() => {
     const payment = searchParams.get("payment");
     if (payment === "cancelled") {
-      toast.error("Payment was cancelled. Please try again.");
+      toast.error(t.paymentCancelled);
     }
-  }, [searchParams]);
+  }, [searchParams, t.paymentCancelled]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -62,12 +94,12 @@ function CheckoutContent() {
 
     // Validation
     if (!formData.email || !formData.name || !formData.street || !formData.city || !formData.state || !formData.zipCode) {
-      toast.error("Please fill in all required fields");
+      toast.error(t.fillAllFields);
       return;
     }
 
     if (items.length === 0) {
-      toast.error("Your cart is empty");
+      toast.error(t.cartEmpty);
       return;
     }
 
@@ -140,12 +172,12 @@ function CheckoutContent() {
       <div className="container mx-auto px-4 py-16">
         <Card className="max-w-md mx-auto text-center p-8">
           <Package className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-          <h1 className="text-2xl font-bold mb-2">Your Cart is Empty</h1>
+          <h1 className="text-2xl font-bold mb-2">{t.emptyCart}</h1>
           <p className="text-muted-foreground mb-6">
-            Add some items to your cart before checking out.
+            {t.emptyCartDesc}
           </p>
           <Link href="/store/products">
-            <Button>Browse Products</Button>
+            <Button>{t.browseProducts}</Button>
           </Link>
         </Card>
       </div>
@@ -160,7 +192,7 @@ function CheckoutContent() {
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold">Checkout</h1>
+        <h1 className="text-3xl font-bold">{t.checkout}</h1>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -170,12 +202,12 @@ function CheckoutContent() {
             {/* Contact Information */}
             <Card>
               <CardHeader>
-                <CardTitle>Contact Information</CardTitle>
+                <CardTitle>{t.contactInfo}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
+                    <Label htmlFor="name">{t.fullName} *</Label>
                     <Input
                       id="name"
                       value={formData.name}
@@ -185,7 +217,7 @@ function CheckoutContent() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
+                    <Label htmlFor="email">{t.email} *</Label>
                     <Input
                       id="email"
                       type="email"
@@ -197,7 +229,7 @@ function CheckoutContent() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone">{t.phone}</Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -212,11 +244,11 @@ function CheckoutContent() {
             {/* Shipping Address */}
             <Card>
               <CardHeader>
-                <CardTitle>Shipping Address</CardTitle>
+                <CardTitle>{t.shippingAddress}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="street">Street Address *</Label>
+                  <Label htmlFor="street">{t.street} *</Label>
                   <Input
                     id="street"
                     value={formData.street}
@@ -227,7 +259,7 @@ function CheckoutContent() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="city">City *</Label>
+                    <Label htmlFor="city">{t.city} *</Label>
                     <Input
                       id="city"
                       value={formData.city}
@@ -237,7 +269,7 @@ function CheckoutContent() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="state">State *</Label>
+                    <Label htmlFor="state">{t.state} *</Label>
                     <Input
                       id="state"
                       value={formData.state}
@@ -249,7 +281,7 @@ function CheckoutContent() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="zipCode">ZIP Code *</Label>
+                    <Label htmlFor="zipCode">{t.zipCode} *</Label>
                     <Input
                       id="zipCode"
                       value={formData.zipCode}
@@ -259,7 +291,7 @@ function CheckoutContent() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="country">Country</Label>
+                    <Label htmlFor="country">{t.country}</Label>
                     <Input
                       id="country"
                       value={formData.country}
@@ -276,7 +308,7 @@ function CheckoutContent() {
           <div className="lg:col-span-1">
             <Card className="sticky top-24">
               <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+                <CardTitle>{t.orderSummary}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Items */}
@@ -292,7 +324,7 @@ function CheckoutContent() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm line-clamp-2">{item.name}</p>
-                        <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
+                        <p className="text-xs text-muted-foreground">{t.qty}: {item.quantity}</p>
                       </div>
                       <p className="font-medium text-sm">${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
@@ -304,20 +336,20 @@ function CheckoutContent() {
                 {/* Totals */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-muted-foreground">{t.subtotal}</span>
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span>{shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}</span>
+                    <span className="text-muted-foreground">{t.shipping}</span>
+                    <span>{shipping === 0 ? t.free : `$${shipping.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Tax ({(taxRate * 100).toFixed(1)}%)</span>
+                    <span className="text-muted-foreground">{t.tax} ({(taxRate * 100).toFixed(1)}%)</span>
                     <span>${tax.toFixed(2)}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-bold text-lg">
-                    <span>Total</span>
+                    <span>{t.total}</span>
                     <span>${grandTotal.toFixed(2)}</span>
                   </div>
                 </div>
@@ -326,19 +358,19 @@ function CheckoutContent() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Redirecting to Payment...
+                      {t.processing}
                     </>
                   ) : (
                     <>
                       <CreditCard className="h-4 w-4 mr-2" />
-                      Proceed to Payment
+                      {t.proceedToPayment}
                     </>
                   )}
                 </Button>
 
                 <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                   <Lock className="w-3 h-3" />
-                  Secure payment powered by Stripe
+                  {t.securePayment}
                 </div>
               </CardContent>
             </Card>
