@@ -4,6 +4,7 @@ import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
 import Stripe from "stripe";
+import { sendOrderConfirmationEmail } from "@/lib/email-service";
 
 export async function POST(request: NextRequest) {
   const body = await request.text();
@@ -60,6 +61,30 @@ export async function POST(request: NextRequest) {
             });
           }
           console.log(`Order ${order.orderNumber} payment completed`);
+
+          // Send order confirmation email
+          if (order.customer?.email) {
+            try {
+              await sendOrderConfirmationEmail({
+                to: order.customer.email,
+                customerName: order.customer.name,
+                orderNumber: order.orderNumber,
+                items: order.items.map((item: any) => ({
+                  name: item.productName,
+                  quantity: item.quantity,
+                  price: item.unitPrice,
+                })),
+                subtotal: order.subtotal,
+                shipping: order.shipping,
+                tax: order.tax,
+                total: order.total,
+                shippingAddress: order.shippingAddress,
+              });
+              console.log(`Order confirmation email sent for ${order.orderNumber}`);
+            } catch (emailError) {
+              console.error("Failed to send order confirmation email:", emailError);
+            }
+          }
         }
       }
       break;

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
+import { sendOrderStatusEmail } from "@/lib/email-service";
 
 export async function GET(
   request: NextRequest,
@@ -35,6 +36,10 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
 
+    // Get original order to check if status changed
+    const originalOrder = await Order.findById(id);
+    const previousStatus = originalOrder?.status;
+
     const order = await Order.findByIdAndUpdate(
       id,
       { $set: body },
@@ -43,6 +48,28 @@ export async function PATCH(
 
     if (!order) {
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    // Send email notification if status changed to specific values
+    const statusesToNotify = ["processing", "ready_for_pickup", "shipped", "delivered", "cancelled"];
+    if (body.status && body.status !== previousStatus && statusesToNotify.includes(body.status)) {
+      const customerEmail = order.customer?.email;
+      const customerName = order.customer?.name || "Customer";
+      if (customerEmail) {
+        try {
+          await sendOrderStatusEmail({
+            to: customerEmail,
+            customerName,
+            orderNumber: order.orderNumber,
+            status: body.status as "processing" | "ready_for_pickup" | "shipped" | "delivered" | "cancelled",
+            trackingNumber: body.trackingNumber,
+            estimatedDelivery: body.estimatedDelivery,
+          });
+          console.log(`Order status email sent for ${order.orderNumber} - Status: ${body.status}`);
+        } catch (emailError) {
+          console.error("Failed to send order status email:", emailError);
+        }
+      }
     }
 
     return NextResponse.json(order);

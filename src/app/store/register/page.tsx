@@ -54,11 +54,32 @@ export default function RegisterPage() {
 
     setIsLoading(true);
 
-    // TODO: Implement actual registration
-    setTimeout(() => {
-      toast.success("Registration functionality coming soon!");
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create account");
+      }
+
+      toast.success("Account created successfully! Please sign in.");
+      // Redirect to login page
+      window.location.href = "/store/login";
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to create account");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

@@ -13,11 +13,13 @@ export interface IUser extends Document {
   email: string;
   password: string;
   phone?: string;
-  role: "admin" | "manager" | "staff";
+  role: "admin" | "manager" | "staff" | "customer";
   avatar?: string;
   isActive: boolean;
   notifications?: IUserNotifications;
   lastLogin?: Date;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -40,13 +42,15 @@ const UserSchema = new Schema<IUser>(
     phone: { type: String },
     role: {
       type: String,
-      enum: ["admin", "manager", "staff"],
+      enum: ["admin", "manager", "staff", "customer"],
       default: "staff",
     },
     avatar: { type: String },
     isActive: { type: Boolean, default: true },
     notifications: { type: NotificationsSchema, default: () => ({}) },
     lastLogin: { type: Date },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
   },
   {
     timestamps: true,

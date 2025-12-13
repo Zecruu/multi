@@ -13,6 +13,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  UserCog,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const navigation = [
   { name: "Products", href: "/admin/products", icon: Package },
   { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { name: "Ledger", href: "/admin/ledger", icon: BookOpen },
+  { name: "Team", href: "/admin/team", icon: UserCog },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
