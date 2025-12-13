@@ -1,7 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import { getStripe } from "@/lib/stripe";
+import { logProductAction } from "@/lib/activity-logger";
+
+// Helper to get admin user from session
+async function getAdminUser() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("admin_session");
+  if (!sessionCookie) return null;
+  
+  try {
+    const sessionData = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
+    return {
+      name: sessionData.name || sessionData.username || "Admin",
+      role: sessionData.role || "admin",
+    };
+  } catch {
+    return null;
+  }
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -123,6 +142,20 @@ export async function POST(request: NextRequest) {
       stripeProductId,
       stripePriceId,
     });
+
+    // Log activity
+    const adminUser = await getAdminUser();
+    if (adminUser) {
+      await logProductAction(
+        "created",
+        product.name,
+        product._id.toString(),
+        adminUser.name,
+        adminUser.role,
+        `Product "${product.name}" (SKU: ${product.sku}) created`,
+        { sku: product.sku, price: product.price, status: product.status }
+      );
+    }
 
     return NextResponse.json(product, { status: 201 });
   } catch (error) {

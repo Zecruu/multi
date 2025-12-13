@@ -1,6 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
+import { logProductAction } from "@/lib/activity-logger";
+
+// Helper to get admin user from session
+async function getAdminUser() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("admin_session");
+  if (!sessionCookie) return null;
+  
+  try {
+    const sessionData = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
+    return {
+      name: sessionData.name || sessionData.username || "Admin",
+      role: sessionData.role || "admin",
+    };
+  } catch {
+    return null;
+  }
+}
 
 export async function GET(
   request: NextRequest,
@@ -73,6 +92,20 @@ export async function PUT(
       price: product.price,
     }));
 
+    // Log activity
+    const adminUser = await getAdminUser();
+    if (adminUser) {
+      await logProductAction(
+        "updated",
+        product.name,
+        product._id.toString(),
+        adminUser.name,
+        adminUser.role,
+        `Product "${product.name}" (SKU: ${product.sku}) updated`,
+        { sku: product.sku, price: product.price, status: product.status }
+      );
+    }
+
     return NextResponse.json(product);
   } catch (error) {
     console.error("Error updating product:", error);
@@ -91,12 +124,33 @@ export async function DELETE(
     await connectDB();
     const { id } = await params;
 
-    const product = await Product.findByIdAndDelete(id);
+    // Get product first for logging
+    const product = await Product.findById(id);
 
     if (!product) {
       return NextResponse.json(
         { error: "Product not found" },
         { status: 404 }
+      );
+    }
+
+    const productName = product.name;
+    const productSku = product.sku;
+
+    // Delete the product
+    await Product.findByIdAndDelete(id);
+
+    // Log activity
+    const adminUser = await getAdminUser();
+    if (adminUser) {
+      await logProductAction(
+        "deleted",
+        productName,
+        id,
+        adminUser.name,
+        adminUser.role,
+        `Product "${productName}" (SKU: ${productSku}) deleted`,
+        { sku: productSku }
       );
     }
 

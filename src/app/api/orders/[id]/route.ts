@@ -1,7 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
 import { sendOrderStatusEmail } from "@/lib/email-service";
+import { logOrderAction } from "@/lib/activity-logger";
+
+// Helper to get admin user from session
+async function getAdminUser() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("admin_session");
+  if (!sessionCookie) return null;
+  
+  try {
+    const sessionData = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
+    return {
+      name: sessionData.name || sessionData.username || "Admin",
+      role: sessionData.role || "admin",
+    };
+  } catch {
+    return null;
+  }
+}
 
 export async function GET(
   request: NextRequest,
@@ -50,6 +69,22 @@ export async function PATCH(
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
 
+    // Log activity if status changed
+    if (body.status && body.status !== previousStatus) {
+      const adminUser = await getAdminUser();
+      if (adminUser) {
+        await logOrderAction(
+          "status_changed",
+          order.orderNumber,
+          order._id.toString(),
+          adminUser.name,
+          adminUser.role,
+          `Order ${order.orderNumber} status changed from "${previousStatus}" to "${body.status}"`,
+          { previousStatus, newStatus: body.status }
+        );
+      }
+    }
+
     // Send email notification if status changed to specific values
     const statusesToNotify = ["processing", "ready_for_pickup", "shipped", "delivered", "cancelled"];
     if (body.status && body.status !== previousStatus && statusesToNotify.includes(body.status)) {
@@ -90,10 +125,39 @@ export async function DELETE(
     await connectDB();
     const { id } = await params;
 
-    const order = await Order.findByIdAndDelete(id);
+    // Get order first to log the details
+    const order = await Order.findById(id);
 
     if (!order) {
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    // Get admin user for logging
+    const adminUser = await getAdminUser();
+    // Get customer name - client might be ObjectId or populated, customer is always embedded
+    const customerName = order.customer?.name || "Unknown";
+    const orderTotal = order.total;
+
+    // Delete the order
+    await Order.findByIdAndDelete(id);
+
+    // Log the activity
+    if (adminUser) {
+      await logOrderAction(
+        "deleted",
+        order.orderNumber,
+        id,
+        adminUser.name,
+        adminUser.role,
+        `Order ${order.orderNumber} deleted (Customer: ${customerName}, Total: $${orderTotal.toFixed(2)})`,
+        { 
+          customerName,
+          total: orderTotal,
+          status: order.status,
+          paymentStatus: order.paymentStatus,
+          itemCount: order.items.length,
+        }
+      );
     }
 
     return NextResponse.json({ message: "Order deleted successfully" });

@@ -31,6 +31,7 @@ import {
   Package,
   DollarSign,
   Loader2,
+  Trash2,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -143,6 +144,27 @@ export default function OrdersPage() {
       }
     } catch (error) {
       toast.error("Failed to update order");
+    }
+  };
+
+  const deleteOrder = async (orderId: string, orderNumber: string) => {
+    if (!confirm(`Are you sure you want to delete order ${orderNumber}? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        toast.success(`Order ${orderNumber} deleted successfully`);
+        fetchOrders();
+      } else {
+        const data = await response.json();
+        toast.error(data.error || "Failed to delete order");
+      }
+    } catch (error) {
+      toast.error("Failed to delete order");
     }
   };
 
@@ -394,9 +416,16 @@ export default function OrdersPage() {
                           Mark as Shipped
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive" onClick={() => updateOrderStatus(order._id, "cancelled")}>
+                        <DropdownMenuItem onClick={() => updateOrderStatus(order._id, "cancelled")}>
                           <XCircle className="w-4 h-4 mr-2" />
                           Cancel Order
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          className="text-destructive"
+                          onClick={() => deleteOrder(order._id, order.orderNumber)}
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Delete Order
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
