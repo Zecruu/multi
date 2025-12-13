@@ -424,14 +424,14 @@ export default function ProductsPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 items-start">
                 <div className="space-y-2">
                   <Label>Categories *</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full justify-between"
+                        className="w-full justify-between h-10"
                         disabled={isSubmitting}
                       >
                         {formData.categories.length > 0
@@ -466,7 +466,7 @@ export default function ProductsPage() {
                     </PopoverContent>
                   </Popover>
                   {formData.categories.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-2">
+                    <div className="flex flex-wrap gap-1">
                       {formData.categories.map((slug) => {
                         const cat = categories.find((c) => c.slug === slug);
                         return (
@@ -525,7 +525,7 @@ export default function ProductsPage() {
                 </TabsContent>
               </Tabs>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4 items-end">
                 <div className="space-y-2">
                   <Label htmlFor="price">Regular Price *</Label>
                   <Input 
@@ -539,7 +539,7 @@ export default function ProductsPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="costPrice">Cost Price (Admin Only)</Label>
+                  <Label htmlFor="costPrice">Cost Price</Label>
                   <Input 
                     id="costPrice" 
                     type="number" 
@@ -561,11 +561,11 @@ export default function ProductsPage() {
                     onChange={(e) => handleInputChange("compareAtPrice", e.target.value)}
                     disabled={isSubmitting || formData.isOnSale}
                   />
-                  {formData.isOnSale && (
-                    <p className="text-xs text-muted-foreground">Auto-set when sale is active</p>
-                  )}
                 </div>
               </div>
+              {formData.isOnSale && (
+                <p className="text-xs text-muted-foreground -mt-2">Compare at Price is auto-set when sale is active</p>
+              )}
 
               {/* Sale Price Section */}
               <Card className="border-dashed">
@@ -620,7 +620,7 @@ export default function ProductsPage() {
                 </CardContent>
               </Card>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4 items-end">
                 <div className="space-y-2">
                   <Label htmlFor="quantity">Quantity *</Label>
                   <Input 
@@ -637,7 +637,7 @@ export default function ProductsPage() {
                   <Input 
                     id="lowStock" 
                     type="number" 
-                    placeholder="0"
+                    placeholder="10"
                     value={formData.lowStockThreshold}
                     onChange={(e) => handleInputChange("lowStockThreshold", e.target.value)}
                     disabled={isSubmitting}
