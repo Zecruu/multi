@@ -7,13 +7,21 @@ export interface IProductImage {
   isPrimary: boolean;
 }
 
+export interface ILocalizedString {
+  en: string;
+  es: string;
+}
+
 export interface IProduct extends Document {
   _id: mongoose.Types.ObjectId;
   name: string;
+  nameEs?: string;
   slug: string;
   sku: string;
   description: string;
+  descriptionEs?: string;
   shortDescription?: string;
+  shortDescriptionEs?: string;
   category: string;
   subcategory?: string;
   brand?: string;
@@ -55,10 +63,13 @@ const ProductImageSchema = new Schema<IProductImage>(
 const ProductSchema = new Schema<IProduct>(
   {
     name: { type: String, required: true, trim: true },
+    nameEs: { type: String, trim: true },
     slug: { type: String, required: true, unique: true, lowercase: true },
     sku: { type: String, required: true, unique: true, uppercase: true },
     description: { type: String, required: true },
+    descriptionEs: { type: String },
     shortDescription: { type: String },
+    shortDescriptionEs: { type: String },
     category: { type: String, required: true },
     subcategory: { type: String },
     brand: { type: String },

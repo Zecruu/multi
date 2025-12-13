@@ -30,15 +30,12 @@ import {
   Package,
   Heart,
   Settings,
+  Globe,
 } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-
-const navigation = [
-  { name: "Home", href: "/store" },
-  { name: "Products", href: "/store/products" },
-];
+import { useLanguage, translations } from "@/lib/language-context";
 
 export function StoreHeader() {
   const pathname = usePathname();
@@ -46,7 +43,13 @@ export function StoreHeader() {
   const [mounted, setMounted] = useState(false);
   const { items, itemCount } = useCart();
   const { data: session, status } = useSession();
+  const { language, setLanguage, t } = useLanguage();
   const isLoggedIn = status === "authenticated";
+
+  const navigation = [
+    { name: t(translations.home), href: "/store" },
+    { name: t(translations.products), href: "/store/products" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -128,7 +131,7 @@ export function StoreHeader() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder={t(translations.search)}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 pr-4"
@@ -138,6 +141,29 @@ export function StoreHeader() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            {/* Language Toggle */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" title={t(translations.language)}>
+                  <Globe className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem 
+                  onClick={() => setLanguage("es")}
+                  className={language === "es" ? "bg-muted" : ""}
+                >
+                  🇪🇸 {t(translations.spanish)}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => setLanguage("en")}
+                  className={language === "en" ? "bg-muted" : ""}
+                >
+                  🇺🇸 {t(translations.english)}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             {/* Mobile Search */}
             <Button variant="ghost" size="icon" className="md:hidden">
               <Search className="h-5 w-5" />
@@ -162,31 +188,31 @@ export function StoreHeader() {
                       <DropdownMenuItem asChild>
                         <Link href="/store/account">
                           <User className="mr-2 h-4 w-4" />
-                          My Account
+                          {t(translations.myAccount)}
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href="/store/orders">
                           <Package className="mr-2 h-4 w-4" />
-                          Orders
+                          {t(translations.orders)}
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href="/store/wishlist">
                           <Heart className="mr-2 h-4 w-4" />
-                          Wishlist
+                          {t(translations.wishlist)}
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href="/store/settings">
                           <Settings className="mr-2 h-4 w-4" />
-                          Settings
+                          {t(translations.settings)}
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/store" })}>
                         <LogOut className="mr-2 h-4 w-4" />
-                        Sign Out
+                        {t(translations.signOut)}
                       </DropdownMenuItem>
                     </>
                   ) : (
@@ -194,13 +220,13 @@ export function StoreHeader() {
                       <DropdownMenuItem asChild>
                         <Link href="/store/login">
                           <LogIn className="mr-2 h-4 w-4" />
-                          Sign In
+                          {t(translations.signIn)}
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
                         <Link href="/store/register">
                           <User className="mr-2 h-4 w-4" />
-                          Create Account
+                          {t(translations.createAccount)}
                         </Link>
                       </DropdownMenuItem>
                     </>

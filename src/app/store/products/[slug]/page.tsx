@@ -25,14 +25,18 @@ import {
   Package,
   Check,
 } from "lucide-react";
+import { useLanguage, translations } from "@/lib/language-context";
 
 interface Product {
   _id: string;
   name: string;
+  nameEs?: string;
   slug: string;
   sku: string;
   description: string;
+  descriptionEs?: string;
   shortDescription?: string;
+  shortDescriptionEs?: string;
   price: number;
   compareAtPrice?: number;
   isOnSale?: boolean;
@@ -57,6 +61,23 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
 
   const { addItem, isInCart } = useCart();
+  const { language, t } = useLanguage();
+
+  // Helper to get localized content
+  const getLocalizedName = (p: Product) => {
+    if (language === "es" && p.nameEs) return p.nameEs;
+    return p.name;
+  };
+
+  const getLocalizedDescription = (p: Product) => {
+    if (language === "es" && p.descriptionEs) return p.descriptionEs;
+    return p.description;
+  };
+
+  const getLocalizedShortDescription = (p: Product) => {
+    if (language === "es" && p.shortDescriptionEs) return p.shortDescriptionEs;
+    return p.shortDescription;
+  };
 
   useEffect(() => {
     if (slug) {
@@ -100,7 +121,9 @@ export default function ProductDetailPage() {
       quantity,
     });
 
-    toast.success(`${product.name} added to cart`);
+    toast.success(language === "es" 
+      ? `${getLocalizedName(product)} agregado al carrito`
+      : `${getLocalizedName(product)} added to cart`);
   };
 
   if (isLoading) {
@@ -159,11 +182,11 @@ export default function ProductDetailPage() {
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link href="/store" className="hover:text-foreground">
-          Home
+          {t(translations.home)}
         </Link>
         <ChevronRight className="w-4 h-4" />
         <Link href="/store/products" className="hover:text-foreground">
-          Products
+          {t(translations.products)}
         </Link>
         <ChevronRight className="w-4 h-4" />
         <Link
@@ -173,7 +196,7 @@ export default function ProductDetailPage() {
           {product.category}
         </Link>
         <ChevronRight className="w-4 h-4" />
-        <span className="text-foreground">{product.name}</span>
+        <span className="text-foreground">{getLocalizedName(product)}</span>
       </nav>
 
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
@@ -229,8 +252,8 @@ export default function ProductDetailPage() {
             {product.brand && (
               <p className="text-sm text-muted-foreground mb-1">{product.brand}</p>
             )}
-            <h1 className="text-2xl lg:text-3xl font-bold">{product.name}</h1>
-            <p className="text-sm text-muted-foreground mt-1">SKU: {product.sku}</p>
+            <h1 className="text-2xl lg:text-3xl font-bold">{getLocalizedName(product)}</h1>
+            <p className="text-sm text-muted-foreground mt-1">{t(translations.sku)}: {product.sku}</p>
           </div>
 
           {/* Rating */}
@@ -268,19 +291,19 @@ export default function ProductDetailPage() {
             {inStock ? (
               <>
                 <Check className="w-5 h-5 text-green-500" />
-                <span className="text-green-500 font-medium">In Stock</span>
+                <span className="text-green-500 font-medium">{t(translations.inStock)}</span>
                 <span className="text-muted-foreground">
-                  ({product.quantity} available)
+                  ({product.quantity} {language === "es" ? "disponibles" : "available"})
                 </span>
               </>
             ) : (
-              <Badge variant="secondary">Out of Stock</Badge>
+              <Badge variant="secondary">{t(translations.outOfStock)}</Badge>
             )}
           </div>
 
           {/* Short Description */}
-          {product.shortDescription && (
-            <p className="text-muted-foreground">{product.shortDescription}</p>
+          {(product.shortDescription || product.shortDescriptionEs) && (
+            <p className="text-muted-foreground">{getLocalizedShortDescription(product)}</p>
           )}
 
           <Separator />
@@ -288,7 +311,7 @@ export default function ProductDetailPage() {
           {/* Quantity & Add to Cart */}
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <span className="font-medium">Quantity:</span>
+              <span className="font-medium">{t(translations.quantity)}:</span>
               <div className="flex items-center border rounded-md">
                 <Button
                   variant="ghost"
@@ -321,7 +344,9 @@ export default function ProductDetailPage() {
                 disabled={!inStock}
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
-                {inCart ? "Add More to Cart" : "Add to Cart"}
+                {inCart 
+                  ? (language === "es" ? "Agregar Más" : "Add More to Cart")
+                  : t(translations.addToCart)}
               </Button>
               <Button size="lg" variant="outline">
                 <Heart className="w-5 h-5" />
@@ -359,14 +384,14 @@ export default function ProductDetailPage() {
       <div className="mt-12">
         <Tabs defaultValue="description">
           <TabsList className="w-full justify-start">
-            <TabsTrigger value="description">Description</TabsTrigger>
-            <TabsTrigger value="specifications">Specifications</TabsTrigger>
+            <TabsTrigger value="description">{t(translations.description)}</TabsTrigger>
+            <TabsTrigger value="specifications">{t(translations.specifications)}</TabsTrigger>
             <TabsTrigger value="reviews">Reviews (24)</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="mt-6">
             <Card>
               <CardContent className="p-6 prose prose-sm max-w-none dark:prose-invert">
-                <p>{product.description}</p>
+                <p>{getLocalizedDescription(product)}</p>
               </CardContent>
             </Card>
           </TabsContent>

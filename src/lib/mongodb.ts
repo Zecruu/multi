@@ -20,6 +20,7 @@ async function connectDB(): Promise<typeof mongoose> {
   // Check for MONGODB_URI at runtime, not build time
   const MONGODB_URI = process.env.MONGODB_URI;
   
+  // Skip connection during build phase (when MONGODB_URI is not set)
   if (!MONGODB_URI) {
     throw new Error("Please define the MONGODB_URI environment variable");
   }

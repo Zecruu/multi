@@ -9,11 +9,13 @@ import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { useLanguage, translations } from "@/lib/language-context";
 
 interface ProductCardProps {
   product: {
     _id: string;
     name: string;
+    nameEs?: string;
     slug: string;
     sku: string;
     price: number;
@@ -33,6 +35,10 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
   const { addItem, isInCart } = useCart();
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { status } = useSession();
+  const { language, t } = useLanguage();
+
+  // Get localized product name
+  const displayName = (language === "es" && product.nameEs) ? product.nameEs : product.name;
 
   const primaryImage = product.images?.find((img) => img.isPrimary)?.url || product.images?.[0]?.url;
   
@@ -65,7 +71,9 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
       sku: product.sku,
     });
 
-    toast.success(`${product.name} added to cart`);
+    toast.success(language === "es" 
+      ? `${displayName} agregado al carrito`
+      : `${displayName} added to cart`);
   };
 
   if (variant === "compact") {
@@ -76,7 +84,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             {primaryImage ? (
               <img
                 src={primaryImage}
-                alt={product.name}
+                alt={displayName}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             ) : (
@@ -92,7 +100,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           </div>
           <CardContent className="p-3">
             <h3 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
-              {product.name}
+              {displayName}
             </h3>
             <div className="mt-1 flex items-center gap-2">
               <span className={`font-bold ${hasValidSale ? "text-green-600" : ""}`}>
@@ -117,7 +125,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           {primaryImage ? (
             <img
               src={primaryImage}
-              alt={product.name}
+              alt={displayName}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
@@ -134,10 +142,10 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
               </Badge>
             )}
             {product.isFeatured && (
-              <Badge className="bg-primary">Featured</Badge>
+              <Badge className="bg-primary">{language === "es" ? "Destacado" : "Featured"}</Badge>
             )}
             {!inStock && (
-              <Badge variant="secondary">Out of Stock</Badge>
+              <Badge variant="secondary">{t(translations.outOfStock)}</Badge>
             )}
           </div>
 
@@ -178,7 +186,7 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
           </Badge>
 
           <h3 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors mb-2">
-            {product.name}
+            {displayName}
           </h3>
 
           <p className="text-xs text-muted-foreground mb-2">SKU: {product.sku}</p>
@@ -208,7 +216,11 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             variant={inCart ? "secondary" : "default"}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
-            {inCart ? "In Cart" : inStock ? "Add to Cart" : "Out of Stock"}
+            {inCart 
+              ? (language === "es" ? "En Carrito" : "In Cart")
+              : inStock 
+                ? t(translations.addToCart)
+                : t(translations.outOfStock)}
           </Button>
         </CardFooter>
       </Card>

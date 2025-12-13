@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Popover,
   PopoverContent,
@@ -81,10 +82,12 @@ interface Product {
 
 interface ProductFormData {
   name: string;
+  nameEs: string;
   sku: string;
   categories: string[];
   brand: string;
   description: string;
+  descriptionEs: string;
   price: string;
   compareAtPrice: string;
   costPrice: string;
@@ -98,10 +101,12 @@ interface ProductFormData {
 
 const initialFormData: ProductFormData = {
   name: "",
+  nameEs: "",
   sku: "",
   categories: [],
   brand: "",
   description: "",
+  descriptionEs: "",
   price: "",
   compareAtPrice: "",
   costPrice: "",
@@ -177,10 +182,12 @@ export default function ProductsPage() {
       
       setFormData({
         name: product.name || "",
+        nameEs: product.nameEs || "",
         sku: product.sku || "",
         categories: product.categories || [product.category],
         brand: product.brand || "",
         description: product.description || "",
+        descriptionEs: product.descriptionEs || "",
         price: product.price?.toString() || "",
         compareAtPrice: product.compareAtPrice?.toString() || "",
         costPrice: product.costPrice?.toString() || "",
@@ -240,11 +247,13 @@ export default function ProductsPage() {
       
       const productData = {
         name: formData.name,
+        nameEs: formData.nameEs || undefined,
         sku: formData.sku.toUpperCase(),
         category: formData.categories[0], // Primary category for backward compatibility
         categories: formData.categories,
         brand: formData.brand || undefined,
         description: formData.description,
+        descriptionEs: formData.descriptionEs || undefined,
         price: parseFloat(formData.price),
         compareAtPrice: formData.isOnSale ? parseFloat(formData.price) : (formData.compareAtPrice ? parseFloat(formData.compareAtPrice) : null),
         costPrice: formData.costPrice ? parseFloat(formData.costPrice) : null,
@@ -375,27 +384,44 @@ export default function ProductsPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Product Name *</Label>
+              {/* Product Name with Language Tabs */}
+              <Tabs defaultValue="en" className="w-full">
+                <div className="flex items-center justify-between mb-2">
+                  <Label>Product Name *</Label>
+                  <TabsList className="h-8">
+                    <TabsTrigger value="en" className="text-xs px-2 py-1">🇺🇸 English</TabsTrigger>
+                    <TabsTrigger value="es" className="text-xs px-2 py-1">🇪🇸 Spanish</TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="en" className="mt-0">
                   <Input 
                     id="name" 
-                    placeholder="Enter product name"
+                    placeholder="Enter product name in English"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     disabled={isSubmitting}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="sku">SKU *</Label>
+                </TabsContent>
+                <TabsContent value="es" className="mt-0">
                   <Input 
-                    id="sku" 
-                    placeholder="Enter SKU"
-                    value={formData.sku}
-                    onChange={(e) => handleInputChange("sku", e.target.value)}
+                    id="nameEs" 
+                    placeholder="Ingrese el nombre del producto en Español"
+                    value={formData.nameEs}
+                    onChange={(e) => handleInputChange("nameEs", e.target.value)}
                     disabled={isSubmitting}
                   />
-                </div>
+                </TabsContent>
+              </Tabs>
+
+              <div className="space-y-2">
+                <Label htmlFor="sku">SKU *</Label>
+                <Input 
+                  id="sku" 
+                  placeholder="Enter SKU"
+                  value={formData.sku}
+                  onChange={(e) => handleInputChange("sku", e.target.value)}
+                  disabled={isSubmitting}
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -468,17 +494,36 @@ export default function ProductsPage() {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="description">Description *</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Enter product description..."
-                  rows={4}
-                  value={formData.description}
-                  onChange={(e) => handleInputChange("description", e.target.value)}
-                  disabled={isSubmitting}
-                />
-              </div>
+              {/* Description with Language Tabs */}
+              <Tabs defaultValue="en" className="w-full">
+                <div className="flex items-center justify-between mb-2">
+                  <Label>Description *</Label>
+                  <TabsList className="h-8">
+                    <TabsTrigger value="en" className="text-xs px-2 py-1">🇺🇸 English</TabsTrigger>
+                    <TabsTrigger value="es" className="text-xs px-2 py-1">🇪🇸 Spanish</TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="en" className="mt-0">
+                  <Textarea
+                    id="description"
+                    placeholder="Enter product description in English..."
+                    rows={4}
+                    value={formData.description}
+                    onChange={(e) => handleInputChange("description", e.target.value)}
+                    disabled={isSubmitting}
+                  />
+                </TabsContent>
+                <TabsContent value="es" className="mt-0">
+                  <Textarea
+                    id="descriptionEs"
+                    placeholder="Ingrese la descripción del producto en Español..."
+                    rows={4}
+                    value={formData.descriptionEs}
+                    onChange={(e) => handleInputChange("descriptionEs", e.target.value)}
+                    disabled={isSubmitting}
+                  />
+                </TabsContent>
+              </Tabs>
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-2">
