@@ -60,10 +60,15 @@ interface OrderItem {
 interface Order {
   _id: string;
   orderNumber: string;
-  client: {
+  client?: {
     _id: string;
     name: string;
     company?: string;
+  };
+  customer?: {
+    name: string;
+    email: string;
+    phone?: string;
   };
   items: OrderItem[];
   subtotal: number;
@@ -85,6 +90,15 @@ interface Order {
   };
   createdAt: string;
 }
+
+// Helper to get customer/client name
+const getOrderClientName = (order: Order): string => {
+  return order.client?.name || order.customer?.name || "Unknown";
+};
+
+const getOrderClientCompany = (order: Order): string => {
+  return order.client?.company || order.customer?.email || "";
+};
 
 export default function OrdersPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -135,8 +149,8 @@ export default function OrdersPage() {
   const filteredOrders = orders.filter(
     (order) =>
       order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.client.company?.toLowerCase().includes(searchQuery.toLowerCase())
+      getOrderClientName(order).toLowerCase().includes(searchQuery.toLowerCase()) ||
+      getOrderClientCompany(order).toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getStatusBadge = (status: string) => {
@@ -347,8 +361,8 @@ export default function OrdersPage() {
                     </p>
                   </TableCell>
                   <TableCell>
-                    <p className="font-medium text-foreground">{order.client.name}</p>
-                    <p className="text-sm text-muted-foreground">{order.client.company}</p>
+                    <p className="font-medium text-foreground">{getOrderClientName(order)}</p>
+                    <p className="text-sm text-muted-foreground">{getOrderClientCompany(order)}</p>
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     {formatDate(order.createdAt)}
@@ -417,8 +431,8 @@ export default function OrdersPage() {
               {/* Client Info */}
               <div>
                 <h4 className="font-medium text-foreground mb-2">Client</h4>
-                <p className="text-foreground">{selectedOrder.client.name}</p>
-                <p className="text-sm text-muted-foreground">{selectedOrder.client.company}</p>
+                <p className="text-foreground">{getOrderClientName(selectedOrder)}</p>
+                <p className="text-sm text-muted-foreground">{getOrderClientCompany(selectedOrder)}</p>
               </div>
 
               {/* Shipping Address */}
