@@ -5,18 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductCard } from "@/components/store/product-card";
-import {
-  Shield,
-  Headphones,
-  ArrowRight,
-  ChevronRight,
-  Flame,
-  Star,
-  Zap,
-} from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 
 interface Product {
@@ -42,17 +32,6 @@ interface Category {
   isActive: boolean;
 }
 
-const defaultColors = [
-  "bg-blue-500/10 text-blue-500",
-  "bg-green-500/10 text-green-500",
-  "bg-purple-500/10 text-purple-500",
-  "bg-yellow-500/10 text-yellow-500",
-  "bg-orange-500/10 text-orange-500",
-  "bg-pink-500/10 text-pink-500",
-  "bg-red-500/10 text-red-500",
-  "bg-cyan-500/10 text-cyan-500",
-];
-
 export default function StorePage() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [hotProducts, setHotProducts] = useState<Product[]>([]);
@@ -62,21 +41,20 @@ export default function StorePage() {
 
   // Translations
   const t = {
-    professionalGrade: language === "es" ? "Suministros de Grado Profesional" : "Professional Grade Supplies",
-    heroTitle1: language === "es" ? "Potencia Tus Proyectos con " : "Power Your Projects with ",
-    heroTitle2: language === "es" ? "Suministros Eléctricos de Calidad" : "Quality Electrical Supplies",
+    heroTagline: language === "es" ? "Suministros Eléctricos Profesionales" : "Professional Electrical Supplies",
+    heroTitle: language === "es" ? "Todo lo que necesitas para tus proyectos eléctricos" : "Everything you need for your electrical projects",
     heroDescription: language === "es" 
-      ? "Desde cableado hasta paneles, tenemos todo lo que necesitas para tus proyectos eléctricos. Productos de grado profesional a precios competitivos."
-      : "From wiring to panels, we have everything you need for your electrical projects. Professional-grade products at competitive prices.",
-    shopAllProducts: language === "es" ? "Ver Todos los Productos" : "Shop All Products",
-    shopByCategory: language === "es" ? "Comprar por Categoría" : "Shop by Category",
-    findWhatYouNeed: language === "es" ? "Encuentra exactamente lo que necesitas" : "Find exactly what you need",
-    viewAll: language === "es" ? "Ver Todo" : "View All",
-    hotProducts: language === "es" ? "Productos Populares" : "Hot Products",
-    bestSellers: language === "es" ? "Los más vendidos esta semana" : "Best sellers this week",
-    viewAllProducts: language === "es" ? "Ver Todos los Productos" : "View All Products",
-    featuredProducts: language === "es" ? "Productos Destacados" : "Featured Products",
-    handPicked: language === "es" ? "Seleccionados para ti" : "Hand-picked for you",
+      ? "Cableado, paneles, herramientas y más. Productos de calidad profesional a precios competitivos."
+      : "Wiring, panels, tools, and more. Professional-quality products at competitive prices.",
+    shopAllProducts: language === "es" ? "Ver Productos" : "Browse Products",
+    browseCategories: language === "es" ? "Categorías" : "Categories",
+    findByCategory: language === "es" ? "Explora nuestra selección por categoría" : "Explore our selection by category",
+    viewAll: language === "es" ? "Ver todo" : "View all",
+    popularProducts: language === "es" ? "Productos Populares" : "Popular Products",
+    popularDescription: language === "es" ? "Los más vendidos esta semana" : "Best sellers this week",
+    viewAllProducts: language === "es" ? "Ver Todos" : "View All",
+    featuredProducts: language === "es" ? "Destacados" : "Featured",
+    featuredDescription: language === "es" ? "Selección especial para ti" : "Hand-picked selection for you",
     noCategories: language === "es" ? "No hay categorías disponibles aún." : "No categories available yet.",
     noProducts: language === "es" ? "No hay productos disponibles aún. ¡Vuelve pronto!" : "No products available yet. Check back soon!",
   };
@@ -123,53 +101,39 @@ export default function StorePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/10 via-background to-background overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      <section className="border-b bg-gradient-to-b from-muted/50 to-background">
         <div className="container mx-auto px-4 py-16 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
-                <Zap className="w-3 h-3 mr-1" />
-                {t.professionalGrade}
-              </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                {t.heroTitle1}
-                <span className="text-primary">{language === "es" ? "Eléctricos " : "Quality Electrical"}</span> 
-                {language === "es" ? "de Calidad" : " Supplies"}
-              </h1>
-              <p className="text-lg text-muted-foreground max-w-lg">
-                {t.heroDescription}
-              </p>
-              <div className="flex flex-wrap gap-4">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <p className="text-sm font-medium tracking-widest text-primary uppercase">
+                  {t.heroTagline}
+                </p>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
+                  {t.heroTitle}
+                </h1>
+                <p className="text-lg text-muted-foreground max-w-md">
+                  {t.heroDescription}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
                 <Link href="/store/products">
-                  <Button size="lg" className="gap-2">
+                  <Button size="lg">
                     {t.shopAllProducts}
-                    <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
-              
-              {/* Mobile Logo */}
-              <div className="lg:hidden flex justify-center mt-8">
-                <div className="relative w-full max-w-[280px] aspect-square rounded-2xl overflow-hidden bg-white">
-                  <Image
-                    src="/logo.jpg"
-                    alt="MultiElectric Supply"
-                    fill
-                    className="object-contain p-3"
-                  />
-                </div>
-              </div>
             </div>
             
-            {/* Desktop Logo */}
-            <div className="relative hidden lg:flex items-center justify-center">
-              <div className="relative w-full max-w-[500px] aspect-[4/3] rounded-3xl overflow-hidden bg-white">
+            {/* Logo/Image */}
+            <div className="flex items-center justify-center">
+              <div className="relative w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-sm border">
                 <Image
                   src="/logo.jpg"
                   alt="MultiElectric Supply"
                   fill
-                  className="object-contain p-4"
+                  className="object-contain p-6"
+                  priority
                 />
               </div>
             </div>
@@ -178,101 +142,86 @@ export default function StorePage() {
       </section>
 
       {/* Categories */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
+      <section className="container mx-auto px-4 py-16">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <h2 className="text-2xl font-bold">{t.shopByCategory}</h2>
-            <p className="text-muted-foreground">{t.findWhatYouNeed}</p>
+            <h2 className="text-2xl font-bold tracking-tight">{t.browseCategories}</h2>
+            <p className="text-muted-foreground mt-1">{t.findByCategory}</p>
           </div>
-          <Link href="/store/categories">
-            <Button variant="ghost" className="gap-1">
-              {t.viewAll}
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
-          {categories.length === 0 ? (
-            <p className="col-span-full text-center text-muted-foreground py-8">
-              {t.noCategories}
-            </p>
-          ) : (
-            categories.map((category, index) => (
+        
+        {categories.length === 0 ? (
+          <p className="text-center text-muted-foreground py-12">
+            {t.noCategories}
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {categories.map((category) => (
               <Link key={category._id} href={`/store/products?category=${category.slug}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer group">
-                  <CardContent className="p-4 text-center">
-                    <div className={`w-4 h-4 mx-auto rounded-full border-2 ${defaultColors[index % defaultColors.length].split(' ')[0].replace('/10', '')} border-current mb-3 group-hover:scale-110 transition-transform`} />
+                <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+                  <CardContent className="p-5 text-center">
                     <p className="font-medium text-sm">{category.name}</p>
                   </CardContent>
                 </Card>
               </Link>
-            ))
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Popular Products */}
+      <section className="bg-muted/30 border-y">
+        <div className="container mx-auto px-4 py-16">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">{t.popularProducts}</h2>
+              <p className="text-muted-foreground mt-1">{t.popularDescription}</p>
+            </div>
+            <Link href="/store/products">
+              <Button variant="outline">
+                {t.viewAllProducts}
+              </Button>
+            </Link>
+          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <Card key={i} className="overflow-hidden">
+                  <Skeleton className="aspect-square" />
+                  <CardContent className="p-4 space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-6 w-16" />
+                  </CardContent>
+                  <div className="p-4 pt-0">
+                    <Skeleton className="h-10 w-full" />
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : hotProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {hotProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <Card className="p-12 text-center">
+              <p className="text-muted-foreground">{t.noProducts}</p>
+            </Card>
           )}
         </div>
       </section>
 
-      {/* Hot Products */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-red-500/10">
-              <Flame className="w-5 h-5 text-red-500" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold">{t.hotProducts}</h2>
-              <p className="text-muted-foreground">{t.bestSellers}</p>
-            </div>
-          </div>
-          <Link href="/store/products">
-            <Button className="gap-1">
-              {t.viewAllProducts}
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </Link>
-        </div>
-
-        {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[...Array(8)].map((_, i) => (
-              <Card key={i} className="overflow-hidden">
-                <Skeleton className="aspect-square" />
-                <CardContent className="p-4 space-y-2">
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-5 w-full" />
-                  <Skeleton className="h-4 w-24" />
-                  <Skeleton className="h-6 w-16" />
-                </CardContent>
-                <div className="p-4 pt-0">
-                  <Skeleton className="h-10 w-full" />
-                </div>
-              </Card>
-            ))}
-          </div>
-        ) : hotProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {hotProducts.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <Card className="p-12 text-center">
-            <p className="text-muted-foreground">{t.noProducts}</p>
-          </Card>
-        )}
-      </section>
-
       {/* Featured Products */}
       {featuredProducts.length > 0 && (
-        <section className="container mx-auto px-4 py-12">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <Star className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold">{t.featuredProducts}</h2>
-                <p className="text-muted-foreground">{t.handPicked}</p>
-              </div>
+        <section className="container mx-auto px-4 py-16">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">{t.featuredProducts}</h2>
+              <p className="text-muted-foreground mt-1">{t.featuredDescription}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -282,7 +231,6 @@ export default function StorePage() {
           </div>
         </section>
       )}
-
     </div>
   );
 }
