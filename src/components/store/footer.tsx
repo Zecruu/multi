@@ -56,7 +56,12 @@ export function StoreFooter() {
                   <br />
                   <span>Carolina, PR 00923</span>
                   <br />
-                  <Link href="https://maps.google.com" className="text-primary hover:underline text-xs">
+                  <Link 
+                    href="https://www.google.com/maps/dir/?api=1&destination=Multi+Electric+Supply+Corp,+Av+65+de+Infanteria+km+7.4,+Carolina,+PR+00923" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline text-xs"
+                  >
                     {t.viewOnMap}
                   </Link>
                 </div>
@@ -94,9 +99,26 @@ export function StoreFooter() {
       {/* Bottom Bar */}
       <div className="border-t border-border/40">
         <div className="container mx-auto px-4 py-4">
-          <p className="text-sm text-muted-foreground text-center">
-            © {new Date().getFullYear()} Multi Electric Supply. All rights reserved.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Multi Electric Supply. All rights reserved.
+            </p>
+            <Link 
+              href="https://www.nexulonllc.com/en" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
+              <span className="text-xs text-muted-foreground">Created By</span>
+              <Image
+                src="/NEXULON LOGO.png"
+                alt="Nexulon"
+                width={80}
+                height={24}
+                className="object-contain"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
