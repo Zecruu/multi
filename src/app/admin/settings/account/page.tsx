@@ -13,10 +13,7 @@ import { User, Mail, Lock, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 function AccountSettingsPage() {
-  const sessionData = useSession();
-  const session = sessionData?.data;
-  const status = sessionData?.status;
-  const update = sessionData?.update;
+  const { data: session, status, update } = useSession() || {};
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
@@ -35,19 +32,12 @@ function AccountSettingsPage() {
   });
 
   useEffect(() => {
-    if (status === "loading") {
+    if (status === "loading" || status === undefined) {
       return;
     }
     if (status === "unauthenticated") {
       router.push("/admin/login");
-    } else if (status === "authenticated" && session?.user) {
-      setProfile({
-        name: session.user.name || "",
-        email: session.user.email || "",
-      });
-      setIsLoading(false);
     } else if (session?.user) {
-      // Fallback for when status might be undefined but session exists
       setProfile({
         name: session.user.name || "",
         email: session.user.email || "",

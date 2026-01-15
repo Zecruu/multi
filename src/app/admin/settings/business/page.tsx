@@ -68,9 +68,7 @@ const defaultCategoryForm = {
 };
 
 function BusinessSettingsPage() {
-  const sessionData = useSession();
-  const session = sessionData?.data;
-  const status = sessionData?.status;
+  const { data: session, status } = useSession() || {};
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
@@ -78,7 +76,7 @@ function BusinessSettingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [categoryForm, setCategoryForm] = useState(defaultCategoryForm);
-  
+
   // Sync state
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncPreview, setSyncPreview] = useState<SyncPreview | null>(null);
@@ -86,7 +84,7 @@ function BusinessSettingsPage() {
 
   // Admin check
   useEffect(() => {
-    if (status === "loading") {
+    if (status === "loading" || status === undefined) {
       return;
     }
     if (status === "unauthenticated") {
