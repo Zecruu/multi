@@ -61,8 +61,22 @@ export async function GET(request: NextRequest) {
     ]);
     const statsMap = new Map(userOrderStats.map(s => [s._id, s]));
 
+    // Define client type
+    interface TransformedClient {
+      _id: unknown;
+      name: string;
+      email: string;
+      phone: string;
+      company: string;
+      status: string;
+      totalOrders: number;
+      totalSpent: number;
+      createdAt: Date;
+      source: "registered" | "orders";
+    }
+
     // Transform registered users to client format
-    const transformedUsers = registeredUsers.map(user => ({
+    const transformedUsers: TransformedClient[] = registeredUsers.map(user => ({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -76,14 +90,22 @@ export async function GET(request: NextRequest) {
     }));
 
     // Transform order clients, mark their source
-    const transformedClients = orderClients.map(client => ({
-      ...client,
+    const transformedClients: TransformedClient[] = orderClients.map(client => ({
+      _id: client._id,
+      name: client.name,
+      email: client.email,
+      phone: client.phone || "",
+      company: client.company || "",
+      status: client.status || "active",
+      totalOrders: client.totalOrders || 0,
+      totalSpent: client.totalSpent || 0,
+      createdAt: client.createdAt,
       source: "orders" as const,
     }));
 
     // Combine and deduplicate by email (prefer registered users)
     const emailSet = new Set<string>();
-    const allClients: typeof transformedUsers = [];
+    const allClients: TransformedClient[] = [];
 
     // Add registered users first
     for (const user of transformedUsers) {
@@ -97,7 +119,7 @@ export async function GET(request: NextRequest) {
     for (const client of transformedClients) {
       if (!emailSet.has(client.email)) {
         emailSet.add(client.email);
-        allClients.push(client as typeof transformedUsers[0]);
+        allClients.push(client);
       }
     }
 
