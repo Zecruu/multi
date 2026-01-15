@@ -127,14 +127,14 @@ export default function StorePage() {
               </div>
             </div>
             
-            {/* Logo/Image - No white background */}
+            {/* Logo/Image */}
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[400px] aspect-square">
+              <div className="relative w-full max-w-[400px] aspect-square bg-white rounded-xl">
                 <Image
                   src="/MultiElectricLogo.png"
                   alt="MultiElectric Supply"
                   fill
-                  className="object-contain"
+                  className="object-contain p-4"
                   priority
                 />
               </div>
