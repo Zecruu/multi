@@ -33,6 +33,8 @@ import {
   LayoutList,
   X,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useLanguage } from "@/lib/language-context";
 
@@ -109,9 +111,15 @@ function ProductsContent() {
   );
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<number[]>([]);
   const [inStockOnly, setInStockOnly] = useState(false);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const productsPerPage = 24; // Show 24 products per page (8 rows of 3)
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(1);
     fetchCategories();
   }, []);
 
@@ -127,13 +135,16 @@ function ProductsContent() {
     }
   };
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (page = 1) => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/products?status=active");
+      const response = await fetch(`/api/products?status=active&page=${page}&limit=${productsPerPage}`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.products || []);
+        setTotalProducts(data.pagination?.total || 0);
+        setTotalPages(data.pagination?.pages || 1);
+        setCurrentPage(data.pagination?.page || 1);
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -459,7 +470,8 @@ function ProductsContent() {
 
           {/* Results Count */}
           <p className="text-sm text-muted-foreground mb-4">
-            {t.showing} {filteredProducts.length} {language === "es" ? "de" : "of"} {products.length} {t.products}
+            {t.showing} {filteredProducts.length} {language === "es" ? "de" : "of"} {totalProducts} {t.products}
+            {totalPages > 1 && ` (${language === "es" ? "Página" : "Page"} ${currentPage} ${language === "es" ? "de" : "of"} ${totalPages})`}
           </p>
 
           {/* Products Grid */}
@@ -487,17 +499,68 @@ function ProductsContent() {
               ))}
             </div>
           ) : filteredProducts.length > 0 ? (
-            <div
-              className={`grid gap-6 ${
-                viewMode === "grid"
-                  ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-                  : "grid-cols-1"
-              }`}
-            >
-              {filteredProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
+            <>
+              <div
+                className={`grid gap-6 ${
+                  viewMode === "grid"
+                    ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+                    : "grid-cols-1"
+                }`}
+              >
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+              
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-4 mt-8 pt-8 border-t">
+                  <Button
+                    variant="outline"
+                    onClick={() => fetchProducts(currentPage - 1)}
+                    disabled={currentPage <= 1 || isLoading}
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-1" />
+                    {language === "es" ? "Anterior" : "Previous"}
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    {/* Page numbers */}
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={currentPage === pageNum ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => fetchProducts(pageNum)}
+                          disabled={isLoading}
+                          className="w-10"
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => fetchProducts(currentPage + 1)}
+                    disabled={currentPage >= totalPages || isLoading}
+                  >
+                    {language === "es" ? "Siguiente" : "Next"}
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
+                </div>
+              )}
+            </>
           ) : (
             <Card className="p-12 text-center">
               <p className="text-muted-foreground mb-4">
