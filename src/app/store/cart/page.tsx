@@ -24,9 +24,6 @@ export default function CartPage() {
     remove: language === "es" ? "Eliminar" : "Remove",
     subtotalLabel: language === "es" ? "Subtotal" : "Subtotal",
     orderSummary: language === "es" ? "Resumen del Pedido" : "Order Summary",
-    shipping: language === "es" ? "Envío" : "Shipping",
-    free: language === "es" ? "GRATIS" : "FREE",
-    addMoreForFreeShipping: language === "es" ? "Agrega ${amount} más para envío gratis" : "Add ${amount} more for free shipping",
     salesTax: language === "es" ? "Impuesto PR" : "PR Sales Tax",
     total: language === "es" ? "Total" : "Total",
     proceedToCheckout: language === "es" ? "Proceder al Pago" : "Proceed to Checkout",
@@ -34,9 +31,6 @@ export default function CartPage() {
     cartCleared: language === "es" ? "Carrito vaciado" : "Cart cleared",
     itemRemoved: language === "es" ? "Artículo eliminado del carrito" : "Item removed from cart",
   };
-
-  const shipping = subtotal >= 99 ? 0 : 9.99;
-  const grandTotal = total + shipping;
 
   if (items.length === 0) {
     return (
@@ -189,17 +183,6 @@ export default function CartPage() {
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t.shipping}</span>
-                <span>{shipping === 0 ? t.free : `$${shipping.toFixed(2)}`}</span>
-              </div>
-              {shipping > 0 && (
-                <p className="text-xs text-muted-foreground">
-                  {language === "es" 
-                    ? `Agrega $${(99 - subtotal).toFixed(2)} más para envío gratis`
-                    : `Add $${(99 - subtotal).toFixed(2)} more for free shipping`}
-                </p>
-              )}
-              <div className="flex justify-between">
                 <span className="text-muted-foreground">
                   {t.salesTax} ({(taxRate * 100).toFixed(1)}%)
                 </span>
@@ -208,7 +191,7 @@ export default function CartPage() {
               <Separator />
               <div className="flex justify-between text-lg font-bold">
                 <span>{t.total}</span>
-                <span>${grandTotal.toFixed(2)}</span>
+                <span>${total.toFixed(2)}</span>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-3">

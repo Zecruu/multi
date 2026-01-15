@@ -28,7 +28,7 @@ function CheckoutContent() {
     fullName: language === "es" ? "Nombre Completo" : "Full Name",
     email: language === "es" ? "Correo Electrónico" : "Email",
     phone: language === "es" ? "Número de Teléfono" : "Phone Number",
-    shippingAddress: language === "es" ? "Dirección de Envío" : "Shipping Address",
+    address: language === "es" ? "Dirección" : "Address",
     street: language === "es" ? "Dirección" : "Street Address",
     city: language === "es" ? "Ciudad" : "City",
     state: language === "es" ? "Estado" : "State",
@@ -36,8 +36,6 @@ function CheckoutContent() {
     country: language === "es" ? "País" : "Country",
     orderSummary: language === "es" ? "Resumen del Pedido" : "Order Summary",
     subtotal: language === "es" ? "Subtotal" : "Subtotal",
-    shipping: language === "es" ? "Envío" : "Shipping",
-    free: language === "es" ? "GRATIS" : "FREE",
     tax: language === "es" ? "Impuesto" : "Tax",
     total: language === "es" ? "Total" : "Total",
     proceedToPayment: language === "es" ? "Proceder al Pago" : "Proceed to Payment",
@@ -51,9 +49,6 @@ function CheckoutContent() {
     cartEmpty: language === "es" ? "Tu carrito está vacío" : "Your cart is empty",
     qty: language === "es" ? "Cant" : "Qty",
   };
-  
-  const shipping = subtotal >= 99 ? 0 : 9.99;
-  const grandTotal = total + shipping;
 
   const [formData, setFormData] = useState({
     email: "",
@@ -126,8 +121,8 @@ function CheckoutContent() {
         subtotal,
         tax,
         taxRate,
-        shipping,
-        total: grandTotal,
+        shipping: 0,
+        total,
         shippingAddress: {
           street: formData.street,
           city: formData.city,
@@ -241,10 +236,10 @@ function CheckoutContent() {
               </CardContent>
             </Card>
 
-            {/* Shipping Address */}
+            {/* Address */}
             <Card>
               <CardHeader>
-                <CardTitle>{t.shippingAddress}</CardTitle>
+                <CardTitle>{t.address}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -340,17 +335,13 @@ function CheckoutContent() {
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">{t.shipping}</span>
-                    <span>{shipping === 0 ? t.free : `$${shipping.toFixed(2)}`}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{t.tax} ({(taxRate * 100).toFixed(1)}%)</span>
                     <span>${tax.toFixed(2)}</span>
                   </div>
                   <Separator />
                   <div className="flex justify-between font-bold text-lg">
                     <span>{t.total}</span>
-                    <span>${grandTotal.toFixed(2)}</span>
+                    <span>${total.toFixed(2)}</span>
                   </div>
                 </div>
 

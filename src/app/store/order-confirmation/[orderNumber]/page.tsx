@@ -173,10 +173,6 @@ export default function OrderConfirmationPage() {
               <span>${order.subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Shipping</span>
-              <span>{order.shipping === 0 ? "FREE" : `$${order.shipping.toFixed(2)}`}</span>
-            </div>
-            <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Tax</span>
               <span>${order.tax.toFixed(2)}</span>
             </div>
@@ -189,9 +185,9 @@ export default function OrderConfirmationPage() {
 
           <Separator />
 
-          {/* Shipping Address */}
+          {/* Contact Address */}
           <div>
-            <h3 className="font-semibold mb-2">Shipping Address</h3>
+            <h3 className="font-semibold mb-2">Contact Information</h3>
             <p className="text-sm text-muted-foreground">
               {order.customer.name}<br />
               {order.shippingAddress.street}<br />
