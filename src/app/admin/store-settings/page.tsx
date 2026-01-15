@@ -58,19 +58,18 @@ export default function StoreSettingsPage() {
     }
   }, [status, session, router]);
 
+  // Fetch categories on mount (same as products page)
   useEffect(() => {
-    if (status === "authenticated" && session?.user?.role === "admin") {
-      fetchCategories();
-      fetchSyncPreview();
-    }
-  }, [status, session]);
+    fetchCategories();
+    fetchSyncPreview();
+  }, []);
 
   const fetchCategories = async () => {
     try {
       const res = await fetch("/api/categories");
       const data = await res.json();
       setCategories(data.categories || []);
-    } catch { toast.error("Failed to load categories"); }
+    } catch { console.error("Failed to load categories"); }
     finally { setIsLoadingCategories(false); }
   };
 
