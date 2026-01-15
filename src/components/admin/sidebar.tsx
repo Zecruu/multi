@@ -183,7 +183,7 @@ export function AdminSidebar() {
         </Button>
         {!collapsed && (
           <p className="text-[10px] text-muted-foreground text-center mt-2">
-            v1.0.1
+            v1.0.2
           </p>
         )}
       </div>

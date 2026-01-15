@@ -13,7 +13,10 @@ import { User, Mail, Lock, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 function AccountSettingsPage() {
-  const { data: session, status, update } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
+  const status = sessionResult?.status;
+  const update = sessionResult?.update;
   const router = useRouter();
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSavingPassword, setIsSavingPassword] = useState(false);
