@@ -103,33 +103,26 @@ export default function StorePage() {
       {/* Hero Section */}
       <section className="border-b bg-gradient-to-b from-muted/50 to-background">
         <div className="container mx-auto px-4 py-16 md:py-24">
+          {/* Main Title - Centered at top */}
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-center mb-12">
+            {t.heroTitle}
+          </h1>
+          
+          {/* Two column layout */}
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="space-y-4 text-center lg:text-left">
-                {/* Main title first (centered) */}
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
-                  {t.heroTitle}
-                </h1>
-                {/* Tagline below the title */}
-                <p className="text-sm font-medium tracking-widest text-primary uppercase">
-                  {t.heroTagline}
-                </p>
-                <p className="text-lg text-muted-foreground max-w-md mx-auto lg:mx-0">
-                  {t.heroDescription}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-                <Link href="/store/products">
-                  <Button size="lg">
-                    {t.shopAllProducts}
-                  </Button>
-                </Link>
-              </div>
+            {/* Left side - Tagline and Description */}
+            <div className="space-y-4 text-center lg:text-left">
+              <p className="text-sm font-medium tracking-widest text-primary uppercase">
+                {t.heroTagline}
+              </p>
+              <p className="text-lg text-muted-foreground max-w-md mx-auto lg:mx-0">
+                {t.heroDescription}
+              </p>
             </div>
             
-            {/* Logo/Image */}
+            {/* Right side - Logo */}
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[400px] aspect-square bg-white rounded-xl">
+              <div className="relative w-full max-w-[300px] aspect-square bg-white rounded-xl">
                 <Image
                   src="/MultiElectricLogo.png"
                   alt="MultiElectric Supply"
@@ -139,6 +132,15 @@ export default function StorePage() {
                 />
               </div>
             </div>
+          </div>
+          
+          {/* Button - Centered at bottom */}
+          <div className="flex justify-center mt-10">
+            <Link href="/store/products">
+              <Button size="lg">
+                {t.shopAllProducts}
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
