@@ -7,6 +7,14 @@ export interface IUserNotifications {
   newsletter: boolean;
 }
 
+export interface IUserAddress {
+  street?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+}
+
 export interface IUser extends Document {
   _id: mongoose.Types.ObjectId;
   name: string;
@@ -17,6 +25,7 @@ export interface IUser extends Document {
   avatar?: string;
   isActive: boolean;
   notifications?: IUserNotifications;
+  address?: IUserAddress;
   lastLogin?: Date;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
@@ -30,6 +39,17 @@ const NotificationsSchema = new Schema(
     orderUpdates: { type: Boolean, default: true },
     promotions: { type: Boolean, default: false },
     newsletter: { type: Boolean, default: false },
+  },
+  { _id: false }
+);
+
+const AddressSchema = new Schema(
+  {
+    street: { type: String },
+    city: { type: String },
+    state: { type: String },
+    zipCode: { type: String },
+    country: { type: String, default: "USA" },
   },
   { _id: false }
 );
@@ -48,6 +68,7 @@ const UserSchema = new Schema<IUser>(
     avatar: { type: String },
     isActive: { type: Boolean, default: true },
     notifications: { type: NotificationsSchema, default: () => ({}) },
+    address: { type: AddressSchema },
     lastLogin: { type: Date },
     resetPasswordToken: { type: String },
     resetPasswordExpires: { type: Date },

@@ -8,11 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useCart } from "@/lib/cart-context";
 import { useSession } from "next-auth/react";
 import { ArrowLeft, Package, Loader2, CreditCard, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/lib/language-context";
+
+const GUEST_CHECKOUT_KEY = "multielectric_checkout_info";
 
 function CheckoutContent() {
   const router = useRouter();
@@ -48,6 +51,8 @@ function CheckoutContent() {
     fillAllFields: language === "es" ? "Por favor llena todos los campos requeridos" : "Please fill in all required fields",
     cartEmpty: language === "es" ? "Tu carrito está vacío" : "Your cart is empty",
     qty: language === "es" ? "Cant" : "Qty",
+    saveInfo: language === "es" ? "Guardar información para próximas compras" : "Save information for future purchases",
+    infoSaved: language === "es" ? "Información guardada" : "Information saved",
   };
 
   const [formData, setFormData] = useState({
@@ -60,16 +65,50 @@ function CheckoutContent() {
     zipCode: "",
     country: "USA",
   });
+  const [saveInfo, setSaveInfo] = useState(true);
 
-  // Pre-fill form with session data if available
+  // Load saved data on mount
   useEffect(() => {
-    if (session?.user) {
-      setFormData((prev) => ({
-        ...prev,
-        email: session.user?.email || prev.email,
-        name: session.user?.name || prev.name,
-      }));
-    }
+    const loadSavedData = async () => {
+      if (session?.user) {
+        // Logged in - fetch from database
+        try {
+          const response = await fetch("/api/user/profile");
+          if (response.ok) {
+            const data = await response.json();
+            setFormData((prev) => ({
+              ...prev,
+              email: data.email || prev.email,
+              name: data.name || prev.name,
+              phone: data.phone || prev.phone,
+              street: data.address?.street || prev.street,
+              city: data.address?.city || prev.city,
+              state: data.address?.state || prev.state,
+              zipCode: data.address?.zipCode || prev.zipCode,
+              country: data.address?.country || prev.country,
+            }));
+          }
+        } catch (error) {
+          console.error("Failed to load profile:", error);
+        }
+      } else {
+        // Guest - load from localStorage
+        const saved = localStorage.getItem(GUEST_CHECKOUT_KEY);
+        if (saved) {
+          try {
+            const data = JSON.parse(saved);
+            setFormData((prev) => ({
+              ...prev,
+              ...data,
+            }));
+          } catch (error) {
+            console.error("Failed to parse saved checkout info:", error);
+          }
+        }
+      }
+    };
+
+    loadSavedData();
   }, [session]);
 
   // Handle cancelled payment
@@ -131,6 +170,34 @@ function CheckoutContent() {
           country: formData.country,
         },
       };
+
+      // Save info if requested
+      if (saveInfo) {
+        if (session?.user) {
+          // Save to database for logged-in users
+          try {
+            await fetch("/api/user/profile", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                phone: formData.phone,
+                address: {
+                  street: formData.street,
+                  city: formData.city,
+                  state: formData.state,
+                  zipCode: formData.zipCode,
+                  country: formData.country,
+                },
+              }),
+            });
+          } catch (error) {
+            console.error("Failed to save profile:", error);
+          }
+        } else {
+          // Save to localStorage for guests
+          localStorage.setItem(GUEST_CHECKOUT_KEY, JSON.stringify(formData));
+        }
+      }
 
       const response = await fetch("/api/checkout/create-session", {
         method: "POST",
@@ -294,6 +361,21 @@ function CheckoutContent() {
                       placeholder="USA"
                     />
                   </div>
+                </div>
+
+                {/* Save Info Checkbox */}
+                <div className="flex items-center space-x-2 pt-2">
+                  <Checkbox
+                    id="saveInfo"
+                    checked={saveInfo}
+                    onCheckedChange={(checked) => setSaveInfo(checked === true)}
+                  />
+                  <Label
+                    htmlFor="saveInfo"
+                    className="text-sm font-normal cursor-pointer"
+                  >
+                    {t.saveInfo}
+                  </Label>
                 </div>
               </CardContent>
             </Card>
