@@ -15,6 +15,7 @@ import {
   ChevronRight,
   UserCog,
   History,
+  FileUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Clients", href: "/admin/clients", icon: Users },
   { name: "Products", href: "/admin/products", icon: Package },
+  { name: "Import Products", href: "/admin/import-products", icon: FileUp },
   { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { name: "Ledger", href: "/admin/ledger", icon: BookOpen },
   { name: "Team", href: "/admin/team", icon: UserCog },
