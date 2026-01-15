@@ -206,6 +206,15 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
               </Badge>
             )}
           </div>
+
+          {/* Stock Amount */}
+          <div className="mt-2">
+            <span className={`text-sm font-medium ${product.quantity > 10 ? "text-green-600" : product.quantity > 0 ? "text-yellow-600" : "text-red-500"}`}>
+              {product.quantity > 0 
+                ? `${product.quantity} ${language === "es" ? "en stock" : "in stock"}`
+                : (language === "es" ? "Agotado" : "Out of stock")}
+            </span>
+          </div>
         </CardContent>
 
         <CardFooter className="p-4 pt-0">
