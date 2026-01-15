@@ -11,44 +11,44 @@ import {
   Package,
   ShoppingCart,
   BookOpen,
-  Settings,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
   UserCog,
   History,
   FileUp,
   User,
-  Building,
+  Store,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-
-const navigation = [
-  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { name: "Clients", href: "/admin/clients", icon: Users },
-  { name: "Products", href: "/admin/products", icon: Package },
-  { name: "Import Products", href: "/admin/import-products", icon: FileUp },
-  { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
-  { name: "Ledger", href: "/admin/ledger", icon: BookOpen },
-  { name: "Team", href: "/admin/team", icon: UserCog },
-  { name: "History", href: "/admin/history", icon: History },
-];
 
 export function AdminSidebar() {
   const pathname = usePathname();
   const sessionResult = useSession();
   const session = sessionResult?.data;
   const [collapsed, setCollapsed] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(pathname?.startsWith("/admin/settings") ?? false);
 
-  const isAdmin = session?.user?.role === "admin";
-  const isSettingsActive = pathname.startsWith("/admin/settings");
+  const userRole = session?.user?.role;
+  const isAdmin = userRole === "admin";
+
+  // Navigation items - some are conditional based on role
+  const navigation = [
+    { name: "Dashboard", href: "/admin", icon: LayoutDashboard, roles: ["admin", "gerente", "employee"] },
+    { name: "Clients", href: "/admin/clients", icon: Users, roles: ["admin", "gerente", "employee"] },
+    { name: "Products", href: "/admin/products", icon: Package, roles: ["admin", "gerente", "employee"] },
+    { name: "Import Products", href: "/admin/import-products", icon: FileUp, roles: ["admin", "gerente", "employee"] },
+    { name: "Orders", href: "/admin/orders", icon: ShoppingCart, roles: ["admin", "gerente", "employee"] },
+    { name: "Ledger", href: "/admin/ledger", icon: BookOpen, roles: ["admin", "gerente", "employee"] },
+    { name: "Team", href: "/admin/team", icon: UserCog, roles: ["admin"] },
+    { name: "History", href: "/admin/history", icon: History, roles: ["admin", "gerente", "employee"] },
+    { name: "Account Settings", href: "/admin/account-settings", icon: User, roles: ["admin", "gerente", "employee"] },
+    { name: "Store Settings", href: "/admin/store-settings", icon: Store, roles: ["admin"] },
+  ];
+
+  // Filter navigation based on user role
+  const visibleNavigation = navigation.filter(item =>
+    !userRole || item.roles.includes(userRole)
+  );
 
   return (
     <aside
@@ -82,7 +82,7 @@ export function AdminSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 p-2 space-y-1 overflow-y-auto">
-        {navigation.map((item) => {
+        {visibleNavigation.map((item) => {
           const isActive = pathname === item.href ||
             (item.href !== "/admin" && pathname.startsWith(item.href));
 
@@ -102,69 +102,6 @@ export function AdminSidebar() {
             </Link>
           );
         })}
-
-        {/* Settings with submenu */}
-        {collapsed ? (
-          <Link
-            href="/admin/settings/account"
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-              isSettingsActive
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-            )}
-          >
-            <Settings className="w-5 h-5 flex-shrink-0" />
-          </Link>
-        ) : (
-          <Collapsible open={settingsOpen} onOpenChange={setSettingsOpen}>
-            <CollapsibleTrigger asChild>
-              <button
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors w-full",
-                  isSettingsActive
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                )}
-              >
-                <Settings className="w-5 h-5 flex-shrink-0" />
-                <span className="flex-1 text-left">Settings</span>
-                <ChevronDown className={cn(
-                  "w-4 h-4 transition-transform",
-                  settingsOpen && "rotate-180"
-                )} />
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="pl-4 space-y-1 mt-1">
-              <Link
-                href="/admin/settings/account"
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                  pathname === "/admin/settings/account"
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                )}
-              >
-                <User className="w-4 h-4 flex-shrink-0" />
-                <span>Account</span>
-              </Link>
-              {isAdmin && (
-                <Link
-                  href="/admin/settings/business"
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-                    pathname === "/admin/settings/business"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                  )}
-                >
-                  <Building className="w-4 h-4 flex-shrink-0" />
-                  <span>Store</span>
-                </Link>
-              )}
-            </CollapsibleContent>
-          </Collapsible>
-        )}
       </nav>
 
       {/* Collapse Toggle & Version */}
@@ -183,7 +120,7 @@ export function AdminSidebar() {
         </Button>
         {!collapsed && (
           <p className="text-[10px] text-muted-foreground text-center mt-2">
-            v1.0.2
+            v1.0.3
           </p>
         )}
       </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -12,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { User, Mail, Lock, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
-function AccountSettingsPage() {
+export default function AccountSettingsPage() {
   const sessionResult = useSession();
   const session = sessionResult?.data;
   const status = sessionResult?.status;
@@ -23,15 +22,8 @@ function AccountSettingsPage() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-  });
-
-  const [passwords, setPasswords] = useState({
-    new: "",
-    confirm: "",
-  });
+  const [profile, setProfile] = useState({ name: "", email: "" });
+  const [passwords, setPasswords] = useState({ new: "", confirm: "" });
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -49,7 +41,6 @@ function AccountSettingsPage() {
       toast.error("Name is required");
       return;
     }
-
     try {
       setIsSavingProfile(true);
       const response = await fetch("/api/user/settings", {
@@ -57,10 +48,9 @@ function AccountSettingsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: profile.name }),
       });
-
       if (response.ok) {
         toast.success("Profile updated successfully");
-        await update({ name: profile.name });
+        if (update) await update({ name: profile.name });
       } else {
         const data = await response.json();
         toast.error(data.error || "Failed to update profile");
@@ -85,21 +75,16 @@ function AccountSettingsPage() {
       toast.error("Passwords do not match");
       return;
     }
-
     try {
       setIsSavingPassword(true);
       const response = await fetch("/api/user/password", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          newPassword: passwords.new,
-        }),
+        body: JSON.stringify({ newPassword: passwords.new }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
-        toast.success("Password changed successfully. A confirmation email has been sent.");
+        toast.success("Password changed successfully");
         setPasswords({ new: "", confirm: "" });
       } else {
         toast.error(data.error || "Failed to change password");
@@ -121,60 +106,37 @@ function AccountSettingsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
       <div>
         <h1 className="text-3xl font-bold text-foreground">Account Settings</h1>
-        <p className="text-muted-foreground mt-1">
-          Manage your personal account information and security.
-        </p>
+        <p className="text-muted-foreground mt-1">Manage your personal account information and security.</p>
       </div>
 
-      {/* Profile Information */}
-      <Card className="bg-card">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2">
             <User className="w-5 h-5" />
             Profile Information
           </CardTitle>
-          <CardDescription>
-            Update your name and view your account email.
-          </CardDescription>
+          <CardDescription>Update your name and view your account email.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                value={profile.name}
-                onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                placeholder="Your name"
-              />
+              <Input id="name" value={profile.name} onChange={(e) => setProfile({ ...profile, name: e.target.value })} placeholder="Your name" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="email"
-                  type="email"
-                  value={profile.email}
-                  disabled
-                  className="pl-10 bg-muted"
-                />
+                <Input id="email" type="email" value={profile.email} disabled className="pl-10 bg-muted" />
               </div>
-              <p className="text-xs text-muted-foreground">
-                Email cannot be changed. Contact an administrator if needed.
-              </p>
+              <p className="text-xs text-muted-foreground">Email cannot be changed.</p>
             </div>
           </div>
           <div className="flex justify-end">
             <Button onClick={handleSaveProfile} disabled={isSavingProfile}>
-              {isSavingProfile ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Save className="h-4 w-4 mr-2" />
-              )}
+              {isSavingProfile ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
               Save Profile
             </Button>
           </div>
@@ -183,80 +145,39 @@ function AccountSettingsPage() {
 
       <Separator />
 
-      {/* Change Password */}
-      <Card className="bg-card">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2">
             <Lock className="w-5 h-5" />
             Change Password
           </CardTitle>
-          <CardDescription>
-            Update your password to keep your account secure. A confirmation email will be sent after changing.
-          </CardDescription>
+          <CardDescription>Update your password to keep your account secure.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="newPassword">New Password</Label>
               <div className="relative">
-                <Input
-                  id="newPassword"
-                  type={showNewPassword ? "text" : "password"}
-                  value={passwords.new}
-                  onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
-                  placeholder="Enter new password"
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                  onClick={() => setShowNewPassword(!showNewPassword)}
-                >
-                  {showNewPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  )}
+                <Input id="newPassword" type={showNewPassword ? "text" : "password"} value={passwords.new} onChange={(e) => setPasswords({ ...passwords, new: e.target.value })} placeholder="Enter new password" />
+                <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowNewPassword(!showNewPassword)}>
+                  {showNewPassword ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Minimum 8 characters
-              </p>
+              <p className="text-xs text-muted-foreground">Minimum 8 characters</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm New Password</Label>
               <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={passwords.confirm}
-                  onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
-                  placeholder="Confirm new password"
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  )}
+                <Input id="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={passwords.confirm} onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })} placeholder="Confirm new password" />
+                <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-full px-3 hover:bg-transparent" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
                 </Button>
               </div>
             </div>
           </div>
           <div className="flex justify-end">
             <Button onClick={handleChangePassword} disabled={isSavingPassword}>
-              {isSavingPassword ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Lock className="h-4 w-4 mr-2" />
-              )}
+              {isSavingPassword ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Lock className="h-4 w-4 mr-2" />}
               Change Password
             </Button>
           </div>
@@ -266,4 +187,3 @@ function AccountSettingsPage() {
   );
 }
 
-export default dynamic(() => Promise.resolve(AccountSettingsPage), { ssr: false });
