@@ -33,8 +33,16 @@ import {
   Edit,
   Trash2,
   Loader2,
+  RefreshCw,
 } from "lucide-react";
 import { toast } from "sonner";
+
+interface SyncPreview {
+  totalInProducts: number;
+  existingCategories: number;
+  missingCategories: number;
+  missing: string[];
+}
 
 interface Category {
   _id: string;
@@ -62,9 +70,15 @@ export default function SettingsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [categoryForm, setCategoryForm] = useState(defaultCategoryForm);
+  
+  // Sync state
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncPreview, setSyncPreview] = useState<SyncPreview | null>(null);
+  const [isLoadingPreview, setIsLoadingPreview] = useState(false);
 
   useEffect(() => {
     fetchCategories();
+    fetchSyncPreview();
   }, []);
 
   const fetchCategories = async () => {
@@ -80,6 +94,44 @@ export default function SettingsPage() {
       toast.error("Failed to load categories");
     } finally {
       setIsLoadingCategories(false);
+    }
+  };
+
+  const fetchSyncPreview = async () => {
+    try {
+      setIsLoadingPreview(true);
+      const response = await fetch("/api/categories/sync-from-products");
+      if (response.ok) {
+        const data = await response.json();
+        setSyncPreview(data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch sync preview:", error);
+    } finally {
+      setIsLoadingPreview(false);
+    }
+  };
+
+  const handleSyncCategories = async () => {
+    setIsSyncing(true);
+    try {
+      const response = await fetch("/api/categories/sync-from-products", {
+        method: "POST",
+      });
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to sync categories");
+      }
+      
+      toast.success(`${data.created} new categories created!`);
+      fetchCategories();
+      fetchSyncPreview();
+    } catch (error) {
+      console.error("Sync error:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to sync categories");
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -186,16 +238,40 @@ export default function SettingsPage() {
                   Create and manage product categories for your store.
                 </CardDescription>
               </div>
-              <Dialog open={isCategoryDialogOpen} onOpenChange={(open) => {
-                setIsCategoryDialogOpen(open);
-                if (!open) resetCategoryForm();
-              }}>
-                <DialogTrigger asChild>
-                  <Button>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Category
-                  </Button>
-                </DialogTrigger>
+              <div className="flex items-center gap-2">
+                {/* Sync from Products Button */}
+                <Button
+                  variant="outline"
+                  onClick={handleSyncCategories}
+                  disabled={isSyncing || isLoadingPreview || (syncPreview?.missingCategories === 0)}
+                >
+                  {isSyncing ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Syncing...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="w-4 h-4 mr-2" />
+                      Sync from Products
+                      {syncPreview && syncPreview.missingCategories > 0 && (
+                        <Badge variant="secondary" className="ml-2">
+                          {syncPreview.missingCategories} new
+                        </Badge>
+                      )}
+                    </>
+                  )}
+                </Button>
+                <Dialog open={isCategoryDialogOpen} onOpenChange={(open) => {
+                  setIsCategoryDialogOpen(open);
+                  if (!open) resetCategoryForm();
+                }}>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Category
+                    </Button>
+                  </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>
@@ -269,9 +345,30 @@ export default function SettingsPage() {
                     </div>
                   </form>
                 </DialogContent>
-              </Dialog>
+                </Dialog>
+              </div>
             </CardHeader>
             <CardContent>
+              {/* Missing Categories Preview */}
+              {syncPreview && syncPreview.missingCategories > 0 && (
+                <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                  <p className="text-sm font-medium text-yellow-600 dark:text-yellow-400 mb-2">
+                    {syncPreview.missingCategories} categories from imported products need to be created:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {syncPreview.missing.slice(0, 10).map((cat) => (
+                      <Badge key={cat} variant="outline" className="text-xs">
+                        {cat}
+                      </Badge>
+                    ))}
+                    {syncPreview.missing.length > 10 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{syncPreview.missing.length - 10} more
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
               <Table>
                 <TableHeader>
                   <TableRow>
