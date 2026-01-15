@@ -3,12 +3,13 @@ import { getServerSession } from "next-auth";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 import { authOptions } from "@/lib/auth";
+import { sendPasswordChangedEmail } from "@/lib/email-service";
 
-// PUT - Change password
+// PUT - Change password (user is already authenticated, no current password needed)
 export async function PUT(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: "Authentication required" },
@@ -18,11 +19,11 @@ export async function PUT(request: NextRequest) {
 
     await connectDB();
 
-    const { currentPassword, newPassword } = await request.json();
+    const { newPassword } = await request.json();
 
-    if (!currentPassword || !newPassword) {
+    if (!newPassword) {
       return NextResponse.json(
-        { error: "Current and new password are required" },
+        { error: "New password is required" },
         { status: 400 }
       );
     }
@@ -34,8 +35,8 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Get user with password
-    const user = await User.findById(session.user.id).select("+password");
+    // Get user
+    const user = await User.findById(session.user.id);
 
     if (!user) {
       return NextResponse.json(
@@ -44,19 +45,16 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // Verify current password
-    const isPasswordValid = await user.comparePassword(currentPassword);
-
-    if (!isPasswordValid) {
-      return NextResponse.json(
-        { error: "Current password is incorrect" },
-        { status: 400 }
-      );
-    }
-
     // Update password (will be hashed by pre-save hook)
     user.password = newPassword;
     await user.save();
+
+    // Send confirmation email (don't fail if email fails)
+    try {
+      await sendPasswordChangedEmail(user.email, user.name);
+    } catch (emailError) {
+      console.error("Failed to send password changed email:", emailError);
+    }
 
     return NextResponse.json({
       success: true,

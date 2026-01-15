@@ -2,6 +2,7 @@ import { getResend, FROM_EMAIL } from "./resend";
 import {
   welcomeEmail,
   resetPasswordEmail,
+  passwordChangedEmail,
   orderConfirmationEmail,
   orderStatusEmail,
   teamWelcomeEmail,
@@ -188,6 +189,32 @@ export async function sendTeamWelcomeEmail(
     return { success: true, id: data?.id };
   } catch (error) {
     console.error("Error sending team welcome email:", error);
+    return { success: false, error };
+  }
+}
+
+// Send Password Changed Confirmation Email
+export async function sendPasswordChangedEmail(to: string, name: string) {
+  try {
+    const resend = getResend();
+    const html = passwordChangedEmail({ name });
+
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: "Contraseña Actualizada - Multi Electric Supply 🔐",
+      html,
+    });
+
+    if (error) {
+      console.error("Failed to send password changed email:", error);
+      return { success: false, error };
+    }
+
+    console.log("Password changed email sent:", data?.id);
+    return { success: true, id: data?.id };
+  } catch (error) {
+    console.error("Error sending password changed email:", error);
     return { success: false, error };
   }
 }
