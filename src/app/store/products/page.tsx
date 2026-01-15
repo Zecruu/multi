@@ -138,7 +138,8 @@ function ProductsContent() {
   const fetchProducts = async (page = 1) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/products?status=active&page=${page}&limit=${productsPerPage}`);
+      // Only show active products that are in stock (quantity > 0)
+      const response = await fetch(`/api/products?status=active&inStock=true&page=${page}&limit=${productsPerPage}`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.products || []);

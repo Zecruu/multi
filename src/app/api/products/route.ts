@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search") || "";
     const category = searchParams.get("category");
     const status = searchParams.get("status");
+    const inStock = searchParams.get("inStock"); // Filter out of stock products
 
     const query: Record<string, unknown> = {};
 
@@ -49,6 +50,11 @@ export async function GET(request: NextRequest) {
 
     if (status && status !== "all") {
       query.status = status;
+    }
+
+    // Filter out products with 0 quantity (out of stock)
+    if (inStock === "true") {
+      query.quantity = { $gt: 0 };
     }
 
     const skip = (page - 1) * limit;
