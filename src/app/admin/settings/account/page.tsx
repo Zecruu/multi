@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -11,8 +12,11 @@ import { Separator } from "@/components/ui/separator";
 import { User, Mail, Lock, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
-export default function AccountSettingsPage() {
-  const { data: session, status, update } = useSession();
+function AccountSettingsPage() {
+  const sessionData = useSession();
+  const session = sessionData?.data;
+  const status = sessionData?.status;
+  const update = sessionData?.update;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
@@ -264,3 +268,4 @@ export default function AccountSettingsPage() {
   );
 }
 
+export default dynamic(() => Promise.resolve(AccountSettingsPage), { ssr: false });
