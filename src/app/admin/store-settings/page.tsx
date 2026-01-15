@@ -137,8 +137,8 @@ export default function StoreSettingsPage() {
     } catch { toast.error("Failed to delete category"); }
   };
 
-  // Show loading while session is being fetched
-  if (status === "loading" || !session?.user) {
+  // Show loading only during initial session fetch
+  if (status === "loading") {
     return <div className="flex items-center justify-center h-64"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
   }
 
