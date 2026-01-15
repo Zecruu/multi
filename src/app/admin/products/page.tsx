@@ -46,6 +46,8 @@ import {
   AlertTriangle,
   Loader2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   X,
 } from "lucide-react";
 import {
@@ -147,13 +149,20 @@ export default function ProductsPage() {
     }
   };
 
-  const fetchProducts = async () => {
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 50;
+
+  const fetchProducts = async (page = 1) => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/products");
+      // Fetch with pagination - 50 products per page
+      const response = await fetch(`/api/products?page=${page}&limit=${productsPerPage}`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.products || []);
+        setTotalProducts(data.pagination?.total || 0);
+        setCurrentPage(data.pagination?.page || 1);
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -719,7 +728,7 @@ export default function ProductsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">{products.length}</div>
+            <div className="text-2xl font-bold text-foreground">{totalProducts}</div>
           </CardContent>
         </Card>
         <Card className="bg-card">
@@ -805,6 +814,35 @@ export default function ProductsPage() {
       {/* Products Table */}
       <Card className="bg-card">
         <CardContent className="p-0">
+          {/* Pagination Info */}
+          <div className="flex items-center justify-between px-4 py-3 border-b">
+            <p className="text-sm text-muted-foreground">
+              Showing {products.length > 0 ? ((currentPage - 1) * productsPerPage) + 1 : 0} to {Math.min(currentPage * productsPerPage, totalProducts)} of {totalProducts} products
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fetchProducts(currentPage - 1)}
+                disabled={currentPage <= 1 || isLoading}
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Previous
+              </Button>
+              <span className="text-sm">
+                Page {currentPage} of {Math.ceil(totalProducts / productsPerPage) || 1}
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fetchProducts(currentPage + 1)}
+                disabled={currentPage >= Math.ceil(totalProducts / productsPerPage) || isLoading}
+              >
+                Next
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
           <Table>
             <TableHeader>
               <TableRow>
