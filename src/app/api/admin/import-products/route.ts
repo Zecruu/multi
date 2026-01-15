@@ -43,13 +43,20 @@ function cleanString(value: unknown): string {
   return String(value).trim();
 }
 
-// Generate slug from name
-function generateSlug(name: string): string {
-  return name
+// Generate slug from name and SKU to ensure uniqueness
+function generateSlug(name: string, sku: string): string {
+  const nameSlug = name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "")
-    .substring(0, 100); // Limit slug length
+    .substring(0, 80);
+  
+  const skuSlug = sku
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  
+  return `${nameSlug}-${skuSlug}`.substring(0, 100);
 }
 
 // Clean SKU - remove special characters but keep identifier unique
@@ -185,6 +192,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     console.log(`[Import] Processing ${rows.length} rows from sheet "${sheetName}"`);
     console.log(`[Import] Sample row keys:`, Object.keys(rows[0] || {}));
+    console.log(`[Import] Sample row data:`, JSON.stringify(rows[0], null, 2));
 
     // Connect to database
     await connectDB();
@@ -271,8 +279,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         // Generate product name from description
         const name = description.substring(0, 200); // Limit name length
 
-        // Generate slug
-        let slug = generateSlug(name);
+        // Generate unique slug using name + SKU
+        const slug = generateSlug(name, sku);
+        
+        // Build specifications as plain object (not Map - MongoDB doesn't handle Maps)
+        const specifications: Record<string, string> = {};
+        if (subDesc2) specifications["attribute1"] = subDesc2;
+        if (subDesc3) specifications["model"] = subDesc3;
         
         // Build product data
         const productData = {
@@ -293,11 +306,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           status: "active" as const,
           isFeatured: false,
           images: [],
-          // Store additional metadata in specifications
-          specifications: new Map<string, string>([
-            ...(subDesc2 ? [["attribute1", subDesc2] as [string, string]] : []),
-            ...(subDesc3 ? [["model", subDesc3] as [string, string]] : []),
-          ]),
+          specifications: Object.keys(specifications).length > 0 ? specifications : undefined,
           tags: [department, subDesc1, subDesc2, subDesc3].filter(Boolean),
         };
 
@@ -342,37 +351,56 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Execute bulk operations if not dry run
     if (!dryRun && bulkOps.length > 0) {
+      console.log(`[Import] Executing ${bulkOps.length} bulk operations...`);
+      
       try {
-        // Process in batches of 500 to avoid memory issues
-        const batchSize = 500;
+        // Process in batches of 100 to avoid memory/timeout issues
+        const batchSize = 100;
         for (let i = 0; i < bulkOps.length; i += batchSize) {
           const batch = bulkOps.slice(i, i + batchSize);
-          const bulkResult = await Product.bulkWrite(batch, { ordered: false });
+          console.log(`[Import] Processing batch ${Math.floor(i/batchSize) + 1} of ${Math.ceil(bulkOps.length/batchSize)} (${batch.length} items)`);
           
-          result.created += bulkResult.upsertedCount;
-          result.updated += bulkResult.modifiedCount;
-        }
-
-        console.log(`[Import] Completed: ${result.created} created, ${result.updated} updated`);
-      } catch (bulkError: any) {
-        console.error("[Import] Bulk write error:", bulkError);
-        
-        // Handle duplicate key errors gracefully
-        if (bulkError.writeErrors) {
-          for (const writeError of bulkError.writeErrors) {
-            result.errors.push({
-              row: 0,
-              sku: writeError.err?.op?.updateOne?.filter?.sku || "UNKNOWN",
-              error: writeError.err?.errmsg || "Database write error",
-            });
+          try {
+            const bulkResult = await Product.bulkWrite(batch, { ordered: false });
+            result.created += bulkResult.upsertedCount || 0;
+            result.updated += bulkResult.modifiedCount || 0;
+            console.log(`[Import] Batch result: ${bulkResult.upsertedCount} created, ${bulkResult.modifiedCount} updated`);
+          } catch (batchError: any) {
+            console.error(`[Import] Batch error:`, batchError.message);
+            
+            // Handle duplicate key errors gracefully
+            if (batchError.writeErrors) {
+              for (const writeError of batchError.writeErrors) {
+                const errorSku = writeError.err?.op?.updateOne?.filter?.sku || 
+                                writeError.err?.keyValue?.sku ||
+                                writeError.err?.keyValue?.slug ||
+                                "UNKNOWN";
+                const errorMsg = writeError.err?.errmsg || writeError.err?.message || "Database write error";
+                console.error(`[Import] Write error for ${errorSku}: ${errorMsg}`);
+                result.errors.push({
+                  row: 0,
+                  sku: errorSku,
+                  error: errorMsg,
+                });
+              }
+            }
+            
+            // Still count successes from partial write
+            if (batchError.result) {
+              result.created += batchError.result.nUpserted || 0;
+              result.updated += batchError.result.nModified || 0;
+            }
           }
         }
-        
-        // Still count successes from partial write
-        if (bulkError.result) {
-          result.created += bulkError.result.nUpserted || 0;
-          result.updated += bulkError.result.nModified || 0;
-        }
+
+        console.log(`[Import] Completed: ${result.created} created, ${result.updated} updated, ${result.errors.length} errors`);
+      } catch (bulkError: any) {
+        console.error("[Import] Critical bulk write error:", bulkError);
+        result.errors.push({
+          row: 0,
+          sku: "SYSTEM",
+          error: `Database error: ${bulkError.message}`,
+        });
       }
     }
 
@@ -400,6 +428,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       products: result.products?.slice(0, 100), // Limit preview products
       importedBy: adminUser.name,
       timestamp: new Date().toISOString(),
+      // Debug info
+      detectedColumns: Object.keys(rows[0] || {}),
+      sampleRow: rows[0] ? JSON.stringify(rows[0]).substring(0, 500) : null,
     });
 
   } catch (error) {
