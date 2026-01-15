@@ -68,7 +68,7 @@ const defaultCategoryForm = {
 };
 
 function BusinessSettingsPage() {
-  const { data: session, status } = useSession() || {};
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);

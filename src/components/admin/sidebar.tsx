@@ -42,7 +42,7 @@ const navigation = [
 
 export function AdminSidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession() || {};
+  const { data: session } = useSession();
   const [collapsed, setCollapsed] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(pathname.startsWith("/admin/settings"));
 
@@ -166,7 +166,7 @@ export function AdminSidebar() {
         )}
       </nav>
 
-      {/* Collapse Toggle */}
+      {/* Collapse Toggle & Version */}
       <div className="p-2 border-t border-border">
         <Button
           variant="ghost"
@@ -180,6 +180,11 @@ export function AdminSidebar() {
             <ChevronLeft className="w-4 h-4" />
           )}
         </Button>
+        {!collapsed && (
+          <p className="text-[10px] text-muted-foreground text-center mt-2">
+            v1.0.1
+          </p>
+        )}
       </div>
     </aside>
   );

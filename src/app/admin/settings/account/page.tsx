@@ -13,9 +13,8 @@ import { User, Mail, Lock, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 function AccountSettingsPage() {
-  const { data: session, status, update } = useSession() || {};
+  const { data: session, status, update } = useSession();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSavingPassword, setIsSavingPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -32,9 +31,6 @@ function AccountSettingsPage() {
   });
 
   useEffect(() => {
-    if (status === "loading" || status === undefined) {
-      return;
-    }
     if (status === "unauthenticated") {
       router.push("/admin/login");
     } else if (session?.user) {
@@ -42,7 +38,6 @@ function AccountSettingsPage() {
         name: session.user.name || "",
         email: session.user.email || "",
       });
-      setIsLoading(false);
     }
   }, [status, session, router]);
 
@@ -113,7 +108,7 @@ function AccountSettingsPage() {
     }
   };
 
-  if (status === "loading" || isLoading) {
+  if (status === "loading" || !session) {
     return (
       <div className="flex items-center justify-center h-64">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
