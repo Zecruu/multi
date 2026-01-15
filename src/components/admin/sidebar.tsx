@@ -42,7 +42,8 @@ const navigation = [
 
 export function AdminSidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const sessionData = useSession();
+  const session = sessionData?.data;
   const [collapsed, setCollapsed] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(pathname.startsWith("/admin/settings"));
 
