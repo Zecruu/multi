@@ -3,6 +3,7 @@ import { getStripe } from "@/lib/stripe";
 import connectDB from "@/lib/mongodb";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
+import Client from "@/models/Client";
 
 // Generate order number
 async function generateOrderNumber(): Promise<string> {
@@ -75,6 +76,47 @@ export async function POST(request: NextRequest) {
       status: "pending",
       paymentStatus: "pending",
     });
+
+    // Create or update client record for CRM
+    try {
+      const existingClient = await Client.findOne({ email: customer.email.toLowerCase() });
+      if (existingClient) {
+        // Update existing client
+        existingClient.totalOrders += 1;
+        existingClient.totalSpent += total;
+        if (customer.phone) existingClient.phone = customer.phone;
+        if (shippingAddress) {
+          existingClient.address = {
+            street: shippingAddress.line1,
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            zipCode: shippingAddress.postalCode,
+            country: shippingAddress.country,
+          };
+        }
+        await existingClient.save();
+      } else {
+        // Create new client
+        await Client.create({
+          name: customer.name,
+          email: customer.email.toLowerCase(),
+          phone: customer.phone || "",
+          address: {
+            street: shippingAddress.line1,
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            zipCode: shippingAddress.postalCode,
+            country: shippingAddress.country,
+          },
+          status: "active",
+          totalOrders: 1,
+          totalSpent: total,
+        });
+      }
+    } catch (clientError) {
+      // Don't fail the order if client creation fails
+      console.error("Failed to create/update client:", clientError);
+    }
 
     // Create line items for Stripe
     const lineItems = items.map((item: any) => ({

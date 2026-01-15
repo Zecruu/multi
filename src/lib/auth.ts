@@ -57,25 +57,25 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider === "google") {
         try {
           await connectDB();
-          
+
           // Check if user exists
           let dbUser = await User.findOne({ email: user.email });
-          
+
           if (!dbUser) {
-            // Create new user for Google sign-in
+            // Create new user for Google sign-in - default to customer role
             dbUser = await User.create({
               name: user.name,
               email: user.email,
               password: Math.random().toString(36).slice(-16) + Math.random().toString(36).slice(-16), // Random password for OAuth users
-              role: "staff", // Default role for new users
+              role: "customer", // Default role for Google OAuth users
               isActive: true,
             });
           }
-          
+
           // Update last login
           dbUser.lastLogin = new Date();
           await dbUser.save();
-          
+
           return true;
         } catch (error) {
           console.error("Error during Google sign in:", error);
