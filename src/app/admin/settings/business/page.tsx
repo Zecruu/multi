@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -66,8 +67,10 @@ const defaultCategoryForm = {
   sortOrder: 0,
 };
 
-export default function BusinessSettingsPage() {
-  const { data: session, status } = useSession();
+function BusinessSettingsPage() {
+  const sessionData = useSession();
+  const session = sessionData?.data;
+  const status = sessionData?.status;
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoadingCategories, setIsLoadingCategories] = useState(true);
@@ -627,3 +630,5 @@ export default function BusinessSettingsPage() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(BusinessSettingsPage), { ssr: false });
