@@ -4,6 +4,10 @@ import * as XLSX from "xlsx";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 
+// Route segment config - extend timeout for large imports
+export const maxDuration = 60; // 60 seconds (max for Vercel Pro)
+export const dynamic = "force-dynamic";
+
 // Maximum file size: 10MB
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
@@ -43,20 +47,15 @@ function cleanString(value: unknown): string {
   return String(value).trim();
 }
 
-// Generate slug from name and SKU to ensure uniqueness
-function generateSlug(name: string, sku: string): string {
-  const nameSlug = name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
-    .substring(0, 80);
-  
+// Generate slug from SKU only to ensure uniqueness (since SKU is unique)
+function generateSlug(sku: string): string {
+  // Use SKU as the primary slug source since it's guaranteed unique
   const skuSlug = sku
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
   
-  return `${nameSlug}-${skuSlug}`.substring(0, 100);
+  return skuSlug || `product-${Date.now()}`;
 }
 
 // Clean SKU - remove special characters but keep identifier unique
@@ -279,10 +278,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         // Generate product name from description
         const name = description.substring(0, 200); // Limit name length
 
-        // Generate unique slug using name + SKU
-        const slug = generateSlug(name, sku);
+        // Generate unique slug from SKU (guaranteed unique since SKU is unique)
+        const slug = generateSlug(sku);
         
-        // Build specifications as plain object (not Map - MongoDB doesn't handle Maps)
+        // Build specifications - will be converted to Map by mongoose
         const specifications: Record<string, string> = {};
         if (subDesc2) specifications["attribute1"] = subDesc2;
         if (subDesc3) specifications["model"] = subDesc3;
@@ -322,18 +321,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           });
         } else {
           // Add to bulk operations for actual import
+          // Note: Don't set timestamps manually - mongoose handles them with timestamps: true
           bulkOps.push({
             updateOne: {
               filter: { sku: productData.sku },
               update: { 
-                $set: {
-                  ...productData,
-                  updatedAt: new Date(),
-                },
-                $setOnInsert: {
-                  createdAt: new Date(),
-                },
-              } as any,
+                $set: productData,
+              },
               upsert: true,
             },
           });
@@ -354,53 +348,88 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       console.log(`[Import] Executing ${bulkOps.length} bulk operations...`);
       
       try {
-        // Process in batches of 100 to avoid memory/timeout issues
-        const batchSize = 100;
+        // Use larger batches for efficiency - MongoDB can handle 1000+ ops
+        // but keep it at 500 for memory safety
+        const batchSize = 500;
+        const totalBatches = Math.ceil(bulkOps.length / batchSize);
+        
+        console.log(`[Import] Will process ${totalBatches} batches of up to ${batchSize} items`);
+        
         for (let i = 0; i < bulkOps.length; i += batchSize) {
           const batch = bulkOps.slice(i, i + batchSize);
-          console.log(`[Import] Processing batch ${Math.floor(i/batchSize) + 1} of ${Math.ceil(bulkOps.length/batchSize)} (${batch.length} items)`);
+          const batchNum = Math.floor(i/batchSize) + 1;
+          console.log(`[Import] Processing batch ${batchNum}/${totalBatches} (${batch.length} items)`);
+          
+          const startTime = Date.now();
           
           try {
-            const bulkResult = await Product.bulkWrite(batch, { ordered: false });
-            result.created += bulkResult.upsertedCount || 0;
-            result.updated += bulkResult.modifiedCount || 0;
-            console.log(`[Import] Batch result: ${bulkResult.upsertedCount} created, ${bulkResult.modifiedCount} updated`);
-          } catch (batchError: any) {
-            console.error(`[Import] Batch error:`, batchError.message);
+            // Use ordered: false to continue on errors, skip validation for speed
+            const bulkResult = await Product.bulkWrite(batch, { 
+              ordered: false,
+            });
             
-            // Handle duplicate key errors gracefully
-            if (batchError.writeErrors) {
-              for (const writeError of batchError.writeErrors) {
-                const errorSku = writeError.err?.op?.updateOne?.filter?.sku || 
-                                writeError.err?.keyValue?.sku ||
-                                writeError.err?.keyValue?.slug ||
-                                "UNKNOWN";
-                const errorMsg = writeError.err?.errmsg || writeError.err?.message || "Database write error";
-                console.error(`[Import] Write error for ${errorSku}: ${errorMsg}`);
-                result.errors.push({
-                  row: 0,
-                  sku: errorSku,
-                  error: errorMsg,
-                });
-              }
+            const created = bulkResult.upsertedCount || 0;
+            const updated = bulkResult.modifiedCount || 0;
+            const matched = bulkResult.matchedCount || 0;
+            
+            result.created += created;
+            result.updated += updated;
+            
+            const elapsed = Date.now() - startTime;
+            console.log(`[Import] Batch ${batchNum} complete in ${elapsed}ms: created=${created}, updated=${updated}, matched=${matched}`);
+          } catch (batchError: any) {
+            const elapsed = Date.now() - startTime;
+            console.error(`[Import] Batch ${batchNum} error after ${elapsed}ms:`, batchError.message);
+            
+            // BulkWriteError contains partial results
+            if (batchError.result) {
+              const partialCreated = batchError.result.nUpserted || batchError.result.upsertedCount || 0;
+              const partialUpdated = batchError.result.nModified || batchError.result.modifiedCount || 0;
+              result.created += partialCreated;
+              result.updated += partialUpdated;
+              console.log(`[Import] Partial success in batch ${batchNum}: created=${partialCreated}, updated=${partialUpdated}`);
             }
             
-            // Still count successes from partial write
-            if (batchError.result) {
-              result.created += batchError.result.nUpserted || 0;
-              result.updated += batchError.result.nModified || 0;
+            // Handle individual write errors - limit to prevent memory issues
+            const writeErrors = batchError.writeErrors || batchError.result?.writeErrors || [];
+            const maxErrors = 20; // Only log first 20 errors per batch
+            
+            for (let e = 0; e < Math.min(writeErrors.length, maxErrors); e++) {
+              const writeError = writeErrors[e];
+              const errorOp = writeError.err?.op || writeError.op || {};
+              const errorSku = errorOp?.updateOne?.filter?.sku || 
+                              writeError.err?.keyValue?.sku ||
+                              writeError.err?.keyValue?.slug ||
+                              "UNKNOWN";
+              const errorCode = writeError.err?.code || writeError.code || 0;
+              const errorMsg = writeError.err?.errmsg || writeError.err?.message || writeError.errmsg || "Write error";
+              
+              result.errors.push({
+                row: 0,
+                sku: errorSku,
+                error: `[${errorCode}] ${errorMsg.substring(0, 100)}`,
+              });
+            }
+            
+            if (writeErrors.length > maxErrors) {
+              result.errors.push({
+                row: 0,
+                sku: "BATCH",
+                error: `...and ${writeErrors.length - maxErrors} more errors in this batch`,
+              });
             }
           }
         }
 
-        console.log(`[Import] Completed: ${result.created} created, ${result.updated} updated, ${result.errors.length} errors`);
+        console.log(`[Import] Final result: ${result.created} created, ${result.updated} updated, ${result.errors.length} errors`);
       } catch (bulkError: any) {
         console.error("[Import] Critical bulk write error:", bulkError);
         result.errors.push({
           row: 0,
           sku: "SYSTEM",
-          error: `Database error: ${bulkError.message}`,
+          error: `Critical database error: ${bulkError.message}`,
         });
+        result.success = false;
       }
     }
 
