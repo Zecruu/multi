@@ -14,8 +14,6 @@ export function getResend(): Resend {
   return resendInstance;
 }
 
-// Use Resend's default domain for testing until custom domain is verified
-// To use your own domain, verify it at https://resend.com/domains
-// Then set FROM_EMAIL=Multi Electric Supply <noreply@multielectricpr.com>
-export const FROM_EMAIL = process.env.FROM_EMAIL || "Multi Electric Supply <onboarding@resend.dev>";
+// Domain multielectricsupply.com is verified in Resend
+export const FROM_EMAIL = process.env.FROM_EMAIL || "Multi Electric Supply <noreply@multielectricsupply.com>";
 
