@@ -77,6 +77,7 @@ export default function ImportProductsPage() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [dryRun, setDryRun] = useState(true);
   const [result, setResult] = useState<ImportResult | null>(null);
+  const [previewComplete, setPreviewComplete] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const uploadedFile = acceptedFiles[0];
@@ -109,7 +110,7 @@ export default function ImportProductsPage() {
     multiple: false,
   });
 
-  const handleImport = async () => {
+  const handleImport = async (isDryRun: boolean = true) => {
     if (!file) {
       toast.error("Please select a file first");
       return;
@@ -118,11 +119,12 @@ export default function ImportProductsPage() {
     setIsUploading(true);
     setUploadProgress(10);
     setResult(null);
+    setPreviewComplete(false);
 
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("dryRun", dryRun.toString());
+      formData.append("dryRun", isDryRun.toString());
 
       setUploadProgress(30);
 
@@ -144,10 +146,12 @@ export default function ImportProductsPage() {
       setResult(data);
 
       if (data.success) {
-        if (dryRun) {
-          toast.info(`Preview complete: ${data.created} products would be imported`);
+        if (isDryRun) {
+          toast.info(`Preview complete: ${data.created} products ready to import`);
+          setPreviewComplete(true);
         } else {
-          toast.success(`Import complete: ${data.created} created, ${data.updated} updated`);
+          toast.success(`✅ Import complete: ${data.created} created, ${data.updated} updated`);
+          setPreviewComplete(false);
         }
       } else {
         toast.warning("Import completed with errors. Check the results below.");
@@ -176,6 +180,11 @@ export default function ImportProductsPage() {
     setResult(null);
     setUploadProgress(0);
     setDryRun(true);
+    setPreviewComplete(false);
+  };
+
+  const handleConfirmImport = () => {
+    handleImport(false); // Actually import (not dry run)
   };
 
   const formatFileSize = (bytes: number) => {
@@ -275,52 +284,70 @@ export default function ImportProductsPage() {
                 </div>
               )}
 
-              {/* Options */}
-              <div className="flex items-center justify-between pt-4 border-t">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="dryRun"
-                    checked={dryRun}
-                    onCheckedChange={(checked) => setDryRun(checked as boolean)}
-                    disabled={isUploading}
-                  />
-                  <Label htmlFor="dryRun" className="cursor-pointer">
-                    <span className="font-medium">Preview mode</span>
-                    <span className="text-muted-foreground text-sm ml-2">
-                      (validate without saving)
-                    </span>
-                  </Label>
+              {/* Action Buttons */}
+              <div className="flex flex-col gap-4 pt-4 border-t">
+                {/* Step 1: Preview */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Step 1: Preview</p>
+                    <p className="text-sm text-muted-foreground">Validate your file before importing</p>
+                  </div>
+                  <div className="flex gap-2">
+                    {result && (
+                      <Button variant="outline" onClick={handleReset}>
+                        <RefreshCw className="w-4 h-4 mr-2" />
+                        Reset
+                      </Button>
+                    )}
+                    <Button
+                      onClick={() => handleImport(true)}
+                      disabled={!file || isUploading}
+                      variant={previewComplete ? "outline" : "default"}
+                    >
+                      {isUploading && dryRun ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Validating...
+                        </>
+                      ) : (
+                        <>
+                          <Eye className="w-4 h-4 mr-2" />
+                          {previewComplete ? "Preview Again" : "Preview File"}
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
 
-                <div className="flex gap-2">
-                  {result && (
-                    <Button variant="outline" onClick={handleReset}>
-                      <RefreshCw className="w-4 h-4 mr-2" />
-                      Reset
+                {/* Step 2: Confirm Import - Only show after successful preview */}
+                {previewComplete && result && result.success && result.created > 0 && (
+                  <div className="flex items-center justify-between p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <div>
+                      <p className="font-medium text-green-600">Step 2: Confirm Import</p>
+                      <p className="text-sm text-muted-foreground">
+                        Ready to import {result.created} products to your store
+                      </p>
+                    </div>
+                    <Button
+                      onClick={handleConfirmImport}
+                      disabled={isUploading}
+                      size="lg"
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      {isUploading && !dryRun ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Importing...
+                        </>
+                      ) : (
+                        <>
+                          <FileUp className="w-4 h-4 mr-2" />
+                          Import {result.created} Products Now
+                        </>
+                      )}
                     </Button>
-                  )}
-                  <Button
-                    onClick={handleImport}
-                    disabled={!file || isUploading}
-                  >
-                    {isUploading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Processing...
-                      </>
-                    ) : dryRun ? (
-                      <>
-                        <Eye className="w-4 h-4 mr-2" />
-                        Preview Import
-                      </>
-                    ) : (
-                      <>
-                        <FileUp className="w-4 h-4 mr-2" />
-                        Import Products
-                      </>
-                    )}
-                  </Button>
-                </div>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -335,7 +362,7 @@ export default function ImportProductsPage() {
                   ) : (
                     <XCircle className="w-5 h-5 text-red-500" />
                   )}
-                  {dryRun ? "Preview Results" : "Import Results"}
+                  {previewComplete ? "Preview Results" : "Import Results"}
                 </CardTitle>
                 <CardDescription>{result.message}</CardDescription>
               </CardHeader>
@@ -349,13 +376,13 @@ export default function ImportProductsPage() {
                   <div className="text-center p-4 bg-green-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-green-500">{result.created}</p>
                     <p className="text-sm text-muted-foreground">
-                      {dryRun ? "To Create" : "Created"}
+                      {previewComplete ? "To Create" : "Created"}
                     </p>
                   </div>
                   <div className="text-center p-4 bg-blue-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-blue-500">{result.updated}</p>
                     <p className="text-sm text-muted-foreground">
-                      {dryRun ? "To Update" : "Updated"}
+                      {previewComplete ? "To Update" : "Updated"}
                     </p>
                   </div>
                   <div className="text-center p-4 bg-yellow-500/10 rounded-lg">
@@ -365,7 +392,7 @@ export default function ImportProductsPage() {
                 </div>
 
                 {/* Preview Products Table */}
-                {dryRun && result.products && result.products.length > 0 && (
+                {previewComplete && result.products && result.products.length > 0 && (
                   <div className="space-y-2">
                     <h4 className="font-medium">Preview (First 100 products)</h4>
                     <div className="border rounded-lg max-h-64 overflow-auto">
@@ -458,14 +485,14 @@ export default function ImportProductsPage() {
                   </Alert>
                 )}
 
-                {dryRun && result.success && result.created > 0 && (
-                  <Alert>
-                    <Eye className="h-4 w-4" />
-                    <AlertTitle>Preview Complete</AlertTitle>
+                {previewComplete && result.success && result.created > 0 && (
+                  <Alert className="border-green-500 bg-green-500/10">
+                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                    <AlertTitle className="text-green-600">Preview Complete - Ready to Import!</AlertTitle>
                     <AlertDescription>
-                      Review the preview above. When ready, uncheck &quot;Preview mode&quot; 
-                      and click &quot;Import Products&quot; to save {result.created} products 
-                      to your catalog.
+                      ✅ {result.created} products validated successfully. 
+                      <strong> Scroll up and click the green &quot;Import Products Now&quot; button</strong> to 
+                      save them to your store.
                     </AlertDescription>
                   </Alert>
                 )}
