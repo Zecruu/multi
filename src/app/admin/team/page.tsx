@@ -207,6 +207,26 @@ export default function TeamPage() {
     }
   };
 
+  const handleResendWelcome = async (member: TeamMember) => {
+    try {
+      const response = await fetch(`/api/admin/team/${member._id}/resend-welcome`, {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send email");
+      }
+
+      toast.success(`Correo de bienvenida enviado a ${member.email}`);
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Error al enviar correo"
+      );
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -487,6 +507,12 @@ export default function TeamPage() {
                             <DropdownMenuItem onClick={() => handleEdit(member)}>
                               <Pencil className="h-4 w-4 mr-2" />
                               Editar
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => handleResendWelcome(member)}
+                            >
+                              <Mail className="h-4 w-4 mr-2" />
+                              Reenviar Bienvenida
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => handleToggleStatus(member)}
