@@ -65,6 +65,7 @@ interface Client {
   totalOrders: number;
   totalSpent: number;
   notes?: string;
+  source?: "registered" | "orders";
 }
 
 const defaultClientForm = {
@@ -480,7 +481,14 @@ export default function ClientsPage() {
                 <TableRow key={client._id}>
                   <TableCell>
                     <div>
-                      <p className="font-medium text-foreground">{client.name}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-foreground">{client.name}</p>
+                        {client.source === "registered" && (
+                          <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-600 border-blue-200">
+                            Account
+                          </Badge>
+                        )}
+                      </div>
                       {client.company && (
                         <p className="text-sm text-muted-foreground flex items-center gap-1">
                           <Building className="w-3 h-3" />

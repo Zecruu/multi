@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import Client from "@/models/Client";
+import User from "@/models/User";
+import Order from "@/models/Order";
 
 export async function GET(request: NextRequest) {
   try {
@@ -11,30 +13,103 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "10");
     const search = searchParams.get("search") || "";
     const status = searchParams.get("status");
+    const source = searchParams.get("source") || "all"; // "all", "registered", "orders"
 
-    const query: Record<string, unknown> = {};
+    const skip = (page - 1) * limit;
 
+    // Build search query for users
+    const userQuery: Record<string, unknown> = { role: "customer" };
     if (search) {
-      query.$or = [
+      userQuery.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    }
+    if (status && status !== "all") {
+      userQuery.isActive = status === "active";
+    }
+
+    // Build search query for clients (from orders)
+    const clientQuery: Record<string, unknown> = {};
+    if (search) {
+      clientQuery.$or = [
         { name: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
         { company: { $regex: search, $options: "i" } },
       ];
     }
-
     if (status && status !== "all") {
-      query.status = status;
+      clientQuery.status = status;
     }
 
-    const skip = (page - 1) * limit;
+    // Fetch registered customers (Users with role "customer")
+    const registeredUsers = source !== "orders" ? await User.find(userQuery)
+      .select("name email phone isActive createdAt")
+      .sort({ createdAt: -1 })
+      .lean() : [];
 
-    const [clients, total] = await Promise.all([
-      Client.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
-      Client.countDocuments(query),
+    // Fetch CRM clients (from orders)
+    const orderClients = source !== "registered" ? await Client.find(clientQuery)
+      .sort({ createdAt: -1 })
+      .lean() : [];
+
+    // Get order stats for registered users
+    const userEmails = registeredUsers.map(u => u.email);
+    const userOrderStats = await Order.aggregate([
+      { $match: { "customer.email": { $in: userEmails }, paymentStatus: "paid" } },
+      { $group: { _id: "$customer.email", totalOrders: { $sum: 1 }, totalSpent: { $sum: "$total" } } }
     ]);
+    const statsMap = new Map(userOrderStats.map(s => [s._id, s]));
+
+    // Transform registered users to client format
+    const transformedUsers = registeredUsers.map(user => ({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone || "",
+      company: "",
+      status: user.isActive ? "active" : "inactive",
+      totalOrders: statsMap.get(user.email)?.totalOrders || 0,
+      totalSpent: statsMap.get(user.email)?.totalSpent || 0,
+      createdAt: user.createdAt,
+      source: "registered" as const,
+    }));
+
+    // Transform order clients, mark their source
+    const transformedClients = orderClients.map(client => ({
+      ...client,
+      source: "orders" as const,
+    }));
+
+    // Combine and deduplicate by email (prefer registered users)
+    const emailSet = new Set<string>();
+    const allClients: typeof transformedUsers = [];
+
+    // Add registered users first
+    for (const user of transformedUsers) {
+      if (!emailSet.has(user.email)) {
+        emailSet.add(user.email);
+        allClients.push(user);
+      }
+    }
+
+    // Add order clients that aren't already registered
+    for (const client of transformedClients) {
+      if (!emailSet.has(client.email)) {
+        emailSet.add(client.email);
+        allClients.push(client as typeof transformedUsers[0]);
+      }
+    }
+
+    // Sort by createdAt descending
+    allClients.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    // Paginate
+    const total = allClients.length;
+    const paginatedClients = allClients.slice(skip, skip + limit);
 
     return NextResponse.json({
-      clients,
+      clients: paginatedClients,
       pagination: {
         page,
         limit,
