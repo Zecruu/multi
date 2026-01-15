@@ -96,16 +96,12 @@ export default function AccountSettingsPage() {
     }
   };
 
-  if (status === "loading") {
+  if (status === "loading" || status === "unauthenticated") {
     return (
       <div className="flex items-center justify-center h-64">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
-  }
-
-  if (status === "unauthenticated" || !session) {
-    return null; // Will redirect via useEffect
   }
 
   return (
