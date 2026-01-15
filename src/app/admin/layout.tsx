@@ -1,8 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { AdminSidebar } from "@/components/admin/sidebar";
-import { AdminHeader } from "@/components/admin/header";
+
+const AdminSidebar = dynamic(
+  () => import("@/components/admin/sidebar").then((mod) => mod.AdminSidebar),
+  { ssr: false }
+);
+
+const AdminHeader = dynamic(
+  () => import("@/components/admin/header").then((mod) => mod.AdminHeader),
+  { ssr: false }
+);
 
 export default function AdminLayout({
   children,
@@ -10,7 +19,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  
+
   // Don't show sidebar/header on login page
   const isLoginPage = pathname === "/admin/login";
 

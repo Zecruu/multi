@@ -42,9 +42,10 @@ const navigation = [
 
 export function AdminSidebar() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
   const [collapsed, setCollapsed] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(pathname.startsWith("/admin/settings"));
+  const [settingsOpen, setSettingsOpen] = useState(pathname?.startsWith("/admin/settings") ?? false);
 
   const isAdmin = session?.user?.role === "admin";
   const isSettingsActive = pathname.startsWith("/admin/settings");
