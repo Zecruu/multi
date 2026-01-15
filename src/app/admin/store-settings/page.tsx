@@ -137,12 +137,9 @@ export default function StoreSettingsPage() {
     } catch { toast.error("Failed to delete category"); }
   };
 
-  if (status === "loading" || status === "unauthenticated") {
+  // Show loading while session is being fetched or if not admin (will redirect)
+  if (status === "loading" || status === "unauthenticated" || (status === "authenticated" && session?.user?.role !== "admin")) {
     return <div className="flex items-center justify-center h-64"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
-  }
-
-  if (session?.user?.role !== "admin") {
-    return null; // Will redirect via useEffect
   }
 
   return (
