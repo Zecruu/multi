@@ -333,8 +333,8 @@ function ProductsContent() {
       <div className="flex gap-8">
         {/* Desktop Sidebar */}
         <aside className="hidden lg:block w-64 shrink-0">
-          <Card className="sticky top-24">
-            <CardContent className="p-6">
+          <Card className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-hidden flex flex-col">
+            <CardContent className="p-6 overflow-y-auto">
               <FilterSidebar />
             </CardContent>
           </Card>
