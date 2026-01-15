@@ -54,10 +54,10 @@ export function orderStatusEmail({
     ? `
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin: 24px 0;">
       <tr>
-        <td style="padding: 16px; background-color: #1a1a2e; border-radius: 8px; border-left: 4px solid ${config.color};">
+        <td style="padding: 16px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid ${config.color};">
           <p style="margin: 0 0 8px; font-size: 14px; color: #6b7280;">Número de Rastreo:</p>
-          <p style="margin: 0; font-size: 16px; font-weight: bold; color: #ffffff;">${trackingNumber}</p>
-          ${estimatedDelivery ? `<p style="margin: 8px 0 0; font-size: 14px; color: #9ca3af;">Entrega estimada: ${estimatedDelivery}</p>` : ""}
+          <p style="margin: 0; font-size: 16px; font-weight: bold; color: #1f2937;">${trackingNumber}</p>
+          ${estimatedDelivery ? `<p style="margin: 8px 0 0; font-size: 14px; color: #374151;">Entrega estimada: ${estimatedDelivery}</p>` : ""}
         </td>
       </tr>
     </table>
@@ -69,14 +69,14 @@ export function orderStatusEmail({
       ? `
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin: 24px 0;">
       <tr>
-        <td style="padding: 16px; background-color: #1a1a2e; border-radius: 8px; border-left: 4px solid #22c55e;">
-          <p style="margin: 0 0 8px; font-size: 16px; font-weight: bold; color: #ffffff;">📍 Ubicación de Recogida</p>
-          <p style="margin: 0; font-size: 14px; color: #d1d5db; line-height: 1.6;">
+        <td style="padding: 16px; background-color: #f0fdf4; border-radius: 8px; border-left: 4px solid #22c55e;">
+          <p style="margin: 0 0 8px; font-size: 16px; font-weight: bold; color: #1f2937;">📍 Ubicación de Recogida</p>
+          <p style="margin: 0; font-size: 14px; color: #4b5563; line-height: 1.6;">
             Multi Electric Supply<br>
             Av. 65 de Infantería km 7.4<br>
             Carolina, PR 00923
           </p>
-          <p style="margin: 12px 0 0; font-size: 14px; color: #f59e0b;">
+          <p style="margin: 12px 0 0; font-size: 14px; color: #b45309;">
             🕐 Horario: Lun-Vie 8:00 AM - 5:00 PM
           </p>
         </td>
@@ -96,38 +96,38 @@ export function orderStatusEmail({
           </tr>
         </table>
       </div>
-      <h2 style="margin: 0 0 8px; font-size: 28px; font-weight: bold; color: #ffffff;">
+      <h2 style="margin: 0 0 8px; font-size: 28px; font-weight: bold; color: #1f2937;">
         ${config.title}
       </h2>
       <p style="margin: 0; font-size: 14px; color: #6b7280;">
         Pedido #${orderNumber}
       </p>
     </div>
-    
-    <p style="margin: 0 0 16px; font-size: 16px; color: #d1d5db; line-height: 1.6;">
-      Hola <strong style="color: #ffffff;">${customerName}</strong>,
+
+    <p style="margin: 0 0 16px; font-size: 16px; color: #4b5563; line-height: 1.6;">
+      Hola <strong style="color: #1f2937;">${customerName}</strong>,
     </p>
-    
-    <p style="margin: 0 0 24px; font-size: 16px; color: #d1d5db; line-height: 1.6;">
+
+    <p style="margin: 0 0 24px; font-size: 16px; color: #4b5563; line-height: 1.6;">
       ${config.message}
     </p>
-    
+
     ${trackingSection}
     ${pickupSection}
-    
+
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td align="center" style="padding: 24px 0;">
-          <a href="${process.env.NEXTAUTH_URL || 'https://multi-tau.vercel.app'}/store/orders" 
+          <a href="${process.env.NEXTAUTH_URL || 'https://multi-tau.vercel.app'}/store/orders"
              style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: #ffffff; text-decoration: none; font-weight: bold; font-size: 16px; border-radius: 8px;">
             Ver Detalles del Pedido →
           </a>
         </td>
       </tr>
     </table>
-    
+
     <p style="margin: 24px 0 0; font-size: 14px; color: #6b7280; text-align: center; line-height: 1.6;">
-      ¿Tienes preguntas? Contáctanos al <strong style="color: #9ca3af;">+1 (787) 963-0569</strong>
+      ¿Tienes preguntas? Contáctanos al <strong style="color: #374151;">+1 (787) 963-0569</strong>
     </p>
   `;
 
