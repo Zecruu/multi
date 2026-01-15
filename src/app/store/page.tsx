@@ -105,18 +105,20 @@ export default function StorePage() {
         <div className="container mx-auto px-4 py-16 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <div className="space-y-4">
-                <p className="text-sm font-medium tracking-widest text-primary uppercase">
-                  {t.heroTagline}
-                </p>
+              <div className="space-y-4 text-center lg:text-left">
+                {/* Main title first (centered) */}
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight">
                   {t.heroTitle}
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-md">
+                {/* Tagline below the title */}
+                <p className="text-sm font-medium tracking-widest text-primary uppercase">
+                  {t.heroTagline}
+                </p>
+                <p className="text-lg text-muted-foreground max-w-md mx-auto lg:mx-0">
                   {t.heroDescription}
                 </p>
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                 <Link href="/store/products">
                   <Button size="lg">
                     {t.shopAllProducts}
@@ -125,14 +127,14 @@ export default function StorePage() {
               </div>
             </div>
             
-            {/* Logo/Image */}
+            {/* Logo/Image - No white background */}
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden bg-white shadow-sm border">
+              <div className="relative w-full max-w-[400px] aspect-square">
                 <Image
-                  src="/logo.jpg"
+                  src="/MultiElectricLogo.png"
                   alt="MultiElectric Supply"
                   fill
-                  className="object-contain p-6"
+                  className="object-contain"
                   priority
                 />
               </div>
