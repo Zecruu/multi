@@ -59,11 +59,11 @@ export default function StoreSettingsPage() {
   }, [status, session, router]);
 
   useEffect(() => {
-    if (session?.user?.role === "admin") {
+    if (status === "authenticated" && session?.user?.role === "admin") {
       fetchCategories();
       fetchSyncPreview();
     }
-  }, [session]);
+  }, [status, session]);
 
   const fetchCategories = async () => {
     try {
