@@ -86,9 +86,12 @@ function BusinessSettingsPage() {
 
   // Admin check
   useEffect(() => {
+    if (status === "loading") {
+      return;
+    }
     if (status === "unauthenticated") {
       router.push("/admin/login");
-    } else if (status === "authenticated" && session?.user?.role !== "admin") {
+    } else if (session?.user && session.user.role !== "admin") {
       toast.error("Access denied. Admin privileges required.");
       router.push("/admin/settings/account");
     }

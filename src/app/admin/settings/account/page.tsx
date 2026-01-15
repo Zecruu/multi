@@ -35,9 +35,19 @@ function AccountSettingsPage() {
   });
 
   useEffect(() => {
+    if (status === "loading") {
+      return;
+    }
     if (status === "unauthenticated") {
       router.push("/admin/login");
     } else if (status === "authenticated" && session?.user) {
+      setProfile({
+        name: session.user.name || "",
+        email: session.user.email || "",
+      });
+      setIsLoading(false);
+    } else if (session?.user) {
+      // Fallback for when status might be undefined but session exists
       setProfile({
         name: session.user.name || "",
         email: session.user.email || "",
