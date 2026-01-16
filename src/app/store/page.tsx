@@ -244,7 +244,7 @@ export default function StorePage() {
         <div className="absolute inset-y-0 right-0 w-1 bg-gradient-to-b from-transparent via-yellow-400/50 to-transparent spark-2 opacity-70" />
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 py-24 md:py-32 lg:py-40 z-20">
+        <div className="relative container mx-auto px-4 py-16 md:py-20 lg:py-24 z-20">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Tagline */}
             <p className="text-sm md:text-base font-medium tracking-widest text-yellow-400 uppercase">
