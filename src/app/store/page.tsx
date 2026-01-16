@@ -160,6 +160,20 @@ export default function StorePage() {
           <div className="absolute inset-0 bg-black/60" />
         </div>
 
+        {/* Power Lines SVG */}
+        <div className="absolute top-0 left-0 right-0 w-full h-24 md:h-32 pointer-events-none z-10">
+          <svg className="w-full h-full" viewBox="0 0 1200 100" preserveAspectRatio="none">
+            {/* Power line cables with catenary curve */}
+            <path d="M0,15 Q300,45 600,35 Q900,25 1200,20" stroke="rgba(0,0,0,0.6)" strokeWidth="3" fill="none" />
+            <path d="M0,20 Q300,55 600,42 Q900,30 1200,25" stroke="rgba(0,0,0,0.6)" strokeWidth="3" fill="none" />
+            <path d="M0,25 Q300,65 600,50 Q900,38 1200,32" stroke="rgba(0,0,0,0.6)" strokeWidth="3" fill="none" />
+            {/* Highlight lines for depth */}
+            <path d="M0,15 Q300,45 600,35 Q900,25 1200,20" stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none" />
+            <path d="M0,20 Q300,55 600,42 Q900,30 1200,25" stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none" />
+            <path d="M0,25 Q300,65 600,50 Q900,38 1200,32" stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none" />
+          </svg>
+        </div>
+
         {/* Electrical Sparks - Left Side */}
         <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 pointer-events-none z-10">
           {/* Spark 1 */}
