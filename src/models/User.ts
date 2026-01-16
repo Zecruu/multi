@@ -1,0 +1,101 @@
+import mongoose, { Schema, Document, Model } from "mongoose";
+import bcrypt from "bcryptjs";
+
+export interface IUserNotifications {
+  orderUpdates: boolean;
+  promotions: boolean;
+  newsletter: boolean;
+}
+
+export interface IUserAddress {
+  street?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+}
+
+export interface IUser extends Document {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  email: string;
+  password: string;
+  phone?: string;
+  role: "admin" | "manager" | "staff" | "customer";
+  avatar?: string;
+  isActive: boolean;
+  notifications?: IUserNotifications;
+  address?: IUserAddress;
+  lastLogin?: Date;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+const NotificationsSchema = new Schema(
+  {
+    orderUpdates: { type: Boolean, default: true },
+    promotions: { type: Boolean, default: false },
+    newsletter: { type: Boolean, default: false },
+  },
+  { _id: false }
+);
+
+const AddressSchema = new Schema(
+  {
+    street: { type: String },
+    city: { type: String },
+    state: { type: String },
+    zipCode: { type: String },
+    country: { type: String, default: "USA" },
+  },
+  { _id: false }
+);
+
+const UserSchema = new Schema<IUser>(
+  {
+    name: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    password: { type: String, required: true, select: false },
+    phone: { type: String },
+    role: {
+      type: String,
+      enum: ["admin", "manager", "staff", "customer"],
+      default: "staff",
+    },
+    avatar: { type: String },
+    isActive: { type: Boolean, default: true },
+    notifications: { type: NotificationsSchema, default: () => ({}) },
+    address: { type: AddressSchema },
+    lastLogin: { type: Date },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  
+  const salt = await bcrypt.genSalt(12);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string
+): Promise<boolean> {
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+// Note: email already has index via unique: true
+UserSchema.index({ role: 1 });
+
+const User: Model<IUser> =
+  mongoose.models.User || mongoose.model<IUser>("User", UserSchema);
+
+export default User;

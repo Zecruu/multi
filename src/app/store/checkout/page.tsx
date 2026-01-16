@@ -1,0 +1,467 @@
+"use client";
+
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useCart } from "@/lib/cart-context";
+import { useSession } from "next-auth/react";
+import { ArrowLeft, Package, Loader2, CreditCard, Lock } from "lucide-react";
+import { toast } from "sonner";
+import { useLanguage } from "@/lib/language-context";
+
+const GUEST_CHECKOUT_KEY = "multielectric_checkout_info";
+
+function CheckoutContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data: session } = useSession();
+  const { items, subtotal, tax, taxRate, total, clearCart } = useCart();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { language } = useLanguage();
+
+  const t = {
+    checkout: language === "es" ? "Pago" : "Checkout",
+    contactInfo: language === "es" ? "Información de Contacto" : "Contact Information",
+    fullName: language === "es" ? "Nombre Completo" : "Full Name",
+    email: language === "es" ? "Correo Electrónico" : "Email",
+    phone: language === "es" ? "Número de Teléfono" : "Phone Number",
+    address: language === "es" ? "Dirección" : "Address",
+    street: language === "es" ? "Dirección" : "Street Address",
+    city: language === "es" ? "Ciudad" : "City",
+    state: language === "es" ? "Estado" : "State",
+    zipCode: language === "es" ? "Código Postal" : "ZIP Code",
+    country: language === "es" ? "País" : "Country",
+    orderSummary: language === "es" ? "Resumen del Pedido" : "Order Summary",
+    subtotal: language === "es" ? "Subtotal" : "Subtotal",
+    tax: language === "es" ? "Impuesto" : "Tax",
+    total: language === "es" ? "Total" : "Total",
+    proceedToPayment: language === "es" ? "Proceder al Pago" : "Proceed to Payment",
+    processing: language === "es" ? "Procesando..." : "Processing...",
+    securePayment: language === "es" ? "Pago seguro con Stripe" : "Secure payment powered by Stripe",
+    emptyCart: language === "es" ? "Tu Carrito está Vacío" : "Your Cart is Empty",
+    emptyCartDesc: language === "es" ? "Agrega algunos productos a tu carrito antes de pagar." : "Add some items to your cart before checking out.",
+    browseProducts: language === "es" ? "Ver Productos" : "Browse Products",
+    paymentCancelled: language === "es" ? "Pago cancelado. Por favor intenta de nuevo." : "Payment was cancelled. Please try again.",
+    fillAllFields: language === "es" ? "Por favor llena todos los campos requeridos" : "Please fill in all required fields",
+    cartEmpty: language === "es" ? "Tu carrito está vacío" : "Your cart is empty",
+    qty: language === "es" ? "Cant" : "Qty",
+    saveInfo: language === "es" ? "Guardar información para próximas compras" : "Save information for future purchases",
+    infoSaved: language === "es" ? "Información guardada" : "Information saved",
+  };
+
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "USA",
+  });
+  const [saveInfo, setSaveInfo] = useState(true);
+
+  // Load saved data on mount
+  useEffect(() => {
+    const loadSavedData = async () => {
+      if (session?.user) {
+        // Logged in - fetch from database
+        try {
+          const response = await fetch("/api/user/profile");
+          if (response.ok) {
+            const data = await response.json();
+            setFormData((prev) => ({
+              ...prev,
+              email: data.email || prev.email,
+              name: data.name || prev.name,
+              phone: data.phone || prev.phone,
+              street: data.address?.street || prev.street,
+              city: data.address?.city || prev.city,
+              state: data.address?.state || prev.state,
+              zipCode: data.address?.zipCode || prev.zipCode,
+              country: data.address?.country || prev.country,
+            }));
+          }
+        } catch (error) {
+          console.error("Failed to load profile:", error);
+        }
+      } else {
+        // Guest - load from localStorage
+        const saved = localStorage.getItem(GUEST_CHECKOUT_KEY);
+        if (saved) {
+          try {
+            const data = JSON.parse(saved);
+            setFormData((prev) => ({
+              ...prev,
+              ...data,
+            }));
+          } catch (error) {
+            console.error("Failed to parse saved checkout info:", error);
+          }
+        }
+      }
+    };
+
+    loadSavedData();
+  }, [session]);
+
+  // Handle cancelled payment
+  useEffect(() => {
+    const payment = searchParams.get("payment");
+    if (payment === "cancelled") {
+      toast.error(t.paymentCancelled);
+    }
+  }, [searchParams, t.paymentCancelled]);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validation
+    if (!formData.email || !formData.name || !formData.street || !formData.city || !formData.state || !formData.zipCode) {
+      toast.error(t.fillAllFields);
+      return;
+    }
+
+    if (items.length === 0) {
+      toast.error(t.cartEmpty);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Create checkout session with Stripe
+      const orderData = {
+        customer: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        },
+        userId: session?.user?.id || null,
+        items: items.map((item) => ({
+          product: item.productId,
+          productName: item.name,
+          productSku: item.sku,
+          productImage: item.image,
+          quantity: item.quantity,
+          unitPrice: item.price,
+          totalPrice: item.price * item.quantity,
+        })),
+        subtotal,
+        tax,
+        taxRate,
+        shipping: 0,
+        total,
+        shippingAddress: {
+          street: formData.street,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+      };
+
+      // Save info if requested
+      if (saveInfo) {
+        if (session?.user) {
+          // Save to database for logged-in users
+          try {
+            await fetch("/api/user/profile", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                phone: formData.phone,
+                address: {
+                  street: formData.street,
+                  city: formData.city,
+                  state: formData.state,
+                  zipCode: formData.zipCode,
+                  country: formData.country,
+                },
+              }),
+            });
+          } catch (error) {
+            console.error("Failed to save profile:", error);
+          }
+        } else {
+          // Save to localStorage for guests
+          localStorage.setItem(GUEST_CHECKOUT_KEY, JSON.stringify(formData));
+        }
+      }
+
+      const response = await fetch("/api/checkout/create-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to create checkout session");
+      }
+
+      const { sessionUrl } = await response.json();
+
+      // Clear cart before redirecting to Stripe
+      clearCart();
+      
+      // Redirect to Stripe Checkout
+      if (sessionUrl) {
+        window.location.href = sessionUrl;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to process order");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (items.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <Card className="max-w-md mx-auto text-center p-8">
+          <Package className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+          <h1 className="text-2xl font-bold mb-2">{t.emptyCart}</h1>
+          <p className="text-muted-foreground mb-6">
+            {t.emptyCartDesc}
+          </p>
+          <Link href="/store/products">
+            <Button>{t.browseProducts}</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex items-center gap-4 mb-8">
+        <Link href="/store/cart">
+          <Button variant="ghost" size="icon">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        </Link>
+        <h1 className="text-3xl font-bold">{t.checkout}</h1>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Checkout Form */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Contact Information */}
+            <Card>
+              <CardHeader>
+                <CardTitle>{t.contactInfo}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">{t.fullName} *</Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange("name", e.target.value)}
+                      placeholder="John Doe"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">{t.email} *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange("email", e.target.value)}
+                      placeholder="john@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone">{t.phone}</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    placeholder="(555) 123-4567"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Address */}
+            <Card>
+              <CardHeader>
+                <CardTitle>{t.address}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="street">{t.street} *</Label>
+                  <Input
+                    id="street"
+                    value={formData.street}
+                    onChange={(e) => handleInputChange("street", e.target.value)}
+                    placeholder="123 Main St"
+                    required
+                  />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="city">{t.city} *</Label>
+                    <Input
+                      id="city"
+                      value={formData.city}
+                      onChange={(e) => handleInputChange("city", e.target.value)}
+                      placeholder="San Juan"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="state">{t.state} *</Label>
+                    <Input
+                      id="state"
+                      value={formData.state}
+                      onChange={(e) => handleInputChange("state", e.target.value)}
+                      placeholder="PR"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="zipCode">{t.zipCode} *</Label>
+                    <Input
+                      id="zipCode"
+                      value={formData.zipCode}
+                      onChange={(e) => handleInputChange("zipCode", e.target.value)}
+                      placeholder="00901"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="country">{t.country}</Label>
+                    <Input
+                      id="country"
+                      value={formData.country}
+                      onChange={(e) => handleInputChange("country", e.target.value)}
+                      placeholder="USA"
+                    />
+                  </div>
+                </div>
+
+                {/* Save Info Checkbox */}
+                <div className="flex items-center space-x-2 pt-2">
+                  <Checkbox
+                    id="saveInfo"
+                    checked={saveInfo}
+                    onCheckedChange={(checked) => setSaveInfo(checked === true)}
+                  />
+                  <Label
+                    htmlFor="saveInfo"
+                    className="text-sm font-normal cursor-pointer"
+                  >
+                    {t.saveInfo}
+                  </Label>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <Card className="sticky top-24">
+              <CardHeader>
+                <CardTitle>{t.orderSummary}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Items */}
+                <div className="space-y-3">
+                  {items.map((item) => (
+                    <div key={item.productId} className="flex gap-3">
+                      <div className="w-16 h-16 rounded bg-muted flex items-center justify-center overflow-hidden shrink-0">
+                        {item.image ? (
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <Package className="w-6 h-6 text-muted-foreground" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm line-clamp-2">{item.name}</p>
+                        <p className="text-xs text-muted-foreground">{t.qty}: {item.quantity}</p>
+                      </div>
+                      <p className="font-medium text-sm">${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <Separator />
+
+                {/* Totals */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">{t.subtotal}</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">{t.tax} ({(taxRate * 100).toFixed(1)}%)</span>
+                    <span>${tax.toFixed(2)}</span>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>{t.total}</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      {t.processing}
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="h-4 w-4 mr-2" />
+                      {t.proceedToPayment}
+                    </>
+                  )}
+                </Button>
+
+                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+                  <Lock className="w-3 h-3" />
+                  {t.securePayment}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-16 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
+  );
+}
