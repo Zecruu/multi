@@ -150,7 +150,7 @@ export default function StorePage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/5f18b11f-3f32-4d12-9689-bb5f2f2a09ab.jpg"
+            src="/4d1a808c-3013-4f75-acd5-00ddf39cc3f7.jpg"
             alt="Electrical supplies background"
             fill
             className="object-cover"
