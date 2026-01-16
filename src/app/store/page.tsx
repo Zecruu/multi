@@ -146,31 +146,49 @@ export default function StorePage() {
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative border-b overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/4d1a808c-3013-4f75-acd5-00ddf39cc3f7.jpg"
-            alt="Electrical supplies background"
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
+      <section className="relative border-b overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+        {/* Power Lines with Poles SVG */}
+        <div className="absolute top-0 left-0 right-0 w-full h-40 md:h-48 pointer-events-none z-10">
+          <svg className="w-full h-full" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMid slice">
+            {/* Left Power Pole */}
+            <rect x="40" y="0" width="8" height="150" fill="#2d2d2d" />
+            <rect x="20" y="15" width="48" height="6" fill="#2d2d2d" />
+            <rect x="25" y="30" width="38" height="5" fill="#2d2d2d" />
+            <rect x="30" y="45" width="28" height="4" fill="#2d2d2d" />
+            {/* Insulators left */}
+            <circle cx="25" cy="18" r="3" fill="#4a5568" />
+            <circle cx="63" cy="18" r="3" fill="#4a5568" />
+            <circle cx="28" cy="32" r="2.5" fill="#4a5568" />
+            <circle cx="60" cy="32" r="2.5" fill="#4a5568" />
+            <circle cx="32" cy="47" r="2" fill="#4a5568" />
+            <circle cx="56" cy="47" r="2" fill="#4a5568" />
 
-        {/* Power Lines SVG */}
-        <div className="absolute top-0 left-0 right-0 w-full h-24 md:h-32 pointer-events-none z-10">
-          <svg className="w-full h-full" viewBox="0 0 1200 100" preserveAspectRatio="none">
-            {/* Power line cables with catenary curve */}
-            <path d="M0,15 Q300,45 600,35 Q900,25 1200,20" stroke="rgba(0,0,0,0.6)" strokeWidth="3" fill="none" />
-            <path d="M0,20 Q300,55 600,42 Q900,30 1200,25" stroke="rgba(0,0,0,0.6)" strokeWidth="3" fill="none" />
-            <path d="M0,25 Q300,65 600,50 Q900,38 1200,32" stroke="rgba(0,0,0,0.6)" strokeWidth="3" fill="none" />
-            {/* Highlight lines for depth */}
-            <path d="M0,15 Q300,45 600,35 Q900,25 1200,20" stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none" />
-            <path d="M0,20 Q300,55 600,42 Q900,30 1200,25" stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none" />
-            <path d="M0,25 Q300,65 600,50 Q900,38 1200,32" stroke="rgba(255,255,255,0.15)" strokeWidth="1" fill="none" />
+            {/* Right Power Pole */}
+            <rect x="1152" y="0" width="8" height="150" fill="#2d2d2d" />
+            <rect x="1132" y="15" width="48" height="6" fill="#2d2d2d" />
+            <rect x="1137" y="30" width="38" height="5" fill="#2d2d2d" />
+            <rect x="1142" y="45" width="28" height="4" fill="#2d2d2d" />
+            {/* Insulators right */}
+            <circle cx="1137" cy="18" r="3" fill="#4a5568" />
+            <circle cx="1175" cy="18" r="3" fill="#4a5568" />
+            <circle cx="1140" cy="32" r="2.5" fill="#4a5568" />
+            <circle cx="1172" cy="32" r="2.5" fill="#4a5568" />
+            <circle cx="1144" cy="47" r="2" fill="#4a5568" />
+            <circle cx="1168" cy="47" r="2" fill="#4a5568" />
+
+            {/* Power line cables with catenary curve - top set */}
+            <path d="M25,18 Q600,70 1175,18" stroke="#1a1a1a" strokeWidth="2.5" fill="none" />
+            <path d="M63,18 Q600,75 1137,18" stroke="#1a1a1a" strokeWidth="2.5" fill="none" />
+            {/* Middle set */}
+            <path d="M28,32 Q600,85 1172,32" stroke="#1a1a1a" strokeWidth="2" fill="none" />
+            <path d="M60,32 Q600,90 1140,32" stroke="#1a1a1a" strokeWidth="2" fill="none" />
+            {/* Bottom set */}
+            <path d="M32,47 Q600,100 1168,47" stroke="#1a1a1a" strokeWidth="1.5" fill="none" />
+            <path d="M56,47 Q600,105 1144,47" stroke="#1a1a1a" strokeWidth="1.5" fill="none" />
+
+            {/* Highlight lines for metallic look */}
+            <path d="M25,18 Q600,70 1175,18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
+            <path d="M63,18 Q600,75 1137,18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
           </svg>
         </div>
 
