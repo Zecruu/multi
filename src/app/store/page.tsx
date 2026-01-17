@@ -100,203 +100,44 @@ export default function StorePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Spark Animation Styles */}
-      <style jsx>{`
-        @keyframes spark-flicker {
-          0%, 100% { opacity: 0; }
-          5% { opacity: 1; }
-          10% { opacity: 0.3; }
-          15% { opacity: 1; }
-          20% { opacity: 0; }
-          45% { opacity: 0; }
-          50% { opacity: 0.8; }
-          55% { opacity: 0; }
-          80% { opacity: 0; }
-          85% { opacity: 1; }
-          90% { opacity: 0.5; }
-          95% { opacity: 1; }
-        }
-        @keyframes spark-flicker-2 {
-          0%, 100% { opacity: 0; }
-          10% { opacity: 0; }
-          15% { opacity: 1; }
-          20% { opacity: 0.2; }
-          25% { opacity: 0.9; }
-          30% { opacity: 0; }
-          60% { opacity: 0; }
-          65% { opacity: 1; }
-          70% { opacity: 0; }
-        }
-        @keyframes spark-flicker-3 {
-          0%, 100% { opacity: 0; }
-          30% { opacity: 0; }
-          35% { opacity: 1; }
-          40% { opacity: 0; }
-          42% { opacity: 0.7; }
-          45% { opacity: 0; }
-          70% { opacity: 0; }
-          75% { opacity: 1; }
-          78% { opacity: 0.4; }
-          80% { opacity: 1; }
-          85% { opacity: 0; }
-        }
-        .spark { animation: spark-flicker 2s infinite; }
-        .spark-2 { animation: spark-flicker-2 2.5s infinite; }
-        .spark-3 { animation: spark-flicker-3 3s infinite; }
-      `}</style>
-
       {/* Hero Section */}
-      <section className="relative border-b overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
-        {/* Power Lines with Poles SVG */}
-        <div className="absolute top-0 left-0 right-0 w-full h-40 md:h-48 pointer-events-none z-10">
-          <svg className="w-full h-full" viewBox="0 0 1200 150" preserveAspectRatio="xMidYMid slice">
-            {/* Left Power Pole */}
-            <rect x="40" y="0" width="8" height="150" fill="#2d2d2d" />
-            <rect x="20" y="15" width="48" height="6" fill="#2d2d2d" />
-            <rect x="25" y="30" width="38" height="5" fill="#2d2d2d" />
-            <rect x="30" y="45" width="28" height="4" fill="#2d2d2d" />
-            {/* Insulators left */}
-            <circle cx="25" cy="18" r="3" fill="#4a5568" />
-            <circle cx="63" cy="18" r="3" fill="#4a5568" />
-            <circle cx="28" cy="32" r="2.5" fill="#4a5568" />
-            <circle cx="60" cy="32" r="2.5" fill="#4a5568" />
-            <circle cx="32" cy="47" r="2" fill="#4a5568" />
-            <circle cx="56" cy="47" r="2" fill="#4a5568" />
-
-            {/* Right Power Pole */}
-            <rect x="1152" y="0" width="8" height="150" fill="#2d2d2d" />
-            <rect x="1132" y="15" width="48" height="6" fill="#2d2d2d" />
-            <rect x="1137" y="30" width="38" height="5" fill="#2d2d2d" />
-            <rect x="1142" y="45" width="28" height="4" fill="#2d2d2d" />
-            {/* Insulators right */}
-            <circle cx="1137" cy="18" r="3" fill="#4a5568" />
-            <circle cx="1175" cy="18" r="3" fill="#4a5568" />
-            <circle cx="1140" cy="32" r="2.5" fill="#4a5568" />
-            <circle cx="1172" cy="32" r="2.5" fill="#4a5568" />
-            <circle cx="1144" cy="47" r="2" fill="#4a5568" />
-            <circle cx="1168" cy="47" r="2" fill="#4a5568" />
-
-            {/* Power line cables with catenary curve - top set */}
-            <path d="M25,18 Q600,70 1175,18" stroke="#1a1a1a" strokeWidth="2.5" fill="none" />
-            <path d="M63,18 Q600,75 1137,18" stroke="#1a1a1a" strokeWidth="2.5" fill="none" />
-            {/* Middle set */}
-            <path d="M28,32 Q600,85 1172,32" stroke="#1a1a1a" strokeWidth="2" fill="none" />
-            <path d="M60,32 Q600,90 1140,32" stroke="#1a1a1a" strokeWidth="2" fill="none" />
-            {/* Bottom set */}
-            <path d="M32,47 Q600,100 1168,47" stroke="#1a1a1a" strokeWidth="1.5" fill="none" />
-            <path d="M56,47 Q600,105 1144,47" stroke="#1a1a1a" strokeWidth="1.5" fill="none" />
-
-            {/* Highlight lines for metallic look */}
-            <path d="M25,18 Q600,70 1175,18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
-            <path d="M63,18 Q600,75 1137,18" stroke="rgba(255,255,255,0.1)" strokeWidth="1" fill="none" />
-          </svg>
+      <section className="relative border-b overflow-hidden min-h-[600px] md:min-h-[650px] lg:min-h-[700px]">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/ChatGPT Image Jan 16, 2026, 08_02_04 PM.png"
+            alt="Multi Electric Supply - Professional electricians at work"
+            fill
+            className="object-cover object-center"
+            priority
+            sizes="100vw"
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
         </div>
-
-        {/* Electrical Sparks - Left Side */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 pointer-events-none z-10">
-          {/* Spark 1 */}
-          <svg className="spark absolute top-[15%] -left-2" width="60" height="80" viewBox="0 0 60 80">
-            <path d="M30 0 L35 25 L50 20 L25 45 L35 42 L10 80 L20 45 L5 50 L25 20 L15 25 Z"
-              fill="url(#sparkGradient)" filter="url(#glow)" />
-            <defs>
-              <linearGradient id="sparkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fff" />
-                <stop offset="50%" stopColor="#fef08a" />
-                <stop offset="100%" stopColor="#facc15" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-          </svg>
-          {/* Spark 2 */}
-          <svg className="spark-2 absolute top-[45%] left-1" width="50" height="70" viewBox="0 0 50 70">
-            <path d="M25 0 L30 20 L45 15 L20 40 L30 37 L5 70 L15 40 L0 45 L20 15 L10 20 Z"
-              fill="#fef9c3" filter="url(#glow2)" />
-            <defs>
-              <filter id="glow2">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-          </svg>
-          {/* Spark 3 */}
-          <svg className="spark-3 absolute top-[75%] -left-1" width="45" height="60" viewBox="0 0 45 60">
-            <path d="M20 0 L25 18 L40 14 L18 35 L26 33 L5 60 L12 35 L0 38 L18 14 L10 17 Z"
-              fill="#fde047" filter="url(#glow3)" />
-            <defs>
-              <filter id="glow3">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-          </svg>
-        </div>
-
-        {/* Electrical Sparks - Right Side */}
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 pointer-events-none z-10">
-          {/* Spark 4 */}
-          <svg className="spark-2 absolute top-[20%] -right-2 rotate-180" width="55" height="75" viewBox="0 0 55 75">
-            <path d="M28 0 L33 22 L48 18 L23 42 L32 39 L8 75 L17 42 L3 46 L23 18 L13 22 Z"
-              fill="#fef08a" filter="url(#glow4)" />
-            <defs>
-              <filter id="glow4">
-                <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-          </svg>
-          {/* Spark 5 */}
-          <svg className="spark absolute top-[55%] right-0 rotate-180" width="50" height="65" viewBox="0 0 50 65">
-            <path d="M25 0 L29 19 L44 15 L21 38 L29 35 L6 65 L14 38 L1 42 L21 15 L12 19 Z"
-              fill="#fff" filter="url(#glow5)" />
-            <defs>
-              <filter id="glow5">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-          </svg>
-          {/* Spark 6 */}
-          <svg className="spark-3 absolute top-[80%] -right-1 rotate-180" width="48" height="62" viewBox="0 0 48 62">
-            <path d="M24 0 L28 17 L42 14 L20 36 L28 33 L6 62 L13 36 L1 39 L20 14 L11 17 Z"
-              fill="#facc15" filter="url(#glow6)" />
-            <defs>
-              <filter id="glow6">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-          </svg>
-        </div>
-
-        {/* Electric arc lines on edges */}
-        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-transparent via-yellow-400/50 to-transparent spark opacity-70" />
-        <div className="absolute inset-y-0 right-0 w-1 bg-gradient-to-b from-transparent via-yellow-400/50 to-transparent spark-2 opacity-70" />
 
         {/* Content */}
-        <div className="relative container mx-auto px-4 py-16 md:py-20 lg:py-24 z-20">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
+        <div className="relative container mx-auto px-4 py-12 md:py-16 lg:py-20 z-20 flex items-center min-h-[600px] md:min-h-[650px] lg:min-h-[700px]">
+          <div className="max-w-3xl mx-auto text-center space-y-5 md:space-y-6">
             {/* Tagline */}
-            <p className="text-sm md:text-base font-medium tracking-widest text-yellow-400 uppercase">
+            <p className="text-sm md:text-base font-medium tracking-widest text-yellow-400 uppercase drop-shadow-md">
               {t.heroTagline}
             </p>
 
             {/* Main Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-white drop-shadow-lg">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white drop-shadow-lg">
               {t.heroTitle}
             </h1>
 
             {/* Description */}
-            <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg lg:text-xl text-gray-100 max-w-2xl mx-auto drop-shadow-md">
               {t.heroDescription}
             </p>
 
             {/* Button */}
-            <div className="pt-4">
+            <div className="pt-2 md:pt-4">
               <Link href="/store/products">
-                <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-6 text-lg">
+                <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 md:px-8 py-5 md:py-6 text-base md:text-lg shadow-lg">
                   {t.shopAllProducts}
                 </Button>
               </Link>
