@@ -14,9 +14,6 @@ import {
   ShoppingCart,
   Heart,
   Share2,
-  Truck,
-  Shield,
-  RotateCcw,
   Minus,
   Plus,
   ChevronRight,
@@ -364,24 +361,6 @@ export default function ProductClient({ initialProduct, slug }: ProductClientPro
 
           <Separator className="hidden lg:block" />
 
-          {/* Features - inline on mobile */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            <div className="text-center p-2 sm:p-3 rounded-lg bg-muted/50">
-              <Truck className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-primary" />
-              <p className="text-[10px] sm:text-xs font-medium">{language === "es" ? "Envío Gratis" : "Free Shipping"}</p>
-              <p className="text-[10px] sm:text-xs text-muted-foreground">{language === "es" ? "Pedidos $99+" : "Orders $99+"}</p>
-            </div>
-            <div className="text-center p-2 sm:p-3 rounded-lg bg-muted/50">
-              <Shield className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-primary" />
-              <p className="text-[10px] sm:text-xs font-medium">{language === "es" ? "Garantía" : "Warranty"}</p>
-              <p className="text-[10px] sm:text-xs text-muted-foreground">{language === "es" ? "1 Año" : "1 Year"}</p>
-            </div>
-            <div className="text-center p-2 sm:p-3 rounded-lg bg-muted/50">
-              <RotateCcw className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1 sm:mb-2 text-primary" />
-              <p className="text-[10px] sm:text-xs font-medium">{language === "es" ? "Devoluciones" : "Easy Returns"}</p>
-              <p className="text-[10px] sm:text-xs text-muted-foreground">{language === "es" ? "30 Días" : "30 Days"}</p>
-            </div>
-          </div>
         </div>
       </div>
 
