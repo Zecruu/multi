@@ -19,7 +19,6 @@ import {
   RotateCcw,
   Minus,
   Plus,
-  Star,
   ChevronRight,
   Package,
   Check,
@@ -257,21 +256,6 @@ export default function ProductClient({ initialProduct, slug }: ProductClientPro
             <p className="text-sm text-muted-foreground mt-1">{t(translations.sku)}: {product.sku}</p>
           </div>
 
-          {/* Rating */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${
-                    i < 4 ? "fill-yellow-400 text-yellow-400" : "text-muted-foreground"
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-muted-foreground">(24 reviews)</span>
-          </div>
-
           {/* Price */}
           <div className="flex items-baseline gap-3 flex-wrap">
             <span className={`text-3xl font-bold ${hasValidSale ? "text-green-600" : ""}`}>
@@ -387,7 +371,6 @@ export default function ProductClient({ initialProduct, slug }: ProductClientPro
           <TabsList className="w-full justify-start">
             <TabsTrigger value="description">{t(translations.description)}</TabsTrigger>
             <TabsTrigger value="specifications">{t(translations.specifications)}</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews (24)</TabsTrigger>
           </TabsList>
           <TabsContent value="description" className="mt-6">
             <Card>
@@ -426,13 +409,6 @@ export default function ProductClient({ initialProduct, slug }: ProductClientPro
                       </div>
                     ))}
                 </dl>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="reviews" className="mt-6">
-            <Card>
-              <CardContent className="p-6 text-center text-muted-foreground">
-                <p>Reviews coming soon!</p>
               </CardContent>
             </Card>
           </TabsContent>

@@ -164,11 +164,6 @@ function ProductJsonLd({ product }: { product: ProductData }) {
         name: "MultiElectric Supply",
       },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.5",
-      reviewCount: "24",
-    },
   };
 
   return (
