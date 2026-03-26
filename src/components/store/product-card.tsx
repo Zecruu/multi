@@ -120,41 +120,41 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
   return (
     <Link href={`/store/products/${product.slug}`}>
-      <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300">
-        <div className="relative aspect-square bg-muted overflow-hidden">
+      <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+        <div className="relative aspect-square bg-white overflow-hidden">
           {primaryImage ? (
             <img
               src={primaryImage}
               alt={displayName}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <Package className="w-16 h-16 text-muted-foreground" />
+              <Package className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground/40" />
             </div>
           )}
-          
+
           {/* Badges */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
+          <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 flex flex-col gap-1">
             {discount > 0 && (
-              <Badge className="bg-red-500 hover:bg-red-600">
+              <Badge className="bg-red-500 hover:bg-red-600 text-[10px] sm:text-xs px-1.5 sm:px-2">
                 -{discount}%
               </Badge>
             )}
             {product.isFeatured && (
-              <Badge className="bg-primary">{language === "es" ? "Destacado" : "Featured"}</Badge>
+              <Badge className="bg-primary text-[10px] sm:text-xs px-1.5 sm:px-2">{language === "es" ? "Destacado" : "Featured"}</Badge>
             )}
             {!inStock && (
-              <Badge variant="secondary">{t(translations.outOfStock)}</Badge>
+              <Badge variant="secondary" className="text-[10px] sm:text-xs px-1.5 sm:px-2">{t(translations.outOfStock)}</Badge>
             )}
           </div>
 
-          {/* Quick Actions */}
+          {/* Quick Actions - visible on desktop hover */}
           <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button
               variant="secondary"
               size="icon"
-              className={`h-8 w-8 ${isInWishlist(product._id) ? "text-red-500" : ""}`}
+              className={`h-7 w-7 sm:h-8 sm:w-8 ${isInWishlist(product._id) ? "text-red-500" : ""}`}
               onClick={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -175,59 +175,50 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
                 }
               }}
             >
-              <Heart className={`h-4 w-4 ${isInWishlist(product._id) ? "fill-current" : ""}`} />
+              <Heart className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isInWishlist(product._id) ? "fill-current" : ""}`} />
             </Button>
           </div>
         </div>
 
-        <CardContent className="p-4">
-          <Badge variant="outline" className="mb-2 text-xs">
-            {product.category}
-          </Badge>
-
-          <h3 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors mb-2">
+        <CardContent className="p-2.5 sm:p-4 flex-1 flex flex-col">
+          <h3 className="font-semibold text-xs sm:text-sm line-clamp-2 group-hover:text-primary transition-colors mb-1 sm:mb-2 leading-tight">
             {displayName}
           </h3>
 
-          <p className="text-xs text-muted-foreground mb-2">SKU: {product.sku}</p>
-
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className={`text-lg font-bold ${hasValidSale ? "text-green-600" : ""}`}>
-              ${displayPrice.toFixed(2)}
-            </span>
-            {originalPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                ${originalPrice.toFixed(2)}
+          <div className="mt-auto">
+            <div className="flex items-baseline gap-1.5 flex-wrap">
+              <span className={`text-base sm:text-lg font-bold ${hasValidSale ? "text-green-600" : ""}`}>
+                ${displayPrice.toFixed(2)}
               </span>
-            )}
-            {discount > 0 && (
-              <Badge className="bg-red-500 text-white text-xs">
-                -{discount}%
-              </Badge>
-            )}
-          </div>
+              {originalPrice && (
+                <span className="text-[10px] sm:text-sm text-muted-foreground line-through">
+                  ${originalPrice.toFixed(2)}
+                </span>
+              )}
+            </div>
 
-          {/* Stock Amount */}
-          <div className="mt-2">
-            <span className={`text-sm font-medium ${product.quantity > 10 ? "text-green-600" : product.quantity > 0 ? "text-yellow-600" : "text-red-500"}`}>
-              {product.quantity > 0 
-                ? `${product.quantity} ${language === "es" ? "en stock" : "in stock"}`
-                : (language === "es" ? "Agotado" : "Out of stock")}
-            </span>
+            {/* Stock - compact on mobile */}
+            <div className="mt-1">
+              <span className={`text-[10px] sm:text-xs font-medium ${product.quantity > 10 ? "text-green-600" : product.quantity > 0 ? "text-yellow-600" : "text-red-500"}`}>
+                {product.quantity > 0
+                  ? (language === "es" ? "En stock" : "In stock")
+                  : (language === "es" ? "Agotado" : "Out of stock")}
+              </span>
+            </div>
           </div>
         </CardContent>
 
-        <CardFooter className="p-4 pt-0">
+        <CardFooter className="p-2.5 sm:p-4 pt-0">
           <Button
-            className="w-full"
+            className="w-full h-8 sm:h-10 text-xs sm:text-sm"
             onClick={handleAddToCart}
             disabled={!inStock}
             variant={inCart ? "secondary" : "default"}
           >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            {inCart 
+            <ShoppingCart className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
+            {inCart
               ? (language === "es" ? "En Carrito" : "In Cart")
-              : inStock 
+              : inStock
                 ? t(translations.addToCart)
                 : t(translations.outOfStock)}
           </Button>
