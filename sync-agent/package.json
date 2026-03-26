@@ -1,0 +1,51 @@
+{
+  "name": "multi-electric-sync-agent",
+  "version": "1.0.0",
+  "description": "Multi Electric Supply - Product Sync Agent",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --publish never",
+    "release": "electron-builder --win --publish always"
+  },
+  "build": {
+    "appId": "com.multielectricsupply.sync-agent",
+    "productName": "MultiElectric Sync",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Zecruu",
+      "repo": "multi-electric-sync"
+    }
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "electron-updater": "^6.1.7",
+    "form-data": "^4.0.0",
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^2.7.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  }
+}

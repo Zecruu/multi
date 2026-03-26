@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MultiElectric Sync Agent</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .container { padding: 24px; }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .header h1 { font-size: 18px; color: #f8fafc; }
+    .version { font-size: 12px; color: #64748b; }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: #1e293b;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #334155;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+    .status-dot.error { background: #ef4444; }
+    .status-dot.syncing { background: #f59e0b; animation: pulse 0.5s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .status-text { font-size: 14px; flex: 1; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .stat-label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+    .stat-value { font-size: 22px; font-weight: 700; color: #f8fafc; }
+    .stat-value.green { color: #4ade80; }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .activity-log {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+    .log-line.info { color: #60a5fa; }
+    .log-line.success { color: #4ade80; }
+    .log-line.error { color: #f87171; }
+    .log-line.warn { color: #fbbf24; }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 1;
+      text-align: center;
+    }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-secondary {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+    }
+    .btn-secondary:hover { background: #334155; }
+
+    .config-info {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .config-info strong { color: #cbd5e1; }
+
+    .update-banner {
+      background: #1e3a5f;
+      border: 1px solid #2563eb;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: none;
+    }
+    .update-banner a {
+      color: #60a5fa;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>MultiElectric Sync</h1>
+      <span class="version">v1.0.0</span>
+    </div>
+
+    <div class="update-banner" id="updateBanner"></div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="statusDot"></div>
+      <span class="status-text" id="statusText">Starting...</span>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Products Synced</div>
+        <div class="stat-value green" id="totalSynced">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Files Processed</div>
+        <div class="stat-value" id="filesProcessed">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Last Sync</div>
+        <div class="stat-value" id="lastSync" style="font-size: 14px;">Never</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Errors</div>
+        <div class="stat-value" id="totalErrors">0</div>
+      </div>
+    </div>
+
+    <div class="section-title">Configuration</div>
+    <div class="config-info" id="configInfo">Loading...</div>
+
+    <div class="section-title">Activity Log</div>
+    <div class="activity-log" id="activityLog">Loading log...</div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="syncNow()">Sync Now</button>
+      <button class="btn btn-secondary" onclick="refreshLog()">Refresh Log</button>
+      <button class="btn btn-secondary" onclick="openConfig()">Settings</button>
+    </div>
+  </div>
+
+  <script>
+    const { ipcRenderer, shell } = require('electron');
+
+    // ── Load data ─────────────────────────────────────────────────────────
+
+    async function loadDashboard() {
+      const [config, stats, log, paths] = await Promise.all([
+        ipcRenderer.invoke('get-config'),
+        ipcRenderer.invoke('get-stats'),
+        ipcRenderer.invoke('get-log'),
+        ipcRenderer.invoke('get-paths'),
+      ]);
+
+      if (config) {
+        document.getElementById('configInfo').innerHTML = `
+          <div><strong>Watch Folder:</strong> ${config.watch_folder}</div>
+          <div><strong>Website:</strong> ${config.api?.url || 'Not set'}</div>
+          <div><strong>Scan Interval:</strong> ${config.scan_interval || 30}s</div>
+          <div><strong>Notifications:</strong> ${config.notifications?.enabled ? 'On' : 'Off'}</div>
+        `;
+      }
+
+      if (stats) {
+        document.getElementById('totalSynced').textContent = stats.totalSynced || 0;
+        document.getElementById('filesProcessed').textContent = stats.filesProcessed || 0;
+        document.getElementById('totalErrors').textContent = stats.totalErrors || 0;
+        document.getElementById('lastSync').textContent = stats.lastSync
+          ? new Date(stats.lastSync).toLocaleString()
+          : 'Never';
+        updateStatus(stats.status || 'watching');
+      }
+
+      if (log) {
+        displayLog(log);
+      }
+    }
+
+    function displayLog(logText) {
+      const logEl = document.getElementById('activityLog');
+      const lines = logText.split('\n').filter(Boolean);
+      logEl.innerHTML = lines.map(line => {
+        let cls = '';
+        if (line.includes('[INFO]')) cls = 'info';
+        else if (line.includes('[ERROR]')) cls = 'error';
+        else if (line.includes('[WARN]')) cls = 'warn';
+        else if (line.includes('successful') || line.includes('Created') || line.includes('Updated')) cls = 'success';
+        return `<div class="log-line ${cls}">${escapeHtml(line)}</div>`;
+      }).join('');
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function updateStatus(status) {
+      const dot = document.getElementById('statusDot');
+      const text = document.getElementById('statusText');
+
+      dot.className = 'status-dot';
+
+      switch (status) {
+        case 'watching':
+          text.textContent = 'Watching for files...';
+          break;
+        case 'syncing':
+          dot.classList.add('syncing');
+          text.textContent = 'Syncing...';
+          break;
+        case 'stopped':
+          dot.classList.add('error');
+          text.textContent = 'Stopped';
+          break;
+        default:
+          text.textContent = status;
+      }
+    }
+
+    // ── Actions ───────────────────────────────────────────────────────────
+
+    async function syncNow() {
+      updateStatus('syncing');
+      await ipcRenderer.invoke('sync-now');
+    }
+
+    async function refreshLog() {
+      const log = await ipcRenderer.invoke('get-log');
+      if (log) displayLog(log);
+      const stats = await ipcRenderer.invoke('get-stats');
+      if (stats) {
+        document.getElementById('totalSynced').textContent = stats.totalSynced || 0;
+        document.getElementById('filesProcessed').textContent = stats.filesProcessed || 0;
+        document.getElementById('totalErrors').textContent = stats.totalErrors || 0;
+        document.getElementById('lastSync').textContent = stats.lastSync
+          ? new Date(stats.lastSync).toLocaleString()
+          : 'Never';
+      }
+    }
+
+    async function openConfig() {
+      const paths = await ipcRenderer.invoke('get-paths');
+      shell.openPath(paths.config);
+    }
+
+    // ── IPC listeners ─────────────────────────────────────────────────────
+
+    ipcRenderer.on('status-update', (event, status) => {
+      updateStatus(status);
+    });
+
+    ipcRenderer.on('sync-result', (event, result) => {
+      refreshLog();
+      loadDashboard();
+    });
+
+    ipcRenderer.on('update-available', (event, version) => {
+      const banner = document.getElementById('updateBanner');
+      banner.style.display = 'block';
+      banner.innerHTML = `Update v${version} available. It will be installed on next restart.`;
+    });
+
+    ipcRenderer.on('update-downloaded', (event, version) => {
+      const banner = document.getElementById('updateBanner');
+      banner.style.display = 'block';
+      banner.innerHTML = `Update v${version} downloaded. Restart to apply.`;
+    });
+
+    // ── Init ──────────────────────────────────────────────────────────────
+
+    loadDashboard();
+    setInterval(refreshLog, 15000); // Auto-refresh every 15s
+  </script>
+</body>
+</html>

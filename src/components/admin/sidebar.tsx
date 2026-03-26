@@ -18,6 +18,7 @@ import {
   FileUp,
   User,
   Store,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -42,6 +43,7 @@ export function AdminSidebar() {
     { name: "Team", href: "/admin/team", icon: UserCog, roles: ["admin"] },
     { name: "History", href: "/admin/history", icon: History, roles: ["admin", "gerente", "employee"] },
     { name: "Account Settings", href: "/admin/account-settings", icon: User, roles: ["admin", "gerente", "employee"] },
+    { name: "Sync Agent", href: "/admin/sync-agent", icon: RefreshCw, roles: ["admin"] },
     { name: "Store Settings", href: "/admin/store-settings", icon: Store, roles: ["admin"] },
   ];
 

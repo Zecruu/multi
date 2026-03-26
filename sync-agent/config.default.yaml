@@ -1,0 +1,47 @@
+# Multi Electric Supply - Sync Agent Configuration
+# Copy this file to config.yaml and update the values
+
+# Folder to watch for export files (.xls, .xlsx)
+watch_folder: "C:\\Exports"
+
+# How often to scan the folder (in seconds)
+scan_interval: 30
+
+# API Configuration
+api:
+  url: "https://multielectricsupply.com"
+  # Get your sync key from the admin panel: Admin > Sync Agent
+  sync_key: "YOUR_SYNC_KEY_HERE"
+
+# Email notifications
+notifications:
+  enabled: true
+  # Email addresses to notify on sync events
+  recipients:
+    - "admin@multielectricsupply.com"
+
+# Logging
+logging:
+  # Log file path (relative to agent directory)
+  file: "sync.log"
+  # Log level: debug, info, warn, error
+  level: "info"
+  # Max log file size in MB before rotation
+  max_size_mb: 10
+
+# Auto-update from GitHub releases
+auto_update:
+  enabled: true
+  # Check for updates every N hours
+  check_interval_hours: 6
+  # GitHub repository for releases
+  repo: "Zecruu/multi-electric-sync"
+
+# Processing options
+processing:
+  # Move processed files to a "processed" subfolder
+  move_after_sync: true
+  # Delete processed files instead of moving (overrides move_after_sync)
+  delete_after_sync: false
+  # Skip files older than N days
+  skip_older_than_days: 7
