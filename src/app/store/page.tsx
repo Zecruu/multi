@@ -33,7 +33,6 @@ interface Category {
 }
 
 export default function StorePage() {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [hotProducts, setHotProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,8 +52,6 @@ export default function StorePage() {
     popularProducts: language === "es" ? "Productos Populares" : "Popular Products",
     popularDescription: language === "es" ? "Los más vendidos esta semana" : "Best sellers this week",
     viewAllProducts: language === "es" ? "Ver Todos" : "View All",
-    featuredProducts: language === "es" ? "Destacados" : "Featured",
-    featuredDescription: language === "es" ? "Selección especial para ti" : "Hand-picked selection for you",
     noCategories: language === "es" ? "No hay categorías disponibles aún." : "No categories available yet.",
     noProducts: language === "es" ? "No hay productos disponibles aún. ¡Vuelve pronto!" : "No products available yet. Check back soon!",
   };
@@ -79,17 +76,17 @@ export default function StorePage() {
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/products?status=active&limit=12");
+      const response = await fetch("/api/products?status=active&limit=50&inStock=true");
       if (response.ok) {
         const data = await response.json();
         const products = data.products || [];
-        
-        // Split products into featured and hot
-        const featured = products.filter((p: Product) => p.isFeatured).slice(0, 4);
-        const hot = products.slice(0, 8);
-        
-        setFeaturedProducts(featured.length > 0 ? featured : products.slice(0, 4));
-        setHotProducts(hot);
+
+        // Only show products that have working images (CloudFront URLs)
+        const withImages = products.filter((p: Product) =>
+          p.images?.length > 0 && p.images[0]?.url?.startsWith("https://")
+        );
+
+        setHotProducts(withImages.slice(0, 8));
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -220,22 +217,6 @@ export default function StorePage() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      {featuredProducts.length > 0 && (
-        <section className="container mx-auto px-4 py-16">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">{t.featuredProducts}</h2>
-              <p className="text-muted-foreground mt-1">{t.featuredDescription}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        </section>
-      )}
     </div>
   );
 }
