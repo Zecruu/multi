@@ -23,18 +23,8 @@ interface Product {
   isFeatured?: boolean;
 }
 
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  icon?: string;
-  color?: string;
-  isActive: boolean;
-}
-
 export default function StorePage() {
   const [hotProducts, setHotProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { language } = useLanguage();
 
@@ -58,20 +48,7 @@ export default function StorePage() {
 
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
   }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch("/api/categories?active=true");
-      if (response.ok) {
-        const data = await response.json();
-        setCategories(data.categories || []);
-      }
-    } catch (error) {
-      console.error("Failed to fetch categories:", error);
-    }
-  };
 
   const fetchProducts = async () => {
     try {
@@ -102,7 +79,7 @@ export default function StorePage() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/ChatGPT Image Jan 16, 2026, 08_02_04 PM.png"
+            src="/hero-electricians.png"
             alt="Multi Electric Supply - Professional electricians at work"
             fill
             className="object-cover object-center"
@@ -141,34 +118,6 @@ export default function StorePage() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Categories */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">{t.browseCategories}</h2>
-            <p className="text-muted-foreground mt-1">{t.findByCategory}</p>
-          </div>
-        </div>
-        
-        {categories.length === 0 ? (
-          <p className="text-center text-muted-foreground py-12">
-            {t.noCategories}
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {categories.map((category) => (
-              <Link key={category._id} href={`/store/products?category=${category.slug}`}>
-                <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
-                  <CardContent className="p-5 text-center">
-                    <p className="font-medium text-sm">{category.name}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        )}
       </section>
 
       {/* Popular Products */}

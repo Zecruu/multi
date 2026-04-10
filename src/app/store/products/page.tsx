@@ -53,17 +53,8 @@ interface Product {
   isFeatured?: boolean;
 }
 
-interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  icon?: string;
-  isActive: boolean;
-}
-
 function ProductsContent() {
   const searchParams = useSearchParams();
-  const initialCategory = searchParams.get("category") || "";
   const initialSearch = searchParams.get("search") || "";
   const { language } = useLanguage();
 
@@ -73,7 +64,6 @@ function ProductsContent() {
     searchProducts: language === "es" ? "Buscar productos..." : "Search products...",
     filters: language === "es" ? "Filtros" : "Filters",
     sortBy: language === "es" ? "Ordenar por" : "Sort by",
-    categories: language === "es" ? "Categorías" : "Categories",
     priceRange: language === "es" ? "Rango de Precio" : "Price Range",
     availability: language === "es" ? "Disponibilidad" : "Availability",
     inStockOnly: language === "es" ? "Solo en Stock" : "In Stock Only",
@@ -101,17 +91,13 @@ function ProductsContent() {
   ];
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("featured");
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    initialCategory ? [initialCategory] : []
-  );
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<number[]>([]);
   const [inStockOnly, setInStockOnly] = useState(false);
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -120,20 +106,7 @@ function ProductsContent() {
 
   useEffect(() => {
     fetchProducts(1);
-    fetchCategories();
   }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch("/api/categories?active=true");
-      if (response.ok) {
-        const data = await response.json();
-        setCategories(data.categories || []);
-      }
-    } catch (error) {
-      console.error("Failed to fetch categories:", error);
-    }
-  };
 
   const fetchProducts = async (page = 1) => {
     try {
@@ -165,13 +138,6 @@ function ProductsContent() {
           !product.sku.toLowerCase().includes(query) &&
           !product.category.toLowerCase().includes(query)
         ) {
-          return false;
-        }
-      }
-
-      // Category filter
-      if (selectedCategories.length > 0) {
-        if (!selectedCategories.includes(product.category.toLowerCase())) {
           return false;
         }
       }
@@ -211,14 +177,6 @@ function ProductsContent() {
       }
     });
 
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
-
   const togglePriceRange = (index: number) => {
     setSelectedPriceRanges((prev) =>
       prev.includes(index)
@@ -229,47 +187,17 @@ function ProductsContent() {
 
   const clearFilters = () => {
     setSearchQuery("");
-    setSelectedCategories([]);
     setSelectedPriceRanges([]);
     setInStockOnly(false);
   };
 
   const hasActiveFilters =
     searchQuery ||
-    selectedCategories.length > 0 ||
     selectedPriceRanges.length > 0 ||
     inStockOnly;
 
   const FilterSidebar = () => (
     <div className="space-y-6">
-      {/* Categories */}
-      <div>
-        <h3 className="font-semibold mb-3">{t.categories}</h3>
-        <div className="space-y-2">
-          {categories.length === 0 ? (
-            <p className="text-sm text-muted-foreground">{language === "es" ? "No hay categorías disponibles" : "No categories available"}</p>
-          ) : (
-            categories.map((category) => (
-              <div key={category._id} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`category-${category.slug}`}
-                  checked={selectedCategories.includes(category.slug)}
-                  onCheckedChange={() => toggleCategory(category.slug)}
-                />
-                <Label
-                  htmlFor={`category-${category.slug}`}
-                  className="text-sm cursor-pointer"
-                >
-                  {category.name}
-                </Label>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-
-      <Separator />
-
       {/* Price Range */}
       <div>
         <h3 className="font-semibold mb-3">{t.priceRange}</h3>
@@ -365,9 +293,7 @@ function ProductsContent() {
                     {t.filters}
                     {hasActiveFilters && (
                       <Badge className="ml-2" variant="secondary">
-                        {selectedCategories.length +
-                          selectedPriceRanges.length +
-                          (inStockOnly ? 1 : 0)}
+                        {selectedPriceRanges.length + (inStockOnly ? 1 : 0)}
                       </Badge>
                     )}
                   </Button>
@@ -428,18 +354,6 @@ function ProductsContent() {
                   />
                 </Badge>
               )}
-              {selectedCategories.map((slug) => {
-                const cat = categories.find((c) => c.slug === slug);
-                return (
-                  <Badge key={slug} variant="secondary" className="gap-1">
-                    {cat?.icon} {cat?.name || slug}
-                    <X
-                      className="h-3 w-3 cursor-pointer"
-                      onClick={() => toggleCategory(slug)}
-                    />
-                  </Badge>
-                );
-              })}
               {selectedPriceRanges.map((rangeIndex) => (
                 <Badge key={rangeIndex} variant="secondary" className="gap-1">
                   {priceRanges[rangeIndex].label}
