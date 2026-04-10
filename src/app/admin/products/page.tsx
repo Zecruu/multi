@@ -49,6 +49,7 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  PackageX,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -151,13 +152,20 @@ export default function ProductsPage() {
 
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showOutOfStock, setShowOutOfStock] = useState(false);
   const productsPerPage = 50;
 
-  const fetchProducts = async (page = 1) => {
+  const fetchProducts = async (page = 1, outOfStockOnly = showOutOfStock) => {
     try {
       setIsLoading(true);
-      // Fetch with pagination - 50 products per page
-      const response = await fetch(`/api/products?page=${page}&limit=${productsPerPage}`);
+      const params = new URLSearchParams({
+        page: String(page),
+        limit: String(productsPerPage),
+      });
+      if (outOfStockOnly) {
+        params.set("outOfStock", "true");
+      }
+      const response = await fetch(`/api/products?${params.toString()}`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.products || []);
@@ -170,6 +178,12 @@ export default function ProductsPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const toggleOutOfStock = () => {
+    const next = !showOutOfStock;
+    setShowOutOfStock(next);
+    fetchProducts(1, next);
   };
 
   const handleInputChange = (field: keyof ProductFormData, value: string) => {
@@ -807,6 +821,14 @@ export default function ProductsPage() {
                 <SelectItem value="archived">Archived</SelectItem>
               </SelectContent>
             </Select>
+            <Button
+              variant={showOutOfStock ? "default" : "outline"}
+              onClick={toggleOutOfStock}
+              className={showOutOfStock ? "bg-red-500 hover:bg-red-600 text-white" : ""}
+            >
+              <PackageX className="w-4 h-4 mr-2" />
+              {showOutOfStock ? "Showing Out of Stock" : "Out of Stock"}
+            </Button>
           </div>
         </CardContent>
       </Card>
