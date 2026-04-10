@@ -246,6 +246,13 @@ export default function ProductClient({ initialProduct, slug }: ProductClientPro
               ))}
             </div>
           )}
+
+          {/* Image disclaimer */}
+          <p className="text-[11px] sm:text-xs text-muted-foreground italic text-center px-2">
+            {language === "es"
+              ? "Las imágenes son solo para referencia y pueden no representar el producto con exactitud."
+              : "Images are for reference only and may not accurately represent the product."}
+          </p>
         </div>
 
         {/* Product Info */}
