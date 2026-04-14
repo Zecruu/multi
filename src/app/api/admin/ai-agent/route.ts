@@ -130,6 +130,28 @@ async function tool_stats() {
   return { total, active, draft, outOfStock, lowStock, pendingCategorize };
 }
 
+async function tool_sendReviewRequest(args: { firstName: string; phone: string }) {
+  const host = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+    ? (process.env.NEXTAUTH_URL || `https://${process.env.VERCEL_URL}`)
+    : "http://localhost:3000";
+  const cookie = (await (await import("next/headers")).cookies()).get("admin_session");
+  const res = await fetch(`${host}/api/admin/reviews/send`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      ...(cookie ? { cookie: `admin_session=${cookie.value}` } : {}),
+    },
+    body: JSON.stringify({
+      firstName: args.firstName,
+      phone: args.phone,
+      consent: true, // Sparky-initiated sends assume the admin already confirmed
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) return { ok: false, error: data.error || `send failed ${res.status}` };
+  return { ok: true, ...data };
+}
+
 async function tool_categorizePending(args: { limit?: number }) {
   const limit = Math.min(Math.max(args.limit ?? 50, 1), 200);
   // Call the dedicated endpoint via internal fetch so both paths behave identically.
@@ -158,6 +180,7 @@ const TOOLS: Record<string, (args: Record<string, unknown>) => Promise<unknown>>
   list_categories: tool_listCategories as (args: Record<string, unknown>) => Promise<unknown>,
   stats: tool_stats as (args: Record<string, unknown>) => Promise<unknown>,
   categorize_pending: tool_categorizePending as (args: Record<string, unknown>) => Promise<unknown>,
+  send_review_request: tool_sendReviewRequest as (args: Record<string, unknown>) => Promise<unknown>,
 };
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -230,6 +253,18 @@ const FUNCTION_DECLARATIONS = [
       properties: {
         limit: { type: "integer", minimum: 1, maximum: 200, default: 50 },
       },
+    },
+  },
+  {
+    name: "send_review_request",
+    description: "Send a Spanish SMS review request (1-5 rating prompt) to a customer who just visited the store. Respect the 30-day anti-spam window. Confirm with the admin before calling this — they're the ones who got verbal consent from the customer.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        firstName: { type: "string" },
+        phone: { type: "string", description: "10-digit US/PR phone, any format" },
+      },
+      required: ["firstName", "phone"],
     },
   },
 ];
