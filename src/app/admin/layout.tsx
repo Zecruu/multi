@@ -14,6 +14,11 @@ const AdminHeader = dynamic(
   { ssr: false }
 );
 
+const SparkyChat = dynamic(
+  () => import("@/components/admin/sparky-chat").then((mod) => mod.SparkyChat),
+  { ssr: false }
+);
+
 export default function AdminLayout({
   children,
 }: {
@@ -36,6 +41,7 @@ export default function AdminLayout({
           <AdminHeader />
           <main className="flex-1 overflow-auto p-6">{children}</main>
         </div>
+        <SparkyChat />
       </div>
     </SessionProvider>
   );
