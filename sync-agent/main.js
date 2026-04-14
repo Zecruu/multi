@@ -9,13 +9,50 @@ const SyncEngine = require('./sync-engine');
 
 const USER_DATA = app.getPath('userData');
 const CONFIG_PATH = path.join(USER_DATA, 'config.yaml');
-const LOG_PATH = path.join(USER_DATA, 'sync.log');
+const LOGS_DIR = path.join(USER_DATA, 'logs');
+const LOG_PATH = path.join(LOGS_DIR, 'sync.log');
 const STATE_PATH = path.join(USER_DATA, '.sync-state.json');
+
+// Ensure logs dir exists; on each app-start, archive the previous log.
+function ensureLogsDir() {
+  if (!fs.existsSync(LOGS_DIR)) fs.mkdirSync(LOGS_DIR, { recursive: true });
+
+  // One-time migration: move old flat sync.log into the folder.
+  const legacy = path.join(USER_DATA, 'sync.log');
+  if (fs.existsSync(legacy) && !fs.existsSync(LOG_PATH)) {
+    try { fs.renameSync(legacy, LOG_PATH); } catch {}
+  }
+
+  // If there's an existing log from a prior run, rotate it.
+  if (fs.existsSync(LOG_PATH)) {
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    const archived = path.join(LOGS_DIR, `sync-${stamp}.log`);
+    try { fs.renameSync(LOG_PATH, archived); } catch {}
+    // Keep only the 10 most recent archives.
+    try {
+      const files = fs.readdirSync(LOGS_DIR)
+        .filter((f) => /^sync-.*\.log$/.test(f))
+        .map((f) => ({ f, t: fs.statSync(path.join(LOGS_DIR, f)).mtimeMs }))
+        .sort((a, b) => b.t - a.t);
+      for (const old of files.slice(10)) {
+        try { fs.unlinkSync(path.join(LOGS_DIR, old.f)); } catch {}
+      }
+    } catch {}
+  }
+}
+ensureLogsDir();
 
 let mainWindow = null;
 let tray = null;
 let syncEngine = null;
 let isQuitting = false;
+let updateState = { status: 'idle', version: null, error: null };
+
+function sendUpdateState() {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send('update-state', updateState);
+  }
+}
 
 // ── Config ──────────────────────────────────────────────────────────────────
 
@@ -111,6 +148,13 @@ function createTray() {
       click: () => {
         const { shell } = require('electron');
         shell.openPath(LOG_PATH);
+      },
+    },
+    {
+      label: 'Open Log Folder',
+      click: () => {
+        const { shell } = require('electron');
+        shell.openPath(LOGS_DIR);
       },
     },
     {
@@ -215,9 +259,65 @@ function setupIPC() {
   ipcMain.handle('get-paths', () => ({
     config: CONFIG_PATH,
     log: LOG_PATH,
+    logsDir: LOGS_DIR,
     state: STATE_PATH,
     userData: USER_DATA,
   }));
+
+  // Open log folder
+  ipcMain.handle('open-logs-folder', () => {
+    const { shell } = require('electron');
+    return shell.openPath(LOGS_DIR);
+  });
+
+  // Version info
+  ipcMain.handle('get-version', () => ({
+    version: app.getVersion(),
+    electron: process.versions.electron,
+    node: process.versions.node,
+  }));
+
+  // Update state snapshot (for UI initial render)
+  ipcMain.handle('get-update-state', () => updateState);
+
+  // Manual update check
+  ipcMain.handle('check-for-updates', async () => {
+    updateState = { status: 'checking', version: null, error: null };
+    sendUpdateState();
+    try {
+      const result = await autoUpdater.checkForUpdates();
+      // If nothing newer, checkForUpdates resolves with updateInfo == current version
+      if (!result || !result.updateInfo || result.updateInfo.version === app.getVersion()) {
+        updateState = { status: 'up-to-date', version: app.getVersion(), error: null };
+        sendUpdateState();
+      }
+      return updateState;
+    } catch (err) {
+      updateState = { status: 'error', version: null, error: err.message };
+      sendUpdateState();
+      return updateState;
+    }
+  });
+
+  // Install downloaded update immediately
+  ipcMain.handle('install-update', () => {
+    if (updateState.status === 'downloaded') {
+      isQuitting = true;
+      autoUpdater.quitAndInstall();
+      return true;
+    }
+    return false;
+  });
+
+  // Toggle auto-download preference (persisted in config.yaml)
+  ipcMain.handle('set-auto-download', (event, enabled) => {
+    const config = loadConfig() || {};
+    config.updates = config.updates || {};
+    config.updates.autoDownload = !!enabled;
+    saveConfig(config);
+    autoUpdater.autoDownload = !!enabled;
+    return true;
+  });
 }
 
 // ── Sync Engine ─────────────────────────────────────────────────────────────
@@ -255,29 +355,48 @@ function startSyncEngine() {
 // ── Auto Update ─────────────────────────────────────────────────────────────
 
 function setupAutoUpdater() {
-  autoUpdater.autoDownload = true;
+  const config = loadConfig() || {};
+  const prefAuto = config.updates?.autoDownload;
+  autoUpdater.autoDownload = prefAuto !== false; // default true
   autoUpdater.autoInstallOnAppQuit = true;
 
+  autoUpdater.on('checking-for-update', () => {
+    updateState = { status: 'checking', version: null, error: null };
+    sendUpdateState();
+  });
+
   autoUpdater.on('update-available', (info) => {
-    if (mainWindow) {
-      mainWindow.webContents.send('update-available', info.version);
-    }
+    updateState = {
+      status: autoUpdater.autoDownload ? 'downloading' : 'available',
+      version: info.version,
+      error: null,
+    };
+    sendUpdateState();
+  });
+
+  autoUpdater.on('update-not-available', () => {
+    updateState = { status: 'up-to-date', version: app.getVersion(), error: null };
+    sendUpdateState();
+  });
+
+  autoUpdater.on('error', (err) => {
+    updateState = { status: 'error', version: null, error: err.message };
+    sendUpdateState();
   });
 
   autoUpdater.on('update-downloaded', (info) => {
-    if (mainWindow) {
-      mainWindow.webContents.send('update-downloaded', info.version);
-    }
+    updateState = { status: 'downloaded', version: info.version, error: null };
+    sendUpdateState();
   });
 
   // Check every 6 hours
   setInterval(() => {
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdatesAndNotify().catch(() => {});
   }, 6 * 60 * 60 * 1000);
 
   // Initial check after 30 seconds
   setTimeout(() => {
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdatesAndNotify().catch(() => {});
   }, 30000);
 }
 

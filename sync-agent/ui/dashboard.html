@@ -140,13 +140,85 @@
       text-decoration: underline;
       cursor: pointer;
     }
+
+    /* Settings modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      width: min(440px, 92vw);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px 22px;
+    }
+    .modal h2 { font-size: 16px; color: #f8fafc; margin-bottom: 16px; }
+    .modal .row {
+      padding: 12px 0;
+      border-top: 1px solid #1e293b;
+    }
+    .modal .row:first-of-type { border-top: none; }
+    .modal .row .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+    .modal .row .value { font-size: 13px; color: #e2e8f0; }
+    .modal .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .switch input { display: none; }
+    .switch .track {
+      width: 36px; height: 20px;
+      background: #334155;
+      border-radius: 20px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .switch .track::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      background: #f8fafc;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .switch input:checked + .track { background: #3b82f6; }
+    .switch input:checked + .track::after { transform: translateX(16px); }
+    .update-status {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .update-status.up-to-date { color: #4ade80; }
+    .update-status.checking, .update-status.downloading { color: #fbbf24; }
+    .update-status.error { color: #f87171; }
+    .update-status.downloaded, .update-status.available { color: #60a5fa; }
+    .modal .close-row {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <h1>MultiElectric Sync</h1>
-      <span class="version">v1.0.0</span>
+      <span class="version" id="appVersion">v—</span>
     </div>
 
     <div class="update-banner" id="updateBanner"></div>
@@ -184,7 +256,48 @@
     <div class="actions">
       <button class="btn btn-primary" onclick="syncNow()">Sync Now</button>
       <button class="btn btn-secondary" onclick="refreshLog()">Refresh Log</button>
-      <button class="btn btn-secondary" onclick="openConfig()">Settings</button>
+      <button class="btn btn-secondary" onclick="openSettings()">Settings</button>
+    </div>
+  </div>
+
+  <!-- Settings modal -->
+  <div class="modal-backdrop" id="settingsBackdrop" onclick="if(event.target===this) closeSettings()">
+    <div class="modal" role="dialog" aria-labelledby="settingsTitle">
+      <h2 id="settingsTitle">Settings</h2>
+
+      <div class="row">
+        <div class="label">App version</div>
+        <div class="value" id="settingsVersion">—</div>
+      </div>
+
+      <div class="row">
+        <div class="label">Updates</div>
+        <div class="value" id="updateStatus">Idle</div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="checkUpdatesBtn" onclick="checkForUpdates()">Check for Updates</button>
+          <button class="btn btn-primary" id="installUpdateBtn" onclick="installUpdate()" style="display:none">Restart & Install</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="switch">
+          <input type="checkbox" id="autoDownloadToggle" onchange="toggleAutoDownload()">
+          <span class="track"></span>
+          <span>Automatically download updates</span>
+        </label>
+      </div>
+
+      <div class="row">
+        <div class="label">Data</div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="openLogsFolder()">Open Log Folder</button>
+          <button class="btn btn-secondary" onclick="openConfig()">Open Config File</button>
+        </div>
+      </div>
+
+      <div class="close-row">
+        <button class="btn btn-secondary" onclick="closeSettings()">Close</button>
+      </div>
     </div>
   </div>
 
@@ -294,6 +407,75 @@
       shell.openPath(paths.config);
     }
 
+    async function openLogsFolder() {
+      await ipcRenderer.invoke('open-logs-folder');
+    }
+
+    // ── Version + settings ────────────────────────────────────────────────
+
+    async function loadVersion() {
+      try {
+        const info = await ipcRenderer.invoke('get-version');
+        if (info?.version) {
+          document.getElementById('appVersion').textContent = `v${info.version}`;
+          document.getElementById('settingsVersion').textContent =
+            `${info.version} (Electron ${info.electron}, Node ${info.node})`;
+        }
+      } catch {}
+    }
+
+    async function openSettings() {
+      await loadVersion();
+      const state = await ipcRenderer.invoke('get-update-state');
+      renderUpdateState(state);
+      const config = await ipcRenderer.invoke('get-config');
+      const autoDownload = config?.updates?.autoDownload !== false;
+      document.getElementById('autoDownloadToggle').checked = autoDownload;
+      document.getElementById('settingsBackdrop').classList.add('open');
+    }
+
+    function closeSettings() {
+      document.getElementById('settingsBackdrop').classList.remove('open');
+    }
+
+    async function checkForUpdates() {
+      const btn = document.getElementById('checkUpdatesBtn');
+      btn.disabled = true;
+      try {
+        const state = await ipcRenderer.invoke('check-for-updates');
+        renderUpdateState(state);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function installUpdate() {
+      await ipcRenderer.invoke('install-update');
+    }
+
+    async function toggleAutoDownload() {
+      const enabled = document.getElementById('autoDownloadToggle').checked;
+      await ipcRenderer.invoke('set-auto-download', enabled);
+    }
+
+    function renderUpdateState(state) {
+      if (!state) return;
+      const el = document.getElementById('updateStatus');
+      el.className = 'update-status ' + (state.status || 'idle');
+      const messages = {
+        idle: 'Idle',
+        checking: 'Checking for updates…',
+        'up-to-date': `You're on the latest version.`,
+        available: `Update v${state.version} available.`,
+        downloading: `Downloading v${state.version}…`,
+        downloaded: `v${state.version} downloaded — restart to install.`,
+        error: `Error: ${state.error || 'unknown'}`,
+      };
+      el.textContent = messages[state.status] || state.status;
+      document.getElementById('installUpdateBtn').style.display =
+        state.status === 'downloaded' ? '' : 'none';
+    }
+
     // ── IPC listeners ─────────────────────────────────────────────────────
 
     ipcRenderer.on('status-update', (event, status) => {
@@ -305,21 +487,24 @@
       loadDashboard();
     });
 
-    ipcRenderer.on('update-available', (event, version) => {
+    ipcRenderer.on('update-state', (event, state) => {
+      renderUpdateState(state);
       const banner = document.getElementById('updateBanner');
-      banner.style.display = 'block';
-      banner.innerHTML = `Update v${version} available. It will be installed on next restart.`;
-    });
-
-    ipcRenderer.on('update-downloaded', (event, version) => {
-      const banner = document.getElementById('updateBanner');
-      banner.style.display = 'block';
-      banner.innerHTML = `Update v${version} downloaded. Restart to apply.`;
+      if (state.status === 'downloaded') {
+        banner.style.display = 'block';
+        banner.innerHTML = `Update v${state.version} downloaded. <a onclick="installUpdate()">Restart to apply</a>.`;
+      } else if (state.status === 'available' || state.status === 'downloading') {
+        banner.style.display = 'block';
+        banner.innerHTML = `Update v${state.version} ${state.status === 'downloading' ? 'downloading' : 'available'}…`;
+      } else {
+        banner.style.display = 'none';
+      }
     });
 
     // ── Init ──────────────────────────────────────────────────────────────
 
     loadDashboard();
+    loadVersion();
     setInterval(refreshLog, 15000); // Auto-refresh every 15s
   </script>
 </body>
