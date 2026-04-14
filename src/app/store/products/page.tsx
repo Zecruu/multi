@@ -112,7 +112,7 @@ function ProductsContent() {
     try {
       setIsLoading(true);
       // Only show active products that are in stock (quantity > 0)
-      const response = await fetch(`/api/products?status=active&inStock=true&page=${page}&limit=${productsPerPage}`);
+      const response = await fetch(`/api/products?status=active&inStockFirst=true&page=${page}&limit=${productsPerPage}`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.products || []);
@@ -161,6 +161,10 @@ function ProductsContent() {
       return true;
     })
     .sort((a, b) => {
+      // Always push out-of-stock to the bottom
+      const aOut = a.quantity <= 0 ? 1 : 0;
+      const bOut = b.quantity <= 0 ? 1 : 0;
+      if (aOut !== bOut) return aOut - bOut;
       switch (sortBy) {
         case "price-asc":
           return a.price - b.price;

@@ -53,7 +53,7 @@ export default function StorePage() {
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/products?status=active&limit=50&inStock=true");
+      const response = await fetch("/api/products?status=active&limit=50&inStockFirst=true");
       if (response.ok) {
         const data = await response.json();
         const products = data.products || [];

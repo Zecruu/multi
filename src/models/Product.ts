@@ -107,6 +107,7 @@ const ProductSchema = new Schema<IProduct>(
 ProductSchema.index({ name: "text", description: "text", sku: "text" });
 ProductSchema.index({ category: 1, subcategory: 1 });
 ProductSchema.index({ status: 1 });
+ProductSchema.index({ status: 1, quantity: -1, createdAt: -1 });
 // Note: slug and sku already have indexes via unique: true
 
 ProductSchema.pre("save", function (next) {

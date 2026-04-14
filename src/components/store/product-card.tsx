@@ -120,13 +120,13 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
   return (
     <Link href={`/store/products/${product.slug}`}>
-      <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
+      <Card className={`group overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col ${!inStock ? "opacity-70" : ""}`}>
         <div className="relative aspect-square bg-white overflow-hidden">
           {primaryImage ? (
             <img
               src={primaryImage}
               alt={displayName}
-              className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+              className={`w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300 ${!inStock ? "grayscale" : ""}`}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">

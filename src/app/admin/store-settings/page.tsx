@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Loader2, Store, FolderSync, Plus, Pencil, Trash2, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Category {
   _id: string;
@@ -19,6 +20,7 @@ interface Category {
   slug: string;
   description?: string;
   color?: string;
+  parentId?: string;
   isActive: boolean;
   sortOrder: number;
 }
@@ -30,7 +32,7 @@ interface SyncPreview {
   missing: string[];
 }
 
-const defaultCategoryForm = { name: "", description: "", color: "bg-blue-500/10 text-blue-500", isActive: true };
+const defaultCategoryForm = { name: "", description: "", color: "bg-blue-500/10 text-blue-500", parentId: "", isActive: true };
 
 export default function StoreSettingsPage() {
   const sessionResult = useSession();
@@ -100,7 +102,7 @@ export default function StoreSettingsPage() {
   const openCategoryDialog = (category?: Category) => {
     if (category) {
       setEditingCategory(category);
-      setCategoryForm({ name: category.name, description: category.description || "", color: category.color || "bg-blue-500/10 text-blue-500", isActive: category.isActive });
+      setCategoryForm({ name: category.name, description: category.description || "", color: category.color || "bg-blue-500/10 text-blue-500", parentId: category.parentId || "", isActive: category.isActive });
     } else {
       setEditingCategory(null);
       setCategoryForm(defaultCategoryForm);
@@ -114,7 +116,11 @@ export default function StoreSettingsPage() {
     try {
       const url = editingCategory ? `/api/categories/${editingCategory._id}` : "/api/categories";
       const method = editingCategory ? "PUT" : "POST";
-      const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(categoryForm) });
+      const payload = {
+        ...categoryForm,
+        parentId: categoryForm.parentId || null,
+      };
+      const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (res.ok) {
         toast.success(editingCategory ? "Category updated" : "Category created");
         setIsCategoryDialogOpen(false);
@@ -189,20 +195,86 @@ export default function StoreSettingsPage() {
           ) : categories.length === 0 ? (
             <p className="text-center text-muted-foreground py-8">No categories yet. Add one or sync from products.</p>
           ) : (
-            <div className="space-y-2">
-              {categories.map((cat) => (
-                <div key={cat._id} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <Badge variant={cat.isActive ? "default" : "secondary"}>{cat.isActive ? "Active" : "Inactive"}</Badge>
-                    <span className="font-medium">{cat.name}</span>
-                    {cat.description && <span className="text-sm text-muted-foreground">- {cat.description}</span>}
+            <div className="space-y-4">
+              {categories
+                .filter((c) => !c.parentId)
+                .map((parent) => {
+                  const children = categories.filter((c) => c.parentId === parent._id);
+                  return (
+                    <div key={parent._id} className="border rounded-lg">
+                      <div className="flex items-center justify-between p-3 bg-muted/40 rounded-t-lg">
+                        <div className="flex items-center gap-3">
+                          <Badge variant={parent.isActive ? "default" : "secondary"}>
+                            {parent.isActive ? "Active" : "Inactive"}
+                          </Badge>
+                          <span className="font-semibold">{parent.name}</span>
+                          <span className="text-xs text-muted-foreground">
+                            Top-level · {children.length} subcategor{children.length === 1 ? "y" : "ies"}
+                          </span>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button variant="ghost" size="icon" onClick={() => openCategoryDialog(parent)}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(parent._id)}>
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </div>
+                      </div>
+                      {children.length > 0 && (
+                        <div className="divide-y">
+                          {children.map((sub) => (
+                            <div key={sub._id} className="flex items-center justify-between p-3 pl-8">
+                              <div className="flex items-center gap-3">
+                                <Badge variant={sub.isActive ? "default" : "secondary"}>
+                                  {sub.isActive ? "Active" : "Inactive"}
+                                </Badge>
+                                <span>{sub.name}</span>
+                                {sub.description && (
+                                  <span className="text-sm text-muted-foreground">- {sub.description}</span>
+                                )}
+                              </div>
+                              <div className="flex gap-2">
+                                <Button variant="ghost" size="icon" onClick={() => openCategoryDialog(sub)}>
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(sub._id)}>
+                                  <Trash2 className="h-4 w-4 text-destructive" />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              {/* Orphans: children whose parent was deleted */}
+              {(() => {
+                const parentIds = new Set(categories.filter((c) => !c.parentId).map((c) => c._id));
+                const orphans = categories.filter((c) => c.parentId && !parentIds.has(c.parentId));
+                if (orphans.length === 0) return null;
+                return (
+                  <div className="border rounded-lg border-dashed">
+                    <div className="p-3 text-sm text-muted-foreground">Unlinked (parent missing)</div>
+                    <div className="divide-y">
+                      {orphans.map((sub) => (
+                        <div key={sub._id} className="flex items-center justify-between p-3 pl-8">
+                          <span>{sub.name}</span>
+                          <div className="flex gap-2">
+                            <Button variant="ghost" size="icon" onClick={() => openCategoryDialog(sub)}>
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(sub._id)}>
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex gap-2">
-                    <Button variant="ghost" size="icon" onClick={() => openCategoryDialog(cat)}><Pencil className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDeleteCategory(cat._id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                  </div>
-                </div>
-              ))}
+                );
+              })()}
             </div>
           )}
         </CardContent>
@@ -223,6 +295,32 @@ export default function StoreSettingsPage() {
             <div className="space-y-2">
               <Label htmlFor="catDesc">Description</Label>
               <Input id="catDesc" value={categoryForm.description} onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })} placeholder="Optional description" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="catParent">Parent</Label>
+              <Select
+                value={categoryForm.parentId || "__none__"}
+                onValueChange={(v) =>
+                  setCategoryForm({ ...categoryForm, parentId: v === "__none__" ? "" : v })
+                }
+              >
+                <SelectTrigger id="catParent">
+                  <SelectValue placeholder="None (top-level nav item)" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__none__">None (top-level nav item)</SelectItem>
+                  {categories
+                    .filter((c) => !c.parentId && c._id !== editingCategory?._id)
+                    .map((c) => (
+                      <SelectItem key={c._id} value={c._id}>
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Top-level items appear in the site nav bar. Child categories appear in that item&apos;s dropdown.
+              </p>
             </div>
             <div className="flex items-center justify-between">
               <Label htmlFor="catActive">Active</Label>

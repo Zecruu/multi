@@ -66,6 +66,7 @@ interface Category {
   name: string;
   slug: string;
   icon?: string;
+  parentId?: string;
   isActive: boolean;
 }
 
@@ -463,27 +464,75 @@ export default function ProductsPage() {
                         <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-full p-2" align="start">
-                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                    <PopoverContent className="w-80 p-2" align="start">
+                      <div className="space-y-1 max-h-72 overflow-y-auto">
                         {categories.length === 0 ? (
                           <p className="text-sm text-muted-foreground p-2">
                             No categories. Create them in Settings.
                           </p>
                         ) : (
-                          categories.map((cat) => (
-                            <div
-                              key={cat._id}
-                              className="flex items-center space-x-2 p-2 hover:bg-muted rounded cursor-pointer"
-                              onClick={() => toggleCategory(cat.slug)}
-                            >
-                              <Checkbox
-                                checked={formData.categories.includes(cat.slug)}
-                                onCheckedChange={() => toggleCategory(cat.slug)}
-                              />
-                              <span className="text-lg mr-1">{cat.icon || "📁"}</span>
-                              <span className="text-sm">{cat.name}</span>
-                            </div>
-                          ))
+                          (() => {
+                            const parents = categories.filter((c) => !c.parentId);
+                            const parentIds = new Set(parents.map((p) => p._id));
+                            const orphans = categories.filter(
+                              (c) => c.parentId && !parentIds.has(c.parentId)
+                            );
+                            return (
+                              <>
+                                {parents.map((parent) => {
+                                  const kids = categories.filter(
+                                    (c) => c.parentId === parent._id
+                                  );
+                                  return (
+                                    <div key={parent._id} className="mb-2">
+                                      <div
+                                        className="flex items-center space-x-2 p-2 hover:bg-muted rounded cursor-pointer font-semibold"
+                                        onClick={() => toggleCategory(parent.slug)}
+                                      >
+                                        <Checkbox
+                                          checked={formData.categories.includes(parent.slug)}
+                                          onCheckedChange={() => toggleCategory(parent.slug)}
+                                        />
+                                        <span className="text-lg mr-1">{parent.icon || "📁"}</span>
+                                        <span className="text-sm">{parent.name}</span>
+                                      </div>
+                                      {kids.map((sub) => (
+                                        <div
+                                          key={sub._id}
+                                          className="flex items-center space-x-2 p-2 pl-8 hover:bg-muted rounded cursor-pointer"
+                                          onClick={() => toggleCategory(sub.slug)}
+                                        >
+                                          <Checkbox
+                                            checked={formData.categories.includes(sub.slug)}
+                                            onCheckedChange={() => toggleCategory(sub.slug)}
+                                          />
+                                          <span className="text-sm">{sub.name}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  );
+                                })}
+                                {orphans.length > 0 && (
+                                  <div className="pt-2 mt-2 border-t">
+                                    <p className="text-xs text-muted-foreground px-2 pb-1">Other</p>
+                                    {orphans.map((cat) => (
+                                      <div
+                                        key={cat._id}
+                                        className="flex items-center space-x-2 p-2 hover:bg-muted rounded cursor-pointer"
+                                        onClick={() => toggleCategory(cat.slug)}
+                                      >
+                                        <Checkbox
+                                          checked={formData.categories.includes(cat.slug)}
+                                          onCheckedChange={() => toggleCategory(cat.slug)}
+                                        />
+                                        <span className="text-sm">{cat.name}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })()
                         )}
                       </div>
                     </PopoverContent>

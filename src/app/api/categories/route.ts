@@ -57,7 +57,9 @@ export async function POST(request: NextRequest) {
       name: body.name.trim(),
       slug: body.slug,
       description: body.description || "",
+      icon: body.icon || undefined,
       color: body.color || "bg-blue-500/10 text-blue-500",
+      parentId: body.parentId || undefined,
       isActive: body.isActive !== false,
       sortOrder: body.sortOrder || 0,
     });

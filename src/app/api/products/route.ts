@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
     const inStock = searchParams.get("inStock"); // Filter out of stock products
     const outOfStock = searchParams.get("outOfStock"); // Show only out of stock products
+    const inStockFirst = searchParams.get("inStockFirst") === "true";
 
     const query: Record<string, unknown> = {};
 
@@ -65,8 +66,12 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit;
 
+    const sort: Record<string, 1 | -1> = inStockFirst
+      ? { quantity: -1, createdAt: -1 }
+      : { createdAt: -1 };
+
     const [products, total] = await Promise.all([
-      Product.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Product.find(query).sort(sort).skip(skip).limit(limit),
       Product.countDocuments(query),
     ]);
 

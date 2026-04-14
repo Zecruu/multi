@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,13 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import {
   Search,
   ShoppingCart,
@@ -32,24 +24,20 @@ import {
   Settings,
   Globe,
 } from "lucide-react";
+import NavBar from "@/components/header/NavBar";
+import MobileNav from "@/components/header/MobileNav";
 import { useCart } from "@/lib/cart-context";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useLanguage, translations } from "@/lib/language-context";
 
 export function StoreHeader() {
-  const pathname = usePathname();
   const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
-  const { items, itemCount } = useCart();
+  const { itemCount } = useCart();
   const { data: session, status } = useSession();
   const { language, setLanguage, t } = useLanguage();
   const isLoggedIn = status === "authenticated";
-
-  const navigation = [
-    { name: t(translations.home), href: "/store" },
-    { name: t(translations.products), href: "/store/products" },
-  ];
 
   useEffect(() => {
     setMounted(true);
@@ -69,42 +57,7 @@ export function StoreHeader() {
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Mobile Menu */}
           {mounted ? (
-            <Sheet>
-              <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-72">
-                <SheetHeader>
-                  <SheetTitle className="flex items-center gap-2">
-                    <Image
-                      src="/logo.jpg"
-                      alt="MultiElectric Supply"
-                      width={32}
-                      height={32}
-                      className="rounded"
-                    />
-                    MultiElectric Supply
-                  </SheetTitle>
-                </SheetHeader>
-                <nav className="mt-6 flex flex-col gap-2">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        pathname === item.href
-                          ? "bg-primary text-primary-foreground"
-                          : "hover:bg-muted"
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
+            <MobileNav />
           ) : (
             <Button variant="ghost" size="icon" className="lg:hidden">
               <Menu className="h-5 w-5" />
@@ -253,23 +206,8 @@ export function StoreHeader() {
           </div>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6 pb-3">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === item.href
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
       </div>
+      <NavBar />
     </header>
   );
 }
