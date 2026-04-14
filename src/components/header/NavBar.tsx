@@ -101,13 +101,15 @@ type ApiCategory = {
 function buildHierarchy(list: ApiCategory[]): Category[] {
   const parents = list.filter((c) => !c.parentId);
   if (parents.length === 0) return [];
-  return parents.map((p) => ({
-    name: p.name,
-    slug: p.slug,
-    sub: list
-      .filter((c) => c.parentId === p._id)
-      .map((c) => ({ name: c.name, slug: c.slug })),
-  }));
+  return parents
+    .map((p) => ({
+      name: p.name,
+      slug: p.slug,
+      sub: list
+        .filter((c) => c.parentId === p._id)
+        .map((c) => ({ name: c.name, slug: c.slug })),
+    }))
+    .filter((c) => c.sub.length > 0);
 }
 
 export default function NavBar() {
@@ -123,7 +125,9 @@ export default function NavBar() {
         const list: unknown = data?.categories;
         if (!Array.isArray(list) || list.length === 0) return;
         const hier = buildHierarchy(list as ApiCategory[]);
-        if (!cancelled && hier.length > 0) setCategories(hier);
+        // Only override the fallback if the DB actually returned a
+        // usable hierarchy (at least one parent with children).
+        if (!cancelled && hier.length >= 3) setCategories(hier);
       } catch {
         // keep fallback
       }
