@@ -19,6 +19,7 @@ import {
   User,
   Store,
   RefreshCw,
+  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -39,6 +40,7 @@ export function AdminSidebar() {
     { name: "Products", href: "/admin/products", icon: Package, roles: ["admin", "gerente", "employee"] },
     { name: "Import Products", href: "/admin/import-products", icon: FileUp, roles: ["admin", "gerente", "employee"] },
     { name: "Orders", href: "/admin/orders", icon: ShoppingCart, roles: ["admin", "gerente", "employee"] },
+    { name: "Reviews & Reputation", href: "/admin/reviews", icon: Star, roles: ["admin", "gerente", "employee"] },
     { name: "Ledger", href: "/admin/ledger", icon: BookOpen, roles: ["admin", "gerente", "employee"] },
     { name: "Team", href: "/admin/team", icon: UserCog, roles: ["admin"] },
     { name: "History", href: "/admin/history", icon: History, roles: ["admin", "gerente", "employee"] },

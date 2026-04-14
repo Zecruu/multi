@@ -14,6 +14,7 @@ export function StoreFooter() {
     { name: language === "es" ? "Nosotros" : "About", href: "/store/about" },
     { name: language === "es" ? "Productos" : "Products", href: "/store/products" },
     { name: language === "es" ? "Mi Cuenta" : "My Account", href: "/store/account" },
+    { name: language === "es" ? "Política de SMS" : "SMS Policy", href: "/store/sms-policy" },
   ];
 
   const t = {
