@@ -47,6 +47,10 @@ export interface IProduct extends Document {
   isFeatured: boolean;
   stripeProductId?: string;
   stripePriceId?: string;
+  /** Set by the importer when the vendor department doesn't map to a nav slug. */
+  needsAiCategorize?: boolean;
+  /** Raw "Departments" value from the RMS export, kept for auditing + AI mapping. */
+  rmsDepartment?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -100,6 +104,8 @@ const ProductSchema = new Schema<IProduct>(
     isFeatured: { type: Boolean, default: false },
     stripeProductId: { type: String },
     stripePriceId: { type: String },
+    needsAiCategorize: { type: Boolean, default: false, index: true },
+    rmsDepartment: { type: String, default: null },
   },
   {
     timestamps: true,

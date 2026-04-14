@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import * as XLSX from "xlsx";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
+import { buildCategories, hasKnownMapping } from "@/lib/category-mapper";
 
 // Route segment config - extend timeout for large imports
 export const maxDuration = 60; // 60 seconds (max for Vercel Pro)
@@ -205,14 +206,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       products: dryRun ? [] : undefined,
     };
 
-    // Process each row
+    // Process each row.
+    // Non-destructive strategy:
+    //   $set            — fields that reflect daily truth from the RMS
+    //                     (price, costPrice, quantity). Always applied.
+    //   $setOnInsert    — fields that should only be populated for brand-new
+    //                     SKUs, so admin edits to existing products survive
+    //                     (name, description, category, images, status, etc).
+    // If the vendor department isn't in our taxonomy, the product lands in
+    // "uncategorized" and is picked up later by the AI categorizer.
     const bulkOps: Array<{
       updateOne: {
         filter: { sku: string };
-        update: { $set: Record<string, unknown> };
+        update: {
+          $set: Record<string, unknown>;
+          $setOnInsert?: Record<string, unknown>;
+        };
         upsert: boolean;
       };
     }> = [];
+    let newSkuNeedsAiCategorize = 0;
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
@@ -286,47 +299,63 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         if (subDesc2) specifications["attribute1"] = subDesc2;
         if (subDesc3) specifications["model"] = subDesc3;
         
-        // Build product data
-        const productData = {
+        // Map the RMS "Departments" value to our nav taxonomy slug.
+        const { primary: mappedCategory, categories: mappedCategories } =
+          buildCategories(department, subDesc1);
+        if (department && !hasKnownMapping(department)) newSkuNeedsAiCategorize++;
+
+        // Fields refreshed on every import — the RMS is source of truth for
+        // stock and price.
+        const alwaysSet: Record<string, unknown> = {
+          price,
+          costPrice: cost || undefined,
+          quantity: Math.max(0, availableQty ?? qtyOnHand ?? 0),
+        };
+
+        // Fields written only when the product is brand new. Protects admin
+        // edits (category changes, images, description tweaks, archived
+        // status, on-sale settings) from being wiped every day.
+        const onInsert: Record<string, unknown> = {
           name,
           slug,
           sku,
           description: extendedDescription || description,
-          descriptionEs: "", // Can be populated later if Spanish text detected in extended description
+          descriptionEs: "",
           shortDescription: description.substring(0, 160),
-          category: department || "Uncategorized",
+          category: mappedCategory,
+          categories: mappedCategories,
           subcategory: subDesc1 || undefined,
           brand: subDesc1 || undefined,
-          price: price,
-          costPrice: cost || undefined,
-          quantity: Math.max(0, availableQty ?? qtyOnHand ?? 0),
           lowStockThreshold: 10,
           unit: "piece",
           status: "active" as const,
           isFeatured: false,
           images: [],
-          specifications: Object.keys(specifications).length > 0 ? specifications : undefined,
+          specifications:
+            Object.keys(specifications).length > 0 ? specifications : undefined,
           tags: [department, subDesc1, subDesc2, subDesc3].filter(Boolean),
+          // Tag unmapped imports so the AI categorizer can find them later.
+          needsAiCategorize: !hasKnownMapping(department),
+          rmsDepartment: department || null,
         };
 
         if (dryRun) {
           // For dry run, just collect the data
           result.products?.push({
-            sku: productData.sku,
-            name: productData.name,
-            price: productData.price,
-            quantity: productData.quantity,
-            category: productData.category,
+            sku,
+            name,
+            price,
+            quantity: Math.max(0, availableQty ?? qtyOnHand ?? 0),
+            category: mappedCategory,
             isNew: true, // Will be determined in actual import
           });
         } else {
-          // Add to bulk operations for actual import
-          // Note: Don't set timestamps manually - mongoose handles them with timestamps: true
           bulkOps.push({
             updateOne: {
-              filter: { sku: productData.sku },
-              update: { 
-                $set: productData,
+              filter: { sku },
+              update: {
+                $set: alwaysSet,
+                $setOnInsert: onInsert,
               },
               upsert: true,
             },
@@ -445,19 +474,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({
       success: result.success,
-      message: dryRun 
+      message: dryRun
         ? `Preview: ${result.created} products would be imported`
-        : `Import complete: ${result.created} created, ${result.updated} updated, ${result.skipped} skipped`,
+        : `Import complete: ${result.created} created, ${result.updated} updated, ${result.skipped} skipped`
+          + (newSkuNeedsAiCategorize > 0
+              ? `. ${newSkuNeedsAiCategorize} new product${newSkuNeedsAiCategorize === 1 ? "" : "s"} need AI categorization (ask Sparky to "categorize pending").`
+              : ""),
       created: result.created,
       updated: result.updated,
       skipped: result.skipped,
       totalRows: rows.length,
-      errors: result.errors.slice(0, 50), // Limit errors in response
+      pendingAiCategorize: newSkuNeedsAiCategorize,
+      errors: result.errors.slice(0, 50),
       totalErrors: result.errors.length,
-      products: result.products?.slice(0, 100), // Limit preview products
+      products: result.products?.slice(0, 100),
       importedBy: adminUser.name,
       timestamp: new Date().toISOString(),
-      // Debug info
       detectedColumns: Object.keys(rows[0] || {}),
       sampleRow: rows[0] ? JSON.stringify(rows[0]).substring(0, 500) : null,
     });

@@ -118,14 +118,37 @@ async function tool_listCategories() {
 }
 
 async function tool_stats() {
-  const [total, active, draft, outOfStock, lowStock] = await Promise.all([
-    Product.countDocuments({}),
-    Product.countDocuments({ status: "active" }),
-    Product.countDocuments({ status: "draft" }),
-    Product.countDocuments({ quantity: { $lte: 0 } }),
-    Product.countDocuments({ quantity: { $gt: 0, $lt: 10 } }),
-  ]);
-  return { total, active, draft, outOfStock, lowStock };
+  const [total, active, draft, outOfStock, lowStock, pendingCategorize] =
+    await Promise.all([
+      Product.countDocuments({}),
+      Product.countDocuments({ status: "active" }),
+      Product.countDocuments({ status: "draft" }),
+      Product.countDocuments({ quantity: { $lte: 0 } }),
+      Product.countDocuments({ quantity: { $gt: 0, $lt: 10 } }),
+      Product.countDocuments({ needsAiCategorize: true }),
+    ]);
+  return { total, active, draft, outOfStock, lowStock, pendingCategorize };
+}
+
+async function tool_categorizePending(args: { limit?: number }) {
+  const limit = Math.min(Math.max(args.limit ?? 50, 1), 200);
+  // Call the dedicated endpoint via internal fetch so both paths behave identically.
+  const host = process.env.NEXTAUTH_URL || process.env.VERCEL_URL
+    ? (process.env.NEXTAUTH_URL || `https://${process.env.VERCEL_URL}`)
+    : "http://localhost:3000";
+  const cookie = (await (await import("next/headers")).cookies()).get("admin_session");
+  const res = await fetch(`${host}/api/admin/ai-categorize-pending`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      ...(cookie ? { cookie: `admin_session=${cookie.value}` } : {}),
+    },
+    body: JSON.stringify({ limit }),
+  });
+  if (!res.ok) {
+    return { error: `categorize endpoint returned ${res.status}`, body: await res.text() };
+  }
+  return await res.json();
 }
 
 const TOOLS: Record<string, (args: Record<string, unknown>) => Promise<unknown>> = {
@@ -134,6 +157,7 @@ const TOOLS: Record<string, (args: Record<string, unknown>) => Promise<unknown>>
   adjust_stock: tool_adjustStock as (args: Record<string, unknown>) => Promise<unknown>,
   list_categories: tool_listCategories as (args: Record<string, unknown>) => Promise<unknown>,
   stats: tool_stats as (args: Record<string, unknown>) => Promise<unknown>,
+  categorize_pending: tool_categorizePending as (args: Record<string, unknown>) => Promise<unknown>,
 };
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -195,8 +219,18 @@ const FUNCTION_DECLARATIONS = [
   },
   {
     name: "stats",
-    description: "Get store-wide counts: total products, active, draft, out-of-stock, low-stock.",
+    description: "Get store-wide counts: total products, active, draft, out-of-stock, low-stock, and how many products are waiting on AI categorization.",
     parametersJsonSchema: { type: "object", properties: {} },
+  },
+  {
+    name: "categorize_pending",
+    description: "Run AI categorization against products flagged needsAiCategorize=true (new SKUs the importer couldn't map). Processes up to `limit` products per call (1-200, default 50). Safe to call repeatedly until `remaining` reaches 0.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        limit: { type: "integer", minimum: 1, maximum: 200, default: 50 },
+      },
+    },
   },
 ];
 
