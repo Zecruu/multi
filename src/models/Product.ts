@@ -23,6 +23,7 @@ export interface IProduct extends Document {
   shortDescription?: string;
   shortDescriptionEs?: string;
   category: string;
+  categories?: string[];
   subcategory?: string;
   brand?: string;
   images: IProductImage[];
@@ -71,6 +72,7 @@ const ProductSchema = new Schema<IProduct>(
     shortDescription: { type: String },
     shortDescriptionEs: { type: String },
     category: { type: String, required: true },
+    categories: { type: [String], default: [] },
     subcategory: { type: String },
     brand: { type: String },
     images: [ProductImageSchema],
@@ -106,6 +108,7 @@ const ProductSchema = new Schema<IProduct>(
 
 ProductSchema.index({ name: "text", description: "text", sku: "text" });
 ProductSchema.index({ category: 1, subcategory: 1 });
+ProductSchema.index({ categories: 1 });
 ProductSchema.index({ status: 1 });
 ProductSchema.index({ status: 1, quantity: -1, createdAt: -1 });
 // Note: slug and sku already have indexes via unique: true

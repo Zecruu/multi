@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
+import Category from "@/models/Category";
 import { getStripe } from "@/lib/stripe";
 import { logProductAction } from "@/lib/activity-logger";
 
@@ -37,18 +38,37 @@ export async function GET(request: NextRequest) {
     const inStockFirst = searchParams.get("inStockFirst") === "true";
 
     const query: Record<string, unknown> = {};
+    const andClauses: Record<string, unknown>[] = [];
 
     if (search) {
-      query.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { sku: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-      ];
+      andClauses.push({
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { sku: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+        ],
+      });
     }
 
     if (category && category !== "all") {
-      query.category = category;
+      // If the requested category is a parent with children, expand to include
+      // every descendant slug so /products?category=tools returns everything
+      // tagged with any Tools subcategory.
+      const requested = await Category.findOne({ slug: category });
+      const slugs: string[] = [category];
+      if (requested) {
+        const kids = await Category.find({ parentId: requested._id }).select("slug");
+        for (const k of kids) slugs.push(k.slug);
+      }
+      andClauses.push({
+        $or: [
+          { category: { $in: slugs } },
+          { categories: { $in: slugs } },
+        ],
+      });
     }
+
+    if (andClauses.length > 0) query.$and = andClauses;
 
     if (status && status !== "all") {
       query.status = status;

@@ -56,6 +56,7 @@ interface Product {
 function ProductsContent() {
   const searchParams = useSearchParams();
   const initialSearch = searchParams.get("search") || "";
+  const categoryParam = searchParams.get("category") || "";
   const { language } = useLanguage();
 
   const t = {
@@ -106,13 +107,20 @@ function ProductsContent() {
 
   useEffect(() => {
     fetchProducts(1);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryParam]);
 
   const fetchProducts = async (page = 1) => {
     try {
       setIsLoading(true);
-      // Only show active products that are in stock (quantity > 0)
-      const response = await fetch(`/api/products?status=active&inStockFirst=true&page=${page}&limit=${productsPerPage}`);
+      const params = new URLSearchParams({
+        status: "active",
+        inStockFirst: "true",
+        page: String(page),
+        limit: String(productsPerPage),
+      });
+      if (categoryParam) params.set("category", categoryParam);
+      const response = await fetch(`/api/products?${params.toString()}`);
       if (response.ok) {
         const data = await response.json();
         setProducts(data.products || []);
