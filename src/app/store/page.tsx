@@ -75,48 +75,38 @@ export default function StorePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative border-b overflow-hidden min-h-[600px] md:min-h-[650px] lg:min-h-[700px]">
-        {/* Background Image */}
-        <div className="absolute inset-0">
+      <section className="relative border-b overflow-hidden bg-white">
+        {/* Desktop image (hidden below md) */}
+        <div className="hidden md:block relative w-full aspect-[1717/916]">
           <Image
-            src="/hero-electricians.png"
-            alt="Multi Electric Supply - Professional electricians at work"
+            src="/hero-desktop.png"
+            alt="Multi Electric Supply — Impulsamos tus proyectos. Entregamos soluciones."
             fill
             className="object-cover object-center"
             priority
             sizes="100vw"
           />
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
         </div>
 
-        {/* Content */}
-        <div className="relative container mx-auto px-4 py-12 md:py-16 lg:py-20 z-20 flex items-center min-h-[600px] md:min-h-[650px] lg:min-h-[700px]">
-          <div className="max-w-3xl mx-auto text-center space-y-5 md:space-y-6">
-            {/* Tagline */}
-            <p className="text-sm md:text-base font-medium tracking-widest text-yellow-400 uppercase drop-shadow-md">
-              {t.heroTagline}
-            </p>
+        {/* Mobile image (hidden at md+) */}
+        <div className="md:hidden relative w-full aspect-[1086/1448]">
+          <Image
+            src="/hero-mobile.png"
+            alt="Multi Electric Supply — Impulsamos tus proyectos. Entregamos soluciones."
+            fill
+            className="object-cover object-center"
+            priority
+            sizes="100vw"
+          />
+        </div>
 
-            {/* Main Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight tracking-tight text-white drop-shadow-lg">
-              {t.heroTitle}
-            </h1>
-
-            {/* Description */}
-            <p className="text-base md:text-lg lg:text-xl text-gray-100 max-w-2xl mx-auto drop-shadow-md">
-              {t.heroDescription}
-            </p>
-
-            {/* Button */}
-            <div className="pt-2 md:pt-4">
-              <Link href="/store/products">
-                <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 md:px-8 py-5 md:py-6 text-base md:text-lg shadow-lg">
-                  {t.shopAllProducts}
-                </Button>
-              </Link>
-            </div>
-          </div>
+        {/* CTA below hero */}
+        <div className="container mx-auto px-4 py-6 md:py-8 flex justify-center">
+          <Link href="/store/products">
+            <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-6 text-base md:text-lg shadow-lg">
+              {t.shopAllProducts}
+            </Button>
+          </Link>
         </div>
       </section>
 
