@@ -31,7 +31,7 @@ const AGENT_DIR = path.dirname(process.execPath.includes('node') ? __filename : 
 const CONFIG_PATH = path.join(AGENT_DIR, 'config.yaml');
 const DEFAULT_CONFIG_PATH = path.join(AGENT_DIR, 'config.default.yaml');
 const STATE_PATH = path.join(AGENT_DIR, '.sync-state.json');
-const VERSION = '1.0.0';
+const VERSION = '1.1.1';
 
 // ── Logger ──────────────────────────────────────────────────────────────────
 
@@ -239,14 +239,19 @@ async function uploadToEcommerce(filePath, config, logger) {
 
   logger.info(`Uploading to: ${endpoint}`);
 
+  // Buffer the file so redirects (apex → www) don't break the upload —
+  // form-data built from a stream can't be replayed after a 301.
+  const fileBuffer = fs.readFileSync(filePath);
+
   const form = new FormData();
-  form.append('file', fs.createReadStream(filePath), {
+  form.append('file', fileBuffer, {
     filename: path.basename(filePath),
     contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
 
   const headers = {
     ...form.getHeaders(),
+    'content-length': form.getLengthSync(),
     'x-sync-key': config.api.sync_key,
     'x-agent-version': VERSION,
   };

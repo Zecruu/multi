@@ -465,8 +465,13 @@ class SyncEngine {
     const apiUrl = this.config.api.url.replace(/\/$/, '');
     const endpoint = `${apiUrl}/api/admin/sync-agent/import`;
 
+    // Buffer the file so node-fetch can replay the body on any redirect
+    // (e.g. apex → www). Streams are not replayable and cause
+    // "Cannot follow redirect with body being a readable stream".
+    const fileBuffer = fs.readFileSync(filePath);
+
     const form = new FormData();
-    form.append('file', fs.createReadStream(filePath), {
+    form.append('file', fileBuffer, {
       filename: path.basename(filePath),
       contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
@@ -475,8 +480,9 @@ class SyncEngine {
       method: 'POST',
       headers: {
         ...form.getHeaders(),
+        'content-length': form.getLengthSync(),
         'x-sync-key': this.config.api.sync_key,
-        'x-agent-version': '1.0.0',
+        'x-agent-version': '1.1.1',
       },
       body: form,
       timeout: 120000,

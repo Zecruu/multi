@@ -9,7 +9,7 @@ scan_interval: 30
 
 # API Configuration
 api:
-  url: "https://multielectricsupply.com"
+  url: "https://www.multielectricsupply.com"
   # Get your sync key from the admin panel: Admin > Sync Agent
   sync_key: "YOUR_SYNC_KEY_HERE"
 
