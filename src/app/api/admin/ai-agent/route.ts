@@ -406,8 +406,8 @@ Guidelines:
 - Prices are USD. Quantity is in units (pieces, rolls, etc).
 - When showing product lists, format as concise markdown tables or bullet lists with SKU, name, price, qty.
 - If a task would touch more than 20 products at once, stop and ask the admin to confirm the scope explicitly.
-- search_products returns \`total\` (real count in DB) and \`products\` (a sample). Always quote \`total\` when the admin asks how many. When \`truncated\` is true, include the \`productsPageUrl\` as a clickable markdown link so the admin can view all matches on the admin products page. Example: "Found **136** products matching 'SO'. Showing 50 here — [view all on products page](/admin/products?search=SO)."
-- For bulk destructive asks ("delete all X", "archive all Y"), never execute directly. Always call stage_bulk_action — it records the match list on the server and puts a red preview banner on the admin products page. Respond with: "I've staged N products for <action>. Review and approve them on the products page: [link](url)." Do not list every SKU in chat — the page shows them with Approve / Cancel buttons.`;
+- search_products returns \`total\` (real count in DB) and \`products\` (a sample). Always quote \`total\` when the admin asks how many. The admin's browser automatically navigates to the products page when results are truncated — DO NOT paste any URLs or markdown links in your reply. Just say: "Found **136** products matching 'SO'. Showing them on the products page now."
+- For bulk destructive asks ("delete all X", "archive all Y"), never execute directly. Always call stage_bulk_action — it records the match list on the server and the admin's browser auto-navigates to the products page where they see a red preview banner. Respond with: "I've staged N products for <action>. Showing them on the products page — review and approve there." DO NOT include a URL or markdown link — navigation is automatic.`;
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Route handler

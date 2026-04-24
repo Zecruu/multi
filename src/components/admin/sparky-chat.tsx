@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Bot, Loader2, Send, X, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +36,8 @@ export function SparkyChat() {
   const [sending, setSending] = useState(false);
   const [lastCalls, setLastCalls] = useState<ToolCall[]>([]);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setHistory(loadHistory());
@@ -66,8 +69,32 @@ export function SparkyChat() {
           { role: "model", text: `**Error:** ${data.error || res.statusText}` },
         ]);
       } else {
-        setLastCalls(data.toolCalls || []);
+        const calls = (data.toolCalls || []) as ToolCall[];
+        setLastCalls(calls);
         setHistory([...next, { role: "model", text: data.reply || "(no reply)" }]);
+
+        // Auto-navigate to the results view when a tool returns a URL.
+        // Priority: staging > search. Only navigate if we're not already
+        // on that page (avoids a jarring scroll-to-top reload).
+        const stagingUrl = calls.find(
+          (c) => c.name === "stage_bulk_action"
+        )?.result as { productsPageUrl?: string } | undefined;
+        const searchUrl = calls.find(
+          (c) => c.name === "search_products"
+        )?.result as { productsPageUrl?: string; truncated?: boolean } | undefined;
+
+        const targetUrl =
+          stagingUrl?.productsPageUrl ||
+          (searchUrl?.truncated ? searchUrl.productsPageUrl : undefined);
+
+        if (targetUrl) {
+          // Always route — the products page reads fresh URL params and
+          // refetches. Skip only if exactly same url so we don't reload.
+          const current = pathname + (typeof window !== "undefined" ? window.location.search : "");
+          if (current !== targetUrl) {
+            router.push(targetUrl);
+          }
+        }
       }
     } catch (err) {
       setHistory([
