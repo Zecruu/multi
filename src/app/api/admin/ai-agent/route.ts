@@ -35,20 +35,28 @@ async function tool_searchProducts(args: {
   limit?: number;
 }) {
   const { query, category, status, limit = 25 } = args;
+  // Match the admin products page (/api/products?search=) exactly so
+  // Sparky's count agrees with what the admin sees on the filtered page.
+  // That endpoint matches name, sku, AND description — description is
+  // important because the RMS often puts descriptive text there.
   const mongoQuery: Record<string, unknown> = {};
+  const andClauses: object[] = [];
+
   if (query) {
-    mongoQuery.$or = [
-      { name: { $regex: query, $options: "i" } },
-      { sku: { $regex: query, $options: "i" } },
-    ];
+    andClauses.push({
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { sku: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+      ],
+    });
   }
   if (category && category !== "all") {
-    mongoQuery.$or = [
-      ...((mongoQuery.$or as object[]) || []),
-      { category },
-      { categories: category },
-    ];
+    andClauses.push({
+      $or: [{ category }, { categories: category }],
+    });
   }
+  if (andClauses.length > 0) mongoQuery.$and = andClauses;
   if (status && status !== "all") mongoQuery.status = status;
 
   const effectiveLimit = Math.min(Math.max(limit, 1), 200);
@@ -210,20 +218,26 @@ async function tool_stageBulkAction(
 ) {
   const { actionType = "delete", query, category, status } = args;
 
+  // Must match the same filter used by search_products and by the
+  // admin products page — otherwise Sparky stages a different set than
+  // the one the admin is looking at.
   const mongoQuery: Record<string, unknown> = {};
+  const andClauses: object[] = [];
   if (query) {
-    mongoQuery.$or = [
-      { name: { $regex: query, $options: "i" } },
-      { sku: { $regex: query, $options: "i" } },
-    ];
+    andClauses.push({
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { sku: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+      ],
+    });
   }
   if (category && category !== "all") {
-    mongoQuery.$or = [
-      ...((mongoQuery.$or as object[]) || []),
-      { category },
-      { categories: category },
-    ];
+    andClauses.push({
+      $or: [{ category }, { categories: category }],
+    });
   }
+  if (andClauses.length > 0) mongoQuery.$and = andClauses;
   if (status && status !== "all") mongoQuery.status = status;
 
   const matches = await Product.find(mongoQuery).select("_id").lean();
