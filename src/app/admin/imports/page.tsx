@@ -194,18 +194,41 @@ export default function ImportsPage() {
 
   async function runSparkyCategorize() {
     const toastId = toast.loading("Asking Sparky to categorize pending products…");
+    let totalProcessed = 0;
+    let totalRejected = 0;
+    // Safety bound so a bug in the endpoint can't loop indefinitely.
+    const MAX_ITERATIONS = 200;
+    const BATCH_SIZE = 200; // server cap
+
     try {
-      const res = await fetch("/api/admin/ai-categorize-pending", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ limit: 50 }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "failed");
+      for (let i = 0; i < MAX_ITERATIONS; i++) {
+        const res = await fetch("/api/admin/ai-categorize-pending", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ limit: BATCH_SIZE }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "failed");
+
+        totalProcessed += data.processed ?? 0;
+        totalRejected += Array.isArray(data.rejected) ? data.rejected.length : 0;
+
+        toast.loading(
+          `Sparky categorized ${totalProcessed} so far. ${data.remaining} remaining…`,
+          { id: toastId }
+        );
+
+        // Stop conditions: nothing left, or this batch made no progress
+        // (happens if all remaining items keep getting rejected for bad
+        // slugs — don't spin forever).
+        if (!data.remaining) break;
+        if ((data.processed ?? 0) === 0) break;
+      }
+
       toast.success(
-        `Sparky categorized ${data.processed} product${
-          data.processed === 1 ? "" : "s"
-        }. ${data.remaining} remaining.`,
+        `Sparky categorized ${totalProcessed} product${
+          totalProcessed === 1 ? "" : "s"
+        }${totalRejected ? ` · ${totalRejected} rejected` : ""}.`,
         { id: toastId }
       );
       fetchSparky();
