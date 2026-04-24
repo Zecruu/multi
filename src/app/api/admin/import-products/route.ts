@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import { buildCategories, hasKnownMapping } from "@/lib/category-mapper";
+import { logImportRun } from "@/lib/import-run-logger";
 
 // Route segment config - extend timeout for large imports
 export const maxDuration = 60; // 60 seconds (max for Vercel Pro)
@@ -225,6 +226,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         upsert: boolean;
       };
     }> = [];
+    // Track per-op metadata so we can resolve SKU → action after bulkWrite.
+    const opMeta: Array<{
+      sku: string;
+      name: string;
+      category: string;
+      needsAiCategorize: boolean;
+    }> = [];
+    const startedAt = new Date();
     let newSkuNeedsAiCategorize = 0;
 
     for (let i = 0; i < rows.length; i++) {
@@ -360,6 +369,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               upsert: true,
             },
           });
+          opMeta.push({
+            sku,
+            name,
+            category: mappedCategory,
+            needsAiCategorize: !hasKnownMapping(department),
+          });
         }
       } catch (rowError) {
         console.error(`[Import] Error processing row ${rowNum}:`, rowError);
@@ -372,37 +387,62 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
     }
 
+    // Per-SKU actions, populated as bulk batches resolve.
+    const skuActions: Array<{
+      sku: string;
+      name?: string;
+      action: "created" | "updated" | "unchanged";
+      category?: string;
+      needsAiCategorize?: boolean;
+    }> = [];
+
     // Execute bulk operations if not dry run
     if (!dryRun && bulkOps.length > 0) {
       console.log(`[Import] Executing ${bulkOps.length} bulk operations...`);
-      
+
       try {
         // Use larger batches for efficiency - MongoDB can handle 1000+ ops
         // but keep it at 500 for memory safety
         const batchSize = 500;
         const totalBatches = Math.ceil(bulkOps.length / batchSize);
-        
+
         console.log(`[Import] Will process ${totalBatches} batches of up to ${batchSize} items`);
-        
+
         for (let i = 0; i < bulkOps.length; i += batchSize) {
           const batch = bulkOps.slice(i, i + batchSize);
+          const batchMeta = opMeta.slice(i, i + batchSize);
           const batchNum = Math.floor(i/batchSize) + 1;
           console.log(`[Import] Processing batch ${batchNum}/${totalBatches} (${batch.length} items)`);
-          
+
           const startTime = Date.now();
-          
+
           try {
             // Use ordered: false to continue on errors, skip validation for speed
-            const bulkResult = await Product.bulkWrite(batch, { 
+            const bulkResult = await Product.bulkWrite(batch, {
               ordered: false,
             });
-            
+
             const created = bulkResult.upsertedCount || 0;
             const updated = bulkResult.modifiedCount || 0;
             const matched = bulkResult.matchedCount || 0;
-            
+
             result.created += created;
             result.updated += updated;
+
+            // upsertedIds maps local-batch index → newly-created ObjectId.
+            const upsertedIdx = new Set<number>(
+              Object.keys(bulkResult.upsertedIds || {}).map((k) => Number(k))
+            );
+            for (let j = 0; j < batchMeta.length; j++) {
+              const meta = batchMeta[j];
+              skuActions.push({
+                sku: meta.sku,
+                name: meta.name,
+                action: upsertedIdx.has(j) ? "created" : "updated",
+                category: meta.category,
+                needsAiCategorize: meta.needsAiCategorize,
+              });
+            }
             
             const elapsed = Date.now() - startTime;
             console.log(`[Import] Batch ${batchNum} complete in ${elapsed}ms: created=${created}, updated=${updated}, matched=${matched}`);
@@ -470,6 +510,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Mark as failed if too many errors
     if (result.errors.length > rows.length * 0.5) {
       result.success = false;
+    }
+
+    // Persist the import run (fire-and-forget — never block the response).
+    if (!dryRun) {
+      await logImportRun({
+        source: "admin-ui",
+        adminUserName: adminUser.name,
+        fileName: file.name,
+        fileSize: file.size,
+        totalRows: rows.length,
+        created: result.created,
+        updated: result.updated,
+        skipped: result.skipped,
+        pendingAiCategorize: newSkuNeedsAiCategorize,
+        errors: result.errors,
+        products: skuActions,
+        startedAt,
+      });
     }
 
     return NextResponse.json({

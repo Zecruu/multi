@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import * as XLSX from "xlsx";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
-import { headers } from "next/headers";
+import { logImportRun } from "@/lib/import-run-logger";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
   }
 
   const agentVersion = request.headers.get("x-agent-version") || "unknown";
+  const startedAt = new Date();
 
   try {
     const formData = await request.formData();
@@ -108,6 +109,13 @@ export async function POST(request: NextRequest) {
         update: { $set: Record<string, unknown> };
         upsert: boolean;
       };
+    }> = [];
+    const opMeta: Array<{ sku: string; name: string; category: string }> = [];
+    const skuActions: Array<{
+      sku: string;
+      name?: string;
+      action: "created" | "updated" | "unchanged";
+      category?: string;
     }> = [];
 
     for (let i = 0; i < rows.length; i++) {
@@ -176,6 +184,7 @@ export async function POST(request: NextRequest) {
             upsert: true,
           },
         });
+        opMeta.push({ sku, name, category: productData.category as string });
       } catch (err) {
         errors.push({ row: i + 2, sku: "unknown", error: (err as Error).message });
       }
@@ -185,10 +194,24 @@ export async function POST(request: NextRequest) {
     const BATCH_SIZE = 500;
     for (let i = 0; i < bulkOps.length; i += BATCH_SIZE) {
       const batch = bulkOps.slice(i, i + BATCH_SIZE);
+      const batchMeta = opMeta.slice(i, i + BATCH_SIZE);
       try {
         const result = await Product.bulkWrite(batch, { ordered: false });
         created += result.upsertedCount || 0;
         updated += result.modifiedCount || 0;
+
+        const upsertedIdx = new Set<number>(
+          Object.keys(result.upsertedIds || {}).map((k) => Number(k))
+        );
+        for (let j = 0; j < batchMeta.length; j++) {
+          const meta = batchMeta[j];
+          skuActions.push({
+            sku: meta.sku,
+            name: meta.name,
+            action: upsertedIdx.has(j) ? "created" : "updated",
+            category: meta.category,
+          });
+        }
       } catch (err: unknown) {
         const bulkError = err as { result?: { nInserted?: number; nModified?: number } };
         if (bulkError.result) {
@@ -198,6 +221,21 @@ export async function POST(request: NextRequest) {
         errors.push({ row: 0, sku: "batch", error: (err as Error).message });
       }
     }
+
+    await logImportRun({
+      source: "sync-agent",
+      agentVersion,
+      fileName: file.name,
+      fileSize: file.size,
+      totalRows: rows.length,
+      created,
+      updated,
+      skipped,
+      pendingAiCategorize: 0,
+      errors,
+      products: skuActions,
+      startedAt,
+    });
 
     return NextResponse.json({
       success: errors.length < rows.length * 0.5,

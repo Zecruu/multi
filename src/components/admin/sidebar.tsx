@@ -20,6 +20,7 @@ import {
   Store,
   RefreshCw,
   Star,
+  FileSpreadsheet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -39,6 +40,7 @@ export function AdminSidebar() {
     { name: "Clients", href: "/admin/clients", icon: Users, roles: ["admin", "gerente", "employee"] },
     { name: "Products", href: "/admin/products", icon: Package, roles: ["admin", "gerente", "employee"] },
     { name: "Import Products", href: "/admin/import-products", icon: FileUp, roles: ["admin", "gerente", "employee"] },
+    { name: "Imports & Sparky", href: "/admin/imports", icon: FileSpreadsheet, roles: ["admin", "gerente", "employee"] },
     { name: "Orders", href: "/admin/orders", icon: ShoppingCart, roles: ["admin", "gerente", "employee"] },
     { name: "Reviews & Reputation", href: "/admin/reviews", icon: Star, roles: ["admin", "gerente", "employee"] },
     { name: "Ledger", href: "/admin/ledger", icon: BookOpen, roles: ["admin", "gerente", "employee"] },

@@ -4,6 +4,7 @@ import { GoogleGenAI, Type } from "@google/genai";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
+import ActivityLog from "@/models/ActivityLog";
 
 export const maxDuration = 60;
 
@@ -176,6 +177,34 @@ Return a JSON array with one object per product in the same order, shape:
 
   if (bulk.length > 0) {
     await Product.bulkWrite(bulk, { ordered: false });
+
+    // Best-effort audit trail so the admin "Imports" tab can show Sparky's work.
+    try {
+      await ActivityLog.insertMany(
+        applied.map((c) => ({
+          action: "categorized",
+          category: "product" as const,
+          description: `Sparky categorized ${c.sku} → ${c.category}${
+            c.brand ? ` (${c.brand})` : ""
+          }`,
+          userName: "Sparky",
+          userRole: "ai",
+          targetId: c.sku,
+          targetType: "Product",
+          targetName: c.sku,
+          metadata: {
+            source: "sparky",
+            tool: "categorize_pending",
+            category: c.category,
+            brand: c.brand || null,
+            reason: c.reason || null,
+          },
+        })),
+        { ordered: false }
+      );
+    } catch (err) {
+      console.error("[ai-categorize] activity log failed", err);
+    }
   }
 
   const remaining = await Product.countDocuments({ needsAiCategorize: true });
