@@ -31,7 +31,7 @@ const AGENT_DIR = path.dirname(process.execPath.includes('node') ? __filename : 
 const CONFIG_PATH = path.join(AGENT_DIR, 'config.yaml');
 const DEFAULT_CONFIG_PATH = path.join(AGENT_DIR, 'config.default.yaml');
 const STATE_PATH = path.join(AGENT_DIR, '.sync-state.json');
-const VERSION = '1.1.1';
+const VERSION = '1.1.2';
 
 // ── Logger ──────────────────────────────────────────────────────────────────
 
@@ -471,6 +471,12 @@ async function processFile(filePath, config, logger, state) {
 
     } else if (result.status === 401) {
       logger.error('Authentication failed. Check your sync_key in config.yaml');
+      state.processedFiles[fileHash] = {
+        timestamp: new Date().toISOString(),
+        status: 'failed',
+        error: 'Authentication failed',
+      };
+      saveState(state);
       await sendNotification(config, logger,
         'Sync Failed - Authentication Error',
         `The sync agent could not authenticate with the server.\nPlease check your sync_key in config.yaml.`
@@ -478,16 +484,30 @@ async function processFile(filePath, config, logger, state) {
     } else {
       const errMsg = result.data?.error || result.data?.message || `HTTP ${result.status}`;
       logger.error(`Upload failed: ${errMsg}`);
+      state.processedFiles[fileHash] = {
+        timestamp: new Date().toISOString(),
+        status: 'failed',
+        error: errMsg,
+      };
+      saveState(state);
       await sendNotification(config, logger,
         `Sync Failed - ${fileName}`,
-        `Product sync failed.\n\nFile: ${fileName}\nError: ${errMsg}\nTime: ${new Date().toLocaleString()}`
+        `Product sync failed.\n\nFile: ${fileName}\nError: ${errMsg}\nTime: ${new Date().toLocaleString()}\n\n` +
+        `The agent will not retry this file automatically. Resave or copy it to the watch folder again to retry.`
       );
     }
   } catch (err) {
     logger.error(`Failed to process ${fileName}: ${err.message}`);
+    state.processedFiles[fileHash] = {
+      timestamp: new Date().toISOString(),
+      status: 'failed',
+      error: err.message,
+    };
+    saveState(state);
     await sendNotification(config, logger,
       `Sync Error - ${fileName}`,
-      `An error occurred during sync.\n\nFile: ${fileName}\nError: ${err.message}\nTime: ${new Date().toLocaleString()}`
+      `An error occurred during sync.\n\nFile: ${fileName}\nError: ${err.message}\nTime: ${new Date().toLocaleString()}\n\n` +
+      `The agent will not retry this file automatically. Resave or copy it to the watch folder again to retry.`
     );
   }
 }

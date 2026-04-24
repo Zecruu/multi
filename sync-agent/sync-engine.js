@@ -439,12 +439,22 @@ class SyncEngine {
     } catch (err) {
       this._log('error', `Failed to process ${fileName}: ${err.message}`);
       this.state.totalErrors = (this.state.totalErrors || 0) + 1;
+
+      // Record the failure in processedFiles so the next scan tick doesn't
+      // retry the same file and re-send the same notification email. The
+      // file hash includes mtime, so saving a new copy retries automatically.
+      this.state.processedFiles[fileHash] = {
+        timestamp: new Date().toISOString(),
+        status: 'failed',
+        error: err.message,
+      };
       this.stats.totalErrors = this.state.totalErrors;
       this._saveState();
 
       await this._notify(
         `Sync Error - ${fileName}`,
-        `An error occurred during sync.\n\nFile: ${fileName}\nError: ${err.message}\nTime: ${new Date().toLocaleString()}`
+        `An error occurred during sync.\n\nFile: ${fileName}\nError: ${err.message}\nTime: ${new Date().toLocaleString()}\n\n` +
+        `The agent will not retry this file automatically. Resave or copy it to the watch folder again to retry.`
       );
 
       this.onSync({
@@ -482,7 +492,7 @@ class SyncEngine {
         ...form.getHeaders(),
         'content-length': form.getLengthSync(),
         'x-sync-key': this.config.api.sync_key,
-        'x-agent-version': '1.1.1',
+        'x-agent-version': '1.1.2',
       },
       body: form,
       timeout: 120000,
