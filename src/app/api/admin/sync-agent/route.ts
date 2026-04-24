@@ -23,19 +23,27 @@ async function getAdminUser() {
   }
 }
 
-// GET - Get sync agent info (version, download URL, sync key status)
+// GET - Get sync agent info (version, download URL, sync key status).
+//
+// Two callers hit this endpoint:
+//   1. The admin UI — authenticated via admin_session cookie.
+//   2. The sync agent's "Test Connection" action — sends x-sync-key header.
+// Either is sufficient.
 export async function GET(request: NextRequest) {
   const admin = await getAdminUser();
-  if (!admin) {
+  const providedKey = request.headers.get("x-sync-key");
+  const expectedKey = process.env.SYNC_AGENT_KEY;
+  const hasValidSyncKey =
+    !!providedKey && !!expectedKey && providedKey === expectedKey;
+
+  if (!admin && !hasValidSyncKey) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const syncKey = process.env.SYNC_AGENT_KEY;
-
   return NextResponse.json({
     version: "1.0.0",
-    hasSyncKey: !!syncKey,
-    syncKeyPreview: syncKey ? `${syncKey.substring(0, 8)}...` : null,
+    hasSyncKey: !!expectedKey,
+    syncKeyPreview: expectedKey ? `${expectedKey.substring(0, 8)}...` : null,
     downloadUrl: "https://github.com/Zecruu/multi-electric-sync/releases/latest",
     repo: "Zecruu/multi-electric-sync",
   });
