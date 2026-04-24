@@ -52,3 +52,6 @@ scripts/debug-*.js
 
 # Claude Code local state
 .claude/scheduled_tasks.lock
+
+# Raw ChatGPT export filenames (use the hero-*.png copies instead)
+public/ChatGPT*.png

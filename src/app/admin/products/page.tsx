@@ -148,10 +148,41 @@ function ProductsPageInner() {
   const [productImages, setProductImages] = useState<UploadedImage[]>([]);
   const [editingProductId, setEditingProductId] = useState<string | null>(null);
 
+  // Sparky pending-action state: when Sparky stages a bulk delete/archive,
+  // a banner appears here with the affected product IDs red-highlighted in
+  // the table and Approve / Cancel buttons.
+  type SparkyPendingAction = {
+    _id: string;
+    actionType: "delete" | "archive";
+    productIds: string[];
+    matchCount: number;
+    summary: string;
+    createdBy: string;
+  };
+  const [pendingAction, setPendingAction] = useState<SparkyPendingAction | null>(null);
+  const [approving, setApproving] = useState(false);
+  const pendingSet = new Set(pendingAction?.productIds ?? []);
+
+  const fetchPendingAction = async () => {
+    try {
+      const res = await fetch("/api/admin/sparky-actions/current");
+      if (!res.ok) return;
+      const data = await res.json();
+      setPendingAction(data.action);
+    } catch {
+      // silent — banner just won't show
+    }
+  };
+
   // Fetch products and categories on mount
   useEffect(() => {
     fetchProducts(1, showOutOfStock, initialSearch);
     fetchCategories();
+    fetchPendingAction();
+    // Light polling so the banner appears without a manual refresh when
+    // Sparky stages an action in another tab.
+    const t = setInterval(fetchPendingAction, 10_000);
+    return () => clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -412,8 +443,74 @@ function ProductsPageInner() {
     return <Badge className="bg-green-500/20 text-green-500">In Stock</Badge>;
   };
 
+  async function approveSparkyAction() {
+    if (!pendingAction) return;
+    setApproving(true);
+    try {
+      const res = await fetch(`/api/admin/sparky-actions/${pendingAction._id}/approve`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || data.message || "approve failed");
+      toast.success(data.message || "Done");
+      setPendingAction(null);
+      fetchProducts(currentPage, showOutOfStock, searchQuery);
+    } catch (err) {
+      toast.error((err as Error).message);
+    } finally {
+      setApproving(false);
+    }
+  }
+
+  async function rejectSparkyAction() {
+    if (!pendingAction) return;
+    try {
+      await fetch(`/api/admin/sparky-actions/${pendingAction._id}/reject`, {
+        method: "POST",
+      });
+      toast.success("Sparky action canceled");
+      setPendingAction(null);
+    } catch (err) {
+      toast.error((err as Error).message);
+    }
+  }
+
   return (
     <div className="space-y-6">
+      {/* Sparky pending-action banner */}
+      {pendingAction && (
+        <div className="rounded-lg border border-red-500/40 bg-red-500/10 p-4 flex items-start gap-4">
+          <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-red-700 dark:text-red-400">
+              Sparky staged {pendingAction.matchCount} product{pendingAction.matchCount === 1 ? "" : "s"} to {pendingAction.actionType}
+            </p>
+            <p className="text-sm text-muted-foreground mt-0.5">
+              Filter: {pendingAction.summary} · Requested by {pendingAction.createdBy}
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Rows below are highlighted in red. Review them, then approve or cancel.
+            </p>
+          </div>
+          <div className="flex gap-2 flex-shrink-0">
+            <Button size="sm" variant="outline" onClick={rejectSparkyAction}>
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={approveSparkyAction}
+              disabled={approving}
+            >
+              {approving ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : null}
+              Approve {pendingAction.actionType}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -984,8 +1081,13 @@ function ProductsPageInner() {
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredProducts.map((product) => (
-                  <TableRow key={product._id}>
+                filteredProducts.map((product) => {
+                  const isPending = pendingSet.has(product._id);
+                  return (
+                  <TableRow
+                    key={product._id}
+                    className={isPending ? "bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-950/50" : undefined}
+                  >
                     <TableCell>
                       <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
                         {product.images && product.images.length > 0 ? (
@@ -1002,7 +1104,14 @@ function ProductsPageInner() {
                     <TableCell>
                       <div>
                         <p className="font-medium text-foreground">{product.name}</p>
-                        <p className="text-sm text-muted-foreground">{product.sku}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm text-muted-foreground">{product.sku}</p>
+                          {isPending && pendingAction && (
+                            <Badge variant="outline" className="bg-red-500/10 text-red-600 border-red-500/30 text-[10px]">
+                              Sparky: will {pendingAction.actionType}
+                            </Badge>
+                          )}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -1048,7 +1157,8 @@ function ProductsPageInner() {
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                ))
+                  );
+                })
               )}
             </TableBody>
           </Table>

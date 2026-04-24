@@ -4,18 +4,23 @@ import { GoogleGenAI, Type, FunctionCallingConfigMode } from "@google/genai";
 import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
+import SparkyAction from "@/models/SparkyAction";
 
 const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
 const MAX_TURNS = 8;
 
-async function requireAdmin() {
+async function requireAdmin(): Promise<{ name: string; role: string } | null> {
   const sessionCookie = (await cookies()).get("admin_session");
-  if (!sessionCookie) return false;
+  if (!sessionCookie) return null;
   try {
     const data = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
-    return data.role === "admin";
+    if (data.role !== "admin") return null;
+    return {
+      name: data.name || data.username || "Admin",
+      role: data.role,
+    };
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -194,14 +199,97 @@ async function tool_categorizePending(args: { limit?: number }) {
   return await res.json();
 }
 
-const TOOLS: Record<string, (args: Record<string, unknown>) => Promise<unknown>> = {
-  search_products: tool_searchProducts as (args: Record<string, unknown>) => Promise<unknown>,
-  update_product: tool_updateProduct as (args: Record<string, unknown>) => Promise<unknown>,
-  adjust_stock: tool_adjustStock as (args: Record<string, unknown>) => Promise<unknown>,
-  list_categories: tool_listCategories as (args: Record<string, unknown>) => Promise<unknown>,
-  stats: tool_stats as (args: Record<string, unknown>) => Promise<unknown>,
-  categorize_pending: tool_categorizePending as (args: Record<string, unknown>) => Promise<unknown>,
-  send_review_request: tool_sendReviewRequest as (args: Record<string, unknown>) => Promise<unknown>,
+async function tool_stageBulkAction(
+  args: {
+    actionType?: "delete" | "archive";
+    query?: string;
+    category?: string;
+    status?: string;
+  },
+  admin: { name: string; role: string }
+) {
+  const { actionType = "delete", query, category, status } = args;
+
+  const mongoQuery: Record<string, unknown> = {};
+  if (query) {
+    mongoQuery.$or = [
+      { name: { $regex: query, $options: "i" } },
+      { sku: { $regex: query, $options: "i" } },
+    ];
+  }
+  if (category && category !== "all") {
+    mongoQuery.$or = [
+      ...((mongoQuery.$or as object[]) || []),
+      { category },
+      { categories: category },
+    ];
+  }
+  if (status && status !== "all") mongoQuery.status = status;
+
+  const matches = await Product.find(mongoQuery).select("_id").lean();
+  if (matches.length === 0) {
+    return { ok: false, error: "no matching products", matchCount: 0 };
+  }
+
+  const summaryParts: string[] = [];
+  if (query) summaryParts.push(`text "${query}"`);
+  if (category) summaryParts.push(`category ${category}`);
+  if (status) summaryParts.push(`status ${status}`);
+  const summary = summaryParts.length ? summaryParts.join(", ") : "all products";
+
+  // Invalidate any other pending actions so only one banner shows at a time.
+  await SparkyAction.updateMany(
+    { status: "pending" },
+    { $set: { status: "rejected", resultMessage: "superseded by newer staging" } }
+  );
+
+  const action = await SparkyAction.create({
+    actionType,
+    filter: { query, category, status },
+    productIds: matches.map((m) => m._id),
+    matchCount: matches.length,
+    summary,
+    createdBy: admin.name,
+    status: "pending",
+  });
+
+  const urlParams = new URLSearchParams();
+  if (query) urlParams.set("search", query);
+  if (category) urlParams.set("category", category);
+  if (status) urlParams.set("status", status);
+  urlParams.set("sparkyAction", String(action._id));
+
+  return {
+    ok: true,
+    actionId: String(action._id),
+    actionType,
+    matchCount: matches.length,
+    summary,
+    productsPageUrl: `/admin/products?${urlParams.toString()}`,
+    message: `Staged ${matches.length} products for ${actionType}. Admin must approve on the products page.`,
+  };
+}
+
+type ToolFn = (
+  args: Record<string, unknown>,
+  admin: { name: string; role: string }
+) => Promise<unknown>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const asTool = <T extends (args: any) => Promise<unknown>>(fn: T): ToolFn =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (args) => fn(args as any);
+
+const TOOLS: Record<string, ToolFn> = {
+  search_products: asTool(tool_searchProducts),
+  update_product: asTool(tool_updateProduct),
+  adjust_stock: asTool(tool_adjustStock),
+  list_categories: () => tool_listCategories(),
+  stats: () => tool_stats(),
+  categorize_pending: asTool(tool_categorizePending),
+  send_review_request: asTool(tool_sendReviewRequest),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  stage_bulk_action: (args, admin) => tool_stageBulkAction(args as any, admin),
 };
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -289,6 +377,25 @@ const FUNCTION_DECLARATIONS = [
       required: ["firstName", "phone"],
     },
   },
+  {
+    name: "stage_bulk_action",
+    description:
+      "Stage a bulk destructive action (delete or archive) for admin review on the products page. Use whenever the admin asks to delete/archive multiple products — NEVER execute these actions directly. The tool returns a productsPageUrl the admin opens to see a red-highlighted preview with Approve/Cancel buttons. Phrase the response as 'I've staged N products for <action>. Review and approve them on the products page: <link>'. Do not list every SKU in chat — the banner on the page shows them.",
+    parametersJsonSchema: {
+      type: "object",
+      properties: {
+        actionType: {
+          type: "string",
+          enum: ["delete", "archive"],
+          description: "delete removes the product; archive sets status to archived (recoverable)",
+        },
+        query: { type: "string", description: "free-text match against name and SKU" },
+        category: { type: "string", description: "category slug" },
+        status: { type: "string", enum: ["active", "draft", "archived", "all"] },
+      },
+      required: ["actionType"],
+    },
+  },
 ];
 
 const SYSTEM_INSTRUCTION = `You are Sparky, the MultiElectric Supply admin assistant. You help the store admin inspect and update the catalog.
@@ -299,7 +406,8 @@ Guidelines:
 - Prices are USD. Quantity is in units (pieces, rolls, etc).
 - When showing product lists, format as concise markdown tables or bullet lists with SKU, name, price, qty.
 - If a task would touch more than 20 products at once, stop and ask the admin to confirm the scope explicitly.
-- search_products returns \`total\` (real count in DB) and \`products\` (a sample). Always quote \`total\` when the admin asks how many. When \`truncated\` is true, include the \`productsPageUrl\` as a clickable markdown link so the admin can view all matches on the admin products page. Example: "Found **136** products matching 'SO'. Showing 50 here — [view all on products page](/admin/products?search=SO)."`;
+- search_products returns \`total\` (real count in DB) and \`products\` (a sample). Always quote \`total\` when the admin asks how many. When \`truncated\` is true, include the \`productsPageUrl\` as a clickable markdown link so the admin can view all matches on the admin products page. Example: "Found **136** products matching 'SO'. Showing 50 here — [view all on products page](/admin/products?search=SO)."
+- For bulk destructive asks ("delete all X", "archive all Y"), never execute directly. Always call stage_bulk_action — it records the match list on the server and puts a red preview banner on the admin products page. Respond with: "I've staged N products for <action>. Review and approve them on the products page: [link](url)." Do not list every SKU in chat — the page shows them with Approve / Cancel buttons.`;
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Route handler
@@ -308,7 +416,8 @@ Guidelines:
 type ChatTurn = { role: "user" | "model"; text: string };
 
 export async function POST(request: NextRequest) {
-  if (!(await requireAdmin())) {
+  const admin = await requireAdmin();
+  if (!admin) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   const apiKey = process.env.GEMINI_API_KEY;
@@ -378,7 +487,7 @@ export async function POST(request: NextRequest) {
         result = { error: `unknown tool ${call.name}` };
       } else {
         try {
-          result = await impl((call.args || {}) as Record<string, unknown>);
+          result = await impl((call.args || {}) as Record<string, unknown>, admin);
         } catch (err) {
           result = { error: err instanceof Error ? err.message : String(err) };
         }
