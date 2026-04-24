@@ -51,6 +51,12 @@ export interface IProduct extends Document {
   needsAiCategorize?: boolean;
   /** Raw "Departments" value from the RMS export, kept for auditing + AI mapping. */
   rmsDepartment?: string | null;
+  /**
+   * SKUs prefixed SO- are "special order" items in the RMS (no stock,
+   * ordered on demand). Hidden from the public storefront by default;
+   * admins can flip this to surface them manually.
+   */
+  isSpecialOrder?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -106,6 +112,7 @@ const ProductSchema = new Schema<IProduct>(
     stripePriceId: { type: String },
     needsAiCategorize: { type: Boolean, default: false, index: true },
     rmsDepartment: { type: String, default: null },
+    isSpecialOrder: { type: Boolean, default: false, index: true },
   },
   {
     timestamps: true,

@@ -156,6 +156,9 @@ export function processImportRows(rows: ImportRow[]): ProcessedRows {
       const name = description.substring(0, 200);
       const slug = generateSlug(sku);
       const quantity = Math.max(0, availableQty ?? qtyOnHand ?? 0);
+      // SO- SKUs are RMS "Special Order" — ordered on demand, no stock.
+      // Hide from storefront by default; admin can surface individually.
+      const isSpecialOrder = /^SO-/i.test(sku);
 
       const specifications: Record<string, string> = {};
       if (subDesc2) specifications["attribute1"] = subDesc2;
@@ -193,6 +196,7 @@ export function processImportRows(rows: ImportRow[]): ProcessedRows {
         tags: [department, subDesc1, subDesc2, subDesc3].filter(Boolean),
         needsAiCategorize: !isMapped,
         rmsDepartment: department || null,
+        isSpecialOrder,
       };
 
       bulkOps.push({

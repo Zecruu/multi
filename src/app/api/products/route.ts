@@ -36,6 +36,14 @@ export async function GET(request: NextRequest) {
     const inStock = searchParams.get("inStock"); // Filter out of stock products
     const outOfStock = searchParams.get("outOfStock"); // Show only out of stock products
     const inStockFirst = searchParams.get("inStockFirst") === "true";
+    // Special Order filter — values: "only" (just SO), "hide" (explicit
+    // hide), or absent (default: hide for public, show for admin).
+    // Admin callers should pass "all" to see both or "only" to see just SO.
+    const specialOrder = searchParams.get("specialOrder");
+    // Admin callers: pass admin=true (or have admin_session cookie) to see
+    // special-order products by default. Public storefront requests hide them.
+    const isAdminRequest =
+      searchParams.get("admin") === "true" || !!(await getAdminUser());
 
     const query: Record<string, unknown> = {};
     const andClauses: Record<string, unknown>[] = [];
@@ -82,6 +90,19 @@ export async function GET(request: NextRequest) {
     // Show only out of stock products
     if (outOfStock === "true") {
       query.quantity = { $lte: 0 };
+    }
+
+    // Special Order gating:
+    //   specialOrder=only  → only SO products
+    //   specialOrder=hide  → force hide (explicit)
+    //   specialOrder=all   → include both (admin bypass)
+    //   default            → hide for public, show for admin
+    if (specialOrder === "only") {
+      query.isSpecialOrder = true;
+    } else if (specialOrder === "hide") {
+      query.isSpecialOrder = { $ne: true };
+    } else if (specialOrder !== "all" && !isAdminRequest) {
+      query.isSpecialOrder = { $ne: true };
     }
 
     const skip = (page - 1) * limit;

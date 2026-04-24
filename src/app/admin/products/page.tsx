@@ -82,6 +82,7 @@ interface Product {
   salePrice?: number;
   quantity: number;
   status: string;
+  isSpecialOrder?: boolean;
   images: { url: string; key: string; isPrimary: boolean }[];
 }
 
@@ -150,6 +151,8 @@ function ProductsPageInner() {
   const [totalProducts, setTotalProducts] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [showOutOfStock, setShowOutOfStock] = useState(false);
+  // "all" — show both; "only" — only Special Order; "hide" — hide SO.
+  const [specialOrderFilter, setSpecialOrderFilter] = useState<"all" | "only" | "hide">("all");
   const productsPerPage = 50;
 
   // Sparky pending-action state: when Sparky stages a bulk delete/archive,
@@ -198,11 +201,11 @@ function ProductsPageInner() {
   // URL param or typing in the box).
   useEffect(() => {
     const t = setTimeout(() => {
-      fetchProducts(1, showOutOfStock, searchQuery);
+      fetchProducts(1, showOutOfStock, searchQuery, specialOrderFilter);
     }, searchQuery === urlSearch ? 0 : 300);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, showOutOfStock]);
+  }, [searchQuery, showOutOfStock, specialOrderFilter]);
 
   const fetchCategories = async () => {
     try {
@@ -219,13 +222,15 @@ function ProductsPageInner() {
   const fetchProducts = async (
     page = 1,
     outOfStockOnly = showOutOfStock,
-    search = searchQuery
+    search = searchQuery,
+    soFilter = specialOrderFilter
   ) => {
     try {
       setIsLoading(true);
       const params = new URLSearchParams({
         page: String(page),
         limit: String(productsPerPage),
+        specialOrder: soFilter,
       });
       if (outOfStockOnly) {
         params.set("outOfStock", "true");
@@ -411,6 +416,27 @@ function ProductsPageInner() {
     } catch (error) {
       console.error("Failed to delete product:", error);
       toast.error("Failed to delete product");
+    }
+  };
+
+  // Toggle the special-order flag on a single product. Surfaces miss-flagged
+  // items to the storefront (isSpecialOrder: false) or hides correctly-flagged
+  // items (isSpecialOrder: true) without editing the full dialog.
+  const toggleSpecialOrder = async (product: Product) => {
+    const next = !product.isSpecialOrder;
+    try {
+      const response = await fetch(`/api/products/${product._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...product, isSpecialOrder: next }),
+      });
+      if (!response.ok) throw new Error("failed");
+      toast.success(
+        next ? "Marked as Special Order (hidden from storefront)" : "Surfaced to storefront"
+      );
+      fetchProducts(currentPage, showOutOfStock, searchQuery, specialOrderFilter);
+    } catch {
+      toast.error("Failed to update");
     }
   };
 
@@ -1014,6 +1040,19 @@ function ProductsPageInner() {
               <PackageX className="w-4 h-4 mr-2" />
               {showOutOfStock ? "Showing Out of Stock" : "Out of Stock"}
             </Button>
+            <Select
+              value={specialOrderFilter}
+              onValueChange={(v) => setSpecialOrderFilter(v as "all" | "only" | "hide")}
+            >
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Special Order" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Products</SelectItem>
+                <SelectItem value="only">Special Order Only</SelectItem>
+                <SelectItem value="hide">Hide Special Order</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
@@ -1105,8 +1144,13 @@ function ProductsPageInner() {
                     <TableCell>
                       <div>
                         <p className="font-medium text-foreground">{product.name}</p>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <p className="text-sm text-muted-foreground">{product.sku}</p>
+                          {product.isSpecialOrder && (
+                            <Badge variant="outline" className="bg-amber-500/10 text-amber-700 border-amber-500/30 text-[10px]">
+                              Special Order
+                            </Badge>
+                          )}
                           {isPending && pendingAction && (
                             <Badge variant="outline" className="bg-red-500/10 text-red-600 border-red-500/30 text-[10px]">
                               Sparky: will {pendingAction.actionType}
@@ -1147,7 +1191,11 @@ function ProductsPageInner() {
                             <Edit className="w-4 h-4 mr-2" />
                             Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem 
+                          <DropdownMenuItem onClick={() => toggleSpecialOrder(product)}>
+                            <Package className="w-4 h-4 mr-2" />
+                            {product.isSpecialOrder ? "Surface to storefront" : "Mark as Special Order"}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
                             className="text-destructive"
                             onClick={() => handleDeleteProduct(product._id)}
                           >
