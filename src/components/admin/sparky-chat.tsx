@@ -35,6 +35,9 @@ export function SparkyChat() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [lastCalls, setLastCalls] = useState<ToolCall[]>([]);
+  // Surface the last navigation target so the user has a fallback button
+  // if the auto-push got eaten by something (permissions, HMR, etc).
+  const [lastNavUrl, setLastNavUrl] = useState<string | null>(null);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const pathname = usePathname();
@@ -86,26 +89,39 @@ export function SparkyChat() {
         setLastCalls(calls);
         setHistory([...next, { role: "model", text: data.reply || "(no reply)" }]);
 
-        // Auto-navigate to the results view when a tool returns a URL.
-        // Priority: staging > search. Only navigate if we're not already
-        // on that page (avoids a jarring scroll-to-top reload).
+        // Find any tool call that wants to route the user to the admin
+        // products page. staging takes precedence over search.
         const stagingUrl = calls.find(
           (c) => c.name === "stage_bulk_action"
         )?.result as { productsPageUrl?: string } | undefined;
-        const searchUrl = calls.find(
+        const searchResult = calls.find(
           (c) => c.name === "search_products"
-        )?.result as { productsPageUrl?: string; truncated?: boolean } | undefined;
+        )?.result as { productsPageUrl?: string; truncated?: boolean; total?: number } | undefined;
 
+        // For search: navigate whenever it returned a URL (even if the
+        // sample wasn't truncated, the admin still wants to see the
+        // filtered view on the products page).
         const targetUrl =
-          stagingUrl?.productsPageUrl ||
-          (searchUrl?.truncated ? searchUrl.productsPageUrl : undefined);
+          stagingUrl?.productsPageUrl || searchResult?.productsPageUrl || null;
+
+        setLastNavUrl(targetUrl);
 
         if (targetUrl) {
-          // Always route — the products page reads fresh URL params and
-          // refetches. Skip only if exactly same url so we don't reload.
-          const current = pathname + (typeof window !== "undefined" ? window.location.search : "");
+          const current =
+            pathname +
+            (typeof window !== "undefined" ? window.location.search : "");
           if (current !== targetUrl) {
-            router.push(targetUrl);
+            // Close the chat so the banner on the products page isn't
+            // hidden under the widget.
+            setOpen(false);
+            // Next router.push is soft-nav; window.location.href is a
+            // hard-reload guarantee. Use hard-reload for staging actions
+            // so the SparkyActions poller definitely picks up the new doc.
+            if (stagingUrl?.productsPageUrl) {
+              window.location.href = targetUrl;
+            } else {
+              router.push(targetUrl);
+            }
           }
         }
       }
@@ -203,6 +219,19 @@ export function SparkyChat() {
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   Thinking…
                 </div>
+              </div>
+            )}
+            {lastNavUrl && (
+              <div className="flex justify-start">
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    window.location.href = lastNavUrl;
+                  }}
+                  className="text-xs font-medium text-amber-700 dark:text-amber-400 underline hover:no-underline"
+                >
+                  Open on products page →
+                </button>
               </div>
             )}
             {lastCalls.length > 0 && (

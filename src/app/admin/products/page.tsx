@@ -137,8 +137,8 @@ function ProductsPageInner() {
   // Honor URL params so Sparky (and bookmarks) can deep-link into a
   // pre-filtered view. e.g. /admin/products?search=SO
   const urlParams = useSearchParams();
-  const initialSearch = urlParams?.get("search") ?? "";
-  const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const urlSearch = urlParams?.get("search") ?? "";
+  const [searchQuery, setSearchQuery] = useState(urlSearch);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -147,6 +147,10 @@ function ProductsPageInner() {
   const [formData, setFormData] = useState<ProductFormData>(initialFormData);
   const [productImages, setProductImages] = useState<UploadedImage[]>([]);
   const [editingProductId, setEditingProductId] = useState<string | null>(null);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showOutOfStock, setShowOutOfStock] = useState(false);
+  const productsPerPage = 50;
 
   // Sparky pending-action state: when Sparky stages a bulk delete/archive,
   // a banner appears here with the affected product IDs red-highlighted in
@@ -174,29 +178,31 @@ function ProductsPageInner() {
     }
   };
 
-  // Fetch products and categories on mount
+  // Fetch categories + start pending-action poll on mount only.
   useEffect(() => {
-    fetchProducts(1, showOutOfStock, initialSearch);
     fetchCategories();
     fetchPendingAction();
-    // Light polling so the banner appears without a manual refresh when
-    // Sparky stages an action in another tab.
     const t = setInterval(fetchPendingAction, 10_000);
     return () => clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Debounced server-side search when the user types. Runs only when
-  // searchQuery diverges from the initial URL-seeded value — avoids a
-  // redundant fetch on mount.
+  // Sync searchQuery whenever the URL ?search= param changes — Sparky
+  // soft-navigates here without remounting, so we have to react to it.
   useEffect(() => {
-    if (searchQuery === initialSearch) return;
+    setSearchQuery(urlSearch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlSearch]);
+
+  // Debounced server-side fetch whenever searchQuery changes (from either
+  // URL param or typing in the box).
+  useEffect(() => {
     const t = setTimeout(() => {
       fetchProducts(1, showOutOfStock, searchQuery);
-    }, 300);
+    }, searchQuery === urlSearch ? 0 : 300);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery]);
+  }, [searchQuery, showOutOfStock]);
 
   const fetchCategories = async () => {
     try {
@@ -209,11 +215,6 @@ function ProductsPageInner() {
       console.error("Failed to fetch categories:", error);
     }
   };
-
-  const [totalProducts, setTotalProducts] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showOutOfStock, setShowOutOfStock] = useState(false);
-  const productsPerPage = 50;
 
   const fetchProducts = async (
     page = 1,
