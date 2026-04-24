@@ -57,6 +57,7 @@ interface ImportRunSummary {
   totalRows: number;
   created: number;
   updated: number;
+  unchanged?: number;
   skipped: number;
   pendingAiCategorize: number;
   totalErrors: number;
@@ -312,6 +313,7 @@ export default function ImportsPage() {
                     <TableHead>Status</TableHead>
                     <TableHead className="text-right">Created</TableHead>
                     <TableHead className="text-right">Updated</TableHead>
+                    <TableHead className="text-right">Unchanged</TableHead>
                     <TableHead className="text-right">Skipped</TableHead>
                     <TableHead className="text-right">Pending AI</TableHead>
                     <TableHead className="text-right">Errors</TableHead>
@@ -324,7 +326,7 @@ export default function ImportsPage() {
                   ) : runs.length === 0 ? (
                     <TableRow>
                       <TableCell
-                        colSpan={9}
+                        colSpan={10}
                         className="text-center text-muted-foreground py-10"
                       >
                         No import runs recorded yet.
@@ -384,6 +386,9 @@ export default function ImportsPage() {
                           {r.created}
                         </TableCell>
                         <TableCell className="text-right">{r.updated}</TableCell>
+                        <TableCell className="text-right text-muted-foreground">
+                          {r.unchanged ?? 0}
+                        </TableCell>
                         <TableCell className="text-right text-muted-foreground">
                           {r.skipped}
                         </TableCell>
@@ -512,7 +517,7 @@ function SkeletonRows() {
     <>
       {[...Array(5)].map((_, i) => (
         <TableRow key={i}>
-          {[...Array(9)].map((__, j) => (
+          {[...Array(10)].map((__, j) => (
             <TableCell key={j}>
               <Skeleton className="h-4 w-full" />
             </TableCell>

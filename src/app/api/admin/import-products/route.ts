@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import { logImportRun } from "@/lib/import-run-logger";
 import { processImportRows, ImportRow } from "@/lib/import-row-processor";
+import { filterUnchangedOps } from "@/lib/import-diff";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
@@ -32,6 +33,7 @@ interface ImportResult {
   success: boolean;
   created: number;
   updated: number;
+  unchanged: number;
   skipped: number;
   errors: Array<{ row: number; sku: string; error: string }>;
   products?: Array<{
@@ -124,10 +126,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { bulkOps, opMeta, errors, skipped, newSkuNeedsAiCategorize } =
       processImportRows(rows);
 
+    // Skip rows whose price/cost/qty already match the DB so the report
+    // reflects actual changes instead of every row being "updated" by
+    // Mongoose's auto updatedAt bump.
+    const diff = dryRun
+      ? { filteredOps: bulkOps, filteredMeta: opMeta, unchangedSkus: [] as string[] }
+      : await filterUnchangedOps(bulkOps, opMeta);
+
     const result: ImportResult = {
       success: true,
       created: 0,
       updated: 0,
+      unchanged: diff.unchangedSkus.length,
       skipped,
       errors,
       products: dryRun ? [] : undefined,
@@ -141,6 +151,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       needsAiCategorize?: boolean;
     }> = [];
 
+    for (const sku of diff.unchangedSkus) {
+      skuActions.push({ sku, action: "unchanged" });
+    }
+
     if (dryRun) {
       result.products = opMeta.map((m) => ({
         sku: m.sku,
@@ -149,17 +163,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         isNew: true, // dry run can't distinguish without a DB hit
       }));
       result.created = opMeta.length;
-    } else if (bulkOps.length > 0) {
-      console.log(`[Import] Executing ${bulkOps.length} bulk operations...`);
+    } else if (diff.filteredOps.length > 0) {
+      console.log(`[Import] Executing ${diff.filteredOps.length} bulk operations (skipped ${diff.unchangedSkus.length} unchanged)...`);
 
       try {
         const batchSize = 500;
-        const totalBatches = Math.ceil(bulkOps.length / batchSize);
+        const totalBatches = Math.ceil(diff.filteredOps.length / batchSize);
         console.log(`[Import] Will process ${totalBatches} batches of up to ${batchSize}`);
 
-        for (let i = 0; i < bulkOps.length; i += batchSize) {
-          const batch = bulkOps.slice(i, i + batchSize);
-          const batchMeta = opMeta.slice(i, i + batchSize);
+        for (let i = 0; i < diff.filteredOps.length; i += batchSize) {
+          const batch = diff.filteredOps.slice(i, i + batchSize);
+          const batchMeta = diff.filteredMeta.slice(i, i + batchSize);
           const batchNum = Math.floor(i / batchSize) + 1;
 
           const startTime = Date.now();
@@ -274,6 +288,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         totalRows: rows.length,
         created: result.created,
         updated: result.updated,
+        unchanged: result.unchanged,
         skipped: result.skipped,
         pendingAiCategorize: newSkuNeedsAiCategorize,
         errors: result.errors,
@@ -294,6 +309,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             : ""),
       created: result.created,
       updated: result.updated,
+      unchanged: result.unchanged,
       skipped: result.skipped,
       totalRows: rows.length,
       pendingAiCategorize: newSkuNeedsAiCategorize,

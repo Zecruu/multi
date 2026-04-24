@@ -28,6 +28,7 @@ export interface IImportRun extends Document {
   totalRows: number;
   created: number;
   updated: number;
+  unchanged: number;
   skipped: number;
   pendingAiCategorize: number;
   totalErrors: number;
@@ -84,6 +85,7 @@ const ImportRunSchema = new Schema<IImportRun>(
     totalRows: { type: Number, default: 0 },
     created: { type: Number, default: 0 },
     updated: { type: Number, default: 0 },
+    unchanged: { type: Number, default: 0 },
     skipped: { type: Number, default: 0 },
     pendingAiCategorize: { type: Number, default: 0 },
     totalErrors: { type: Number, default: 0 },

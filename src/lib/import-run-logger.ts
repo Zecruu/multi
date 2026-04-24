@@ -14,6 +14,7 @@ export interface LogImportRunInput {
   totalRows: number;
   created: number;
   updated: number;
+  unchanged?: number;
   skipped: number;
   pendingAiCategorize?: number;
   errors: IImportRunError[];
@@ -41,6 +42,7 @@ export async function logImportRun(input: LogImportRunInput) {
       totalRows: input.totalRows,
       created: input.created,
       updated: input.updated,
+      unchanged: input.unchanged ?? 0,
       skipped: input.skipped,
       pendingAiCategorize: input.pendingAiCategorize ?? 0,
       totalErrors: input.errors.length,

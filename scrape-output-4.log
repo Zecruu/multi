@@ -1,0 +1,2935 @@
+=== Product Image Scraper ===
+Batch size: 20, Start page: 1, Dry run: false
+
+Connected to MongoDB
+
+── Page 1 (20 products) ──
+
+[1] Raiser Cover 5x5 2G 1/4 (01-0140)
+  Search query: "Metal Raiser Cover 5x5 2G 1/4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/574eed50-3cf7-4038-a6c5-d8a6d0e51463/... (23KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6af/1775661846656-product.jpg
+
+[2] Caja WP 2x4 4Ko 1/2" (01-0161)
+  Search query: "EMT Caja WP 2x4 4Ko 1/2" product"
+  Found 32 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d1/1775661849902-product.jpg
+
+[3] Caja WP 2x4 5Ko 3/4" (01-0166)
+  Search query: "EMT Caja WP 2x4 5Ko 3/4" product"
+  Found 32 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d2/1775661852738-product.jpg
+
+[4] Caja WP 4x4 3Ko 1/2" (01-0169)
+  Search query: "EMT Caja WP 4x4 3Ko 1/2" product"
+  Found 33 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d3/1775661855480-product.jpg
+
+[5] Caja WP 4x4 4Ko 1/2" (01-0170)
+  Search query: "EMT Caja WP 4x4 4Ko 1/2" product"
+  Found 33 candidate images
+  Selected: https://lazo.es/producto/caja-conduit-4x4-emt-ko1-2-3-4/40705.jpg... (27KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d4/1775661860243-product.jpg
+
+[6] Caja WP 4x4 4Ko 3/4" (01-0173)
+  Search query: "EMT Caja WP 4x4 4Ko 3/4" product"
+  Found 32 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d5/1775661863329-product.jpg
+
+[7] Tapa Canopy Cover 4 x 4 (01-0132)
+  Search query: "Metal Plate Tapa Canopy Cover 4 x 4 product"
+  Found 34 candidate images
+  Selected: https://www.instacart.com/image-server/1200x1200/www.instacart.com/assets/domain... (90KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d6/1775661866635-product.jpg
+
+[8] Caja WP 4x4 5Ko 1/2" (01-0174)
+  Search query: "EMT Caja WP 4x4 5Ko 1/2" product"
+  Found 31 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d7/1775661869374-product.jpg
+
+[9] Caja WP 4x4 5Ko 3/4" (01-0175)
+  Search query: "EMT Caja WP 4x4 5Ko 3/4" product"
+  Found 31 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d8/1775661872303-product.jpg
+
+[10] Caja WP 4x4 3Ko 1'' (01-0175-1)
+  Search query: "EMT Caja WP 4x4 3Ko 1'' product"
+  Found 31 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6d9/1775661875157-product.jpg
+
+[11] Caja WP 4x4 5Ko 1'' (01-0175-2)
+  Search query: "EMT Caja WP 4x4 5Ko 1'' product"
+  Found 33 candidate images
+  Selected: https://img.alicdn.com/imgextra/i1/6000000002064/O1CN017xQjTR1R7MGyExfXq_!!60000... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6da/1775661878272-product.jpg
+
+[12] Caja WP Oct 5Ko 1/2" (01-0176)
+  Search query: "EMT Caja WP Oct 5Ko 1/2" product"
+  Found 30 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6db/1775661881112-product.jpg
+
+[13] Caja WP 2x4 3Ko 1/2" (01-0176-1)
+  Search query: "EMT Caja WP 2x4 3Ko 1/2" product"
+  Found 33 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6dc/1775661883967-product.jpg
+
+[14] Caja WP 2x4 3Ko 3/4" PROF (01-0176-10)
+  Search query: "EMT Caja WP 2x4 3Ko 3/4" PROF product"
+  Found 33 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6dd/1775661886732-product.jpg
+
+[15] Caja WP 4x4 3Ko 3/4" (01-0176-13)
+  Search query: "EMT Caja WP 4x4 3Ko 3/4" product"
+  Found 32 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6de/1775661889534-product.jpg
+
+[16] Caja WP 2x4 5Ko 1/2" (01-0176-3)
+  Search query: "EMT Caja WP 2x4 5Ko 1/2" product"
+  Found 33 candidate images
+  Selected: https://cablenortesrl.com/wp-content/uploads/2019/08/caja-electrica-2x4-cm-t7102... (34KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6df/1775661893206-product.jpg
+
+[17] Caja WP 2x4 3Ko 3/4" (01-0176-4)
+  Search query: "EMT Caja WP 2x4 3Ko 3/4" 0163-1 product"
+  Found 32 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6e0/1775661896001-product.jpg
+
+[18] Tapa Round Box 4" ko 1/2 Cake (01-0132-1)
+  Search query: "Metal Tapa Round Box 4" ko 1/2 Cake product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/fd7f31d9-aa42-45de-a9e6-a94b01c18a1f/... (59KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6e1/1775661899287-product.jpg
+
+[19] Caja WP 2x4 4Ko 3/4" (01-0176-5)
+  Search query: "EMT Caja WP 2x4 4Ko 3/4" product"
+  Found 33 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6e2/1775661902110-product.jpg
+
+[20] Caja WP 2x4 3Ko 1" (01-0176-7)
+  Search query: "EMT Caja WP 2x4 3Ko 1" product"
+  Found 34 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060bc47396962b81a6e3/1775661908232-product.jpg
+
+── Page 2 (20 products) ──
+
+[21] Conn Recto Non Metallic 1-1/2" (02-NMFS150)
+  Search query: "02-NMFS150 Conn Recto Non Metallic 1-1/2" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/97ec742e-6583-46da-ae1c-9fbf04fcf1c3/... (32KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a7fc/1775661911348-product.jpg
+
+[22] Conn Recto Non Metallic 2" (02-NMFS200)
+  Search query: "02-NMFS200 Conn Recto Non Metallic 2" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/3d8c1445-31de-42cb-8d3b-2cc10dbf409c/... (62KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a7fd/1775661914256-product.jpg
+
+[23] PVC Raiser Cover 2X4 (03-0048-1)
+  Search query: "PVC PVC Raiser Cover 2X4 product"
+  Found 34 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/a9037a6e-98d3-4ae6-8276-6a2be7272f4... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a7fe/1775661916995-product.jpg
+
+[24] PVC Conduit 3/4" SCH 40 (03-0051)
+  Search query: "PVC PVC Conduit 3/4" SCH 40 165 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/095b34bf-f88d-4745-aa4e-e48c3efc9d33/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a800/1775661920051-product.jpg
+
+[25] PVC Coupling 1/2" (03-0081)
+  Search query: "PVC PVC Coupling 1/2" product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/a265edb0-663e-4068-bf70-1342eceb1fa1/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a814/1775661923161-product.jpg
+
+[26] PVC Coupling 3/4" (03-0082)
+  Search query: "PVC PVC Coupling 3/4" product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/87ed9830-db85-4c95-bc03-4cb7ba896d56/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a815/1775661926010-product.jpg
+
+[27] PVC Coupling 1" (03-0083)
+  Search query: "pvc PVC Coupling 1" product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/e42cb651-24ca-4c9f-8ae0-8a3bb8f66181/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a816/1775661928894-product.jpg
+
+[28] PVC Coupling 1-1/4" (03-0084)
+  Search query: "PVC PVC Coupling 1-1/4" product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/0fe4de45-8d9c-4025-8872-8262d5a6981b/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a817/1775661931967-product.jpg
+
+[29] Conn Curvo Seal Tight 1" (02-0190)
+  Search query: "02-0190 Conn Curvo Seal Tight 1" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/19a55b95-4437-4f14-9263-2694606eb48d/... (34KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a818/1775661934583-product.jpg
+
+[30] PVC Coupling 1-1/2" (03-0085)
+  Search query: "PVC PVC Coupling 1-1/2" 180 product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/51d32b5e-c291-4334-83c7-7ce5dbcaedce/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a819/1775661937507-product.jpg
+
+[31] PVC Coupling 2" (03-0086)
+  Search query: "PVC PVC Coupling 2" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/51d32b5e-c291-4334-83c7-7ce5dbcaedce/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a81a/1775661940425-product.jpg
+
+[32] PVC Coupling 2-1/2" (03-0087)
+  Search query: "PVC PVC Coupling 2-1/2" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/51d32b5e-c291-4334-83c7-7ce5dbcaedce/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a81b/1775661943347-product.jpg
+
+[33] PVC Coupling 3" (03-0088)
+  Search query: "PVC PVC Coupling 3" product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/596a100e-1736-487c-9325-27be88872f74/... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a81c/1775661946385-product.jpg
+
+[34] PVC Coupling 4" (03-0089)
+  Search query: "PVC PVC Coupling 4" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/51d32b5e-c291-4334-83c7-7ce5dbcaedce/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a81d/1775661949651-product.jpg
+
+[35] PVC Coupling 6" (03-0090)
+  Search query: "PVC PVC Coupling 6" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/7b320804-bd41-4b3b-91f5-02f7050c914a/... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a81e/1775661952549-product.jpg
+
+[36] PVC Female Adapter 1/2" (03-0092)
+  Search query: "PVC PVC Female Adapter 1/2" product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/a40db527-bbe0-4514-87a2-7a8780ce83c4/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a81f/1775661955427-product.jpg
+
+[37] PVC Female Adapter 3/4" (03-0093)
+  Search query: "PVC PVC Female Adapter 3/4" product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/083586b0-5815-4eaf-97f7-7d5abe1d972e/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a820/1775661958517-product.jpg
+
+[38] PVC Female Adapter 1" (03-0094)
+  Search query: "PVC PVC Female Adapter 1" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/761ead95-3994-4655-ad76-660d71bb78a1/... (10KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a821/1775661961615-product.jpg
+
+[39] PVC Elbow 3/4" (03-0104)
+  Search query: "PVC PVC Elbow 3/4" 1491 product"
+  Found 33 candidate images
+  Selected: https://images.homedepot-static.com/productImages/ce6bebfa-51d5-4bf4-ba37-7f59f9... (46KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a829/1775661964604-product.jpg
+
+[40] PVC Elbow 1-1/4" (03-0106)
+  Search query: "PVC PVC Elbow 1-1/4" product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/de716c88-4cf2-4e59-a5ef-84d5025eff3b/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a82b/1775661967423-product.jpg
+
+── Page 3 (20 products) ──
+
+[41] Machine Bolt 5/8 x 16 (05-0052)
+  Search query: "Material de Linea Machine Bolt 5/8 x 16 product"
+  Found 33 candidate images
+  Selected: https://dyj5eat7opd4n.cloudfront.net/wp-content/uploads/2022/12/600-100033-2.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8c7/1775661970431-product.jpg
+
+[42] Machine Bolt 5/8 x 18 (05-0053)
+  Search query: "05-0053 Machine Bolt 5/8 x 18 product"
+  Found 33 candidate images
+  Selected: https://cdn.shopify.com/s/files/1/0550/1668/5799/products/boltbmachine1125x1125_... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8c8/1775661973498-product.jpg
+
+[43] Double Arming Bolt 5/8 x 12 (05-0055)
+  Search query: "05-0055 Double Arming Bolt 5/8 x 12 product"
+  Found 33 candidate images
+  Selected: https://alliedboltinc.com/productimages/DoubleArmingBolt6Nuts.jpg... (75KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8c9/1775661976554-product.jpg
+
+[44] Caja Pvc FSC-34 2K/O 3/4 (03-0327)
+  Search query: "PVC Caja Pvc FSC-34 2K/O 3/4 product"
+  Found 35 candidate images
+  Selected: https://surtiendo.com/497-large_default/caja-rectangular-fsc-tp-3-3-4.jpg... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8ca/1775661980023-product.jpg
+
+[45] Double Arming Bolt 5/8 x 14 (05-0056)
+  Search query: "05-0056 Double Arming Bolt 5/8 x 14 product"
+  Found 32 candidate images
+  Selected: https://dyj5eat7opd4n.cloudfront.net/wp-content/uploads/2022/12/600-100011-2.jpg... (37KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8cb/1775661983207-product.jpg
+
+[46] Double Arming Bolt 5/8 x 18 (05-0059)
+  Search query: "05-0059 Double Arming Bolt 5/8 x 18 product"
+  Found 35 candidate images
+  Selected: http://www.novalight.com/Shared/Images/Product/Bolt-Double-Arming-Square-Head-5-... (84KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8cc/1775661986290-product.jpg
+
+[47] Oval Eye Bolt 5/8 x 14 (05-0064)
+  Search query: "05-0064 Oval Eye Bolt 5/8 x 14 product"
+  Found 34 candidate images
+  Selected: https://dyj5eat7opd4n.cloudfront.net/wp-content/uploads/2022/12/600-100063-2.jpg... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8cd/1775661989452-product.jpg
+
+[48] Oval Eye Bolt 5/8 x 18 (05-0066)
+  Search query: "05-0066 Oval Eye Bolt 5/8 x 18 product"
+  Found 31 candidate images
+  Selected: https://www.mymillennium.us/wp-content/uploads/2022/12/600-100012-2.jpg... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8ce/1775661992306-product.jpg
+
+[49] Oval Eye Nut 5/8 (05-0072)
+  Search query: "Material de Linea Oval Eye Nut 5/8 product"
+  Found 34 candidate images
+  Selected: https://dyj5eat7opd4n.cloudfront.net/wp-content/uploads/2022/12/600-100063-2.jpg... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8cf/1775661995170-product.jpg
+
+[50] Square Washer 2 x 2 (05-0073)
+  Search query: "Material de Linea Square Washer 2 x 2 product"
+  Found 32 candidate images
+  Selected: https://5.imimg.com/data5/SELLER/Default/2021/6/ZE/HD/LN/58087602/mild-steel-fla... (56KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d0/1775661998244-product.jpg
+
+[51] Anchor Rod Thimbleye 5/8 x 7 (05-0075)
+  Search query: "Material de Linea Anchor Rod Thimbleye 5/8 x 7 product"
+  Found 34 candidate images
+  Selected: https://bsg-i.nbxc.com/product/a8/56/97/0d6edf2158e43014324dae9211.jpg... (91KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d1/1775662001617-product.jpg
+
+[52] Anchor Expanding 8-Way (05-0077)
+  Search query: "05-0077 Anchor Expanding 8-Way product"
+  Found 35 candidate images
+  Selected: https://alliedboltinc.com/productimages/19021pic Schematic.png... (165KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d2/1775662004611-product.png
+
+[53] Dead End Clamp 1/0 ADE-46 (05-0079)
+  Search query: "05-0079 Dead End Clamp 1/0 ADE-46 product"
+  Found 34 candidate images
+  Selected: https://image.made-in-china.com/2f0j00oBliTsVKnWGM/Line-Hardware-Strain-Clamp-60... (131KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d3/1775662007761-product.jpg
+
+[54] Dead End Clamp 3/0 ADS-48N (05-0080)
+  Search query: "05-0080 Dead End Clamp 3/0 ADS-48N product"
+  Found 34 candidate images
+  Selected: https://susacdn.azureedge.net/product/SonebizAssets/ProductImages/99999999999991... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d4/1775662010700-product.jpg
+
+[55] Caja Pvc FSCC-12 3K/O 1/2 (03-0328)
+  Search query: "PVC Caja Pvc FSCC-12 3K/O 1/2 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/44314c2c-85bb-4fd6-9c4e-c9f94d36f5c0/... (10KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d5/1775662013802-product.jpg
+
+[56] Fuse Cut Out 100A P/M 125KVBIL (05-0086)
+  Search query: "Material de Linea Fuse Cut Out 100A P/M 125KVBIL 100A product"
+  Found 35 candidate images
+  Selected: https://hubbellcdn.com/prodimage515/HPS_ID_836001_836005_2147849_PRODIMAGE_515.w... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d6/1775662017031-product.jpg
+
+[57] Fuse Cut Out 100A P/M 150KVBIL (05-0087)
+  Search query: "Material de Linea Fuse Cut Out 100A P/M 150KVBIL 100A product"
+  Found 33 candidate images
+  Selected: https://maviju.com/product/image/mediumlarge/el110061_0.jpg... (22KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d7/1775662020546-product.jpg
+
+[58] Fuse Cut Out 100A P/M 200KVBIL (05-0088)
+  Search query: "Material de Linea Fuse Cut Out 100A P/M 200KVBIL 100A product"
+  Found 34 candidate images
+  Selected: https://ecdn6.globalso.com/upload/p/393/image_product/2024-03/65e815335649a50526... (65KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8d8/1775662025338-product.jpg
+
+[59] Yellow Guy Guard (05-0090)
+  Search query: "05-0090 Yellow Guy Guard product"
+  Found 34 candidate images
+  Selected: http://www.3starinc.com/images/super/115-Guy-Guard_800x600t.jpg... (126KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8da/1775662028603-product.jpg
+
+[60] Guy Wire 3/8 (05-0091)
+  Search query: "05-0091 Guy Wire 3/8 product"
+  Found 33 candidate images
+  Selected: https://www.gbantennes.com/2720-large_default/guy-wire-3mm.jpg... (33KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a8db/1775662032115-product.jpg
+
+── Page 4 (20 products) ──
+
+[61] Insulated End Cap 200A 167 DRG (05-0164)
+  Search query: "Material de Linea Insulated End Cap 200A 167 DRG 200A product"
+  Found 35 candidate images
+  Selected: https://www.instrument-currenttransformer.com/photo/pl19715378-200a_epoxy_resin_... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a904/1775662035277-product.jpg
+
+[62] Shield Adapter # 2 ELB-200-CES (05-0148)
+  Search query: "Material Linea Shield Adapter # 2 ELB-200-CES 200-CES product"
+  Found 34 candidate images
+  Selected: https://interelectricas.com.co/36151-large_default/conector-tipo-codo-600a-750-k... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a90d/1775662038363-product.jpg
+
+[63] Fusible Dual 400A-600V (05-0177-10-2)
+  Search query: "Fusible Dual 400A-600V 400A-600V product"
+  Found 35 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Grainger_PHPxxOTS400xxMersenxxTIMG... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a915/1775662041599-product.jpg
+
+[64] Fusible Dual 45A 250V (05-0177-1-2)
+  Search query: "Fuse Fusible Dual 45A 250V 250V product"
+  Found 32 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z1J4xxfo5oy.JPG... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a919/1775662044688-product.jpg
+
+[65] Fusible Dual 35A-250V FLNR (05-017713)
+  Search query: "Fuse Fusible Dual 35A-250V FLNR 250V product"
+  Found 35 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z1wx60jcu7IOoutrfs3KPxHt.JPG... (34KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a91a/1775662047766-product.jpg
+
+[66] Fusible Dual 50A 250V (05-0177-1-3)
+  Search query: "Fuse Fusible Dual 50A 250V 250v product"
+  Found 33 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z27-Lyfo5oy.JPG... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a91b/1775662050752-product.jpg
+
+[67] Fusible Dual 60A/250V FRN (05-0177-2)
+  Search query: "Eaton Fusible Dual 60A/250V FRN 250V product"
+  Found 32 candidate images
+  Selected: https://www.elliottelectric.com/Media/FRNR600-BUS-0-7-LargeImage.jpg... (45KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a91c/1775662054156-product.jpg
+
+[68] Fusible GMA -1R (05-0177-20)
+  Search query: "Fuse Fusible GMA -1R product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/ed4a09f6-1906-47bb-90e7-600f9d14fb51/... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a91d/1775662057019-product.jpg
+
+[69] Fusible GMA -2R (05-0177-21)
+  Search query: "Fuse Fusible GMA -2R product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/ed4a09f6-1906-47bb-90e7-600f9d14fb51/... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a91e/1775662059898-product.jpg
+
+[70] Fusible Mini ABC-1-R (05-0177-22)
+  Search query: "Fuse Fusible Mini ABC-1-R 250V product"
+  Found 23 candidate images
+  Selected: https://www.elliottelectric.com/Media/ABC1-BUS-0-2-LargeImage.jpg... (45KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a91f/1775662063203-product.jpg
+
+[71] Fusible Mini ABC-2-R (05-0177-23)
+  Search query: "Fuse Fusible Mini ABC-2-R 100A product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/6a221862-7700-4af7-aa04-30bcd685cc29/... (10KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a920/1775662066196-product.jpg
+
+[72] Fusible Mini ABC-3-R (05-0177-24)
+  Search query: "Fuse Fusible Mini ABC-3-R product"
+  Found 32 candidate images
+  Selected: https://cdn.automationdirect.com/images/products/large/l_abc3.jpg... (90KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a921/1775662069092-product.jpg
+
+[73] Fusible Mini ABC-5-R (05-0177-25)
+  Search query: "Fuse Fusible Mini ABC-5-R product"
+  Found 34 candidate images
+  Selected: https://my.element14.com/productimages/large/en_US/4960015.jpg... (55KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a922/1775662072083-product.jpg
+
+[74] Parking Bushing S Steel 200A (05-0153)
+  Search query: "Material de Linea Parking Bushing S Steel 200A 200A product"
+  Found 35 candidate images
+  Selected: https://construccionbim.com.mx/3666-large_default/bushing-parking-senc-35kv-200a... (21KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a923/1775662075927-product.jpg
+
+[75] Fusible Mini MDL 1-R (05-0177-29)
+  Search query: "Fuse Fusible Mini MDL 1-R product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/ca7e0f89-6cd6-459d-977c-8004214238f4/... (33KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a924/1775662078754-product.jpg
+
+[76] Fusible Dual 10A-250V (05-0177-3)
+  Search query: "Fuse Fusible Dual 10A-250V 250V product"
+  Found 34 candidate images
+  Selected: https://electrosmart.co.uk/image/cache/catalog/Fuses/BEE-C3-T/BEE-C3-T-1000x1000... (46KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a925/1775662082853-product.jpg
+
+[77] Fusible Dual 15A-250V (05-0177-30)
+  Search query: "Fuse Fusible Dual 15A-250V 250V product"
+  Found 30 candidate images
+  Selected: http://www.webstaurantstore.com/images/products/extra_large/183110/680628.jpg... (42KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a926/1775662085833-product.jpg
+
+[78] Fusible Dual 20A-250V (05-0177-3-1)
+  Search query: "Fuse Fusible Dual 20A-250V 250v product"
+  Found 33 candidate images
+  Selected: https://au.element14.com/productimages/standard/en_US/4960016.jpg... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a927/1775662089592-product.jpg
+
+[79] Fusible Dual 25A-250V FLNR (05-0177-3-2)
+  Search query: "Fuse Fusible Dual 25A-250V FLNR 250V product"
+  Found 35 candidate images
+  Selected: https://www.elliottelectric.com/Media/FLNR25-L$F-0-2-LargeImage.jpg... (212KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a928/1775662092844-product.jpg
+
+[80] Fusible Mini MDL 5-R (05-0177-33)
+  Search query: "Fuse Fusible Mini MDL 5-R product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/ca7e0f89-6cd6-459d-977c-8004214238f4/... (33KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a929/1775662095856-product.jpg
+
+── Page 5 (20 products) ──
+
+[81] Splice Conector # 2 Brown (05-0300)
+  Search query: "05-0300 Splice Conector # 2 Brown 100 product"
+  Found 34 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z07Bpwfo5oy.JPG... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a970/1775662098689-product.jpg
+
+[82] Hy Lock # 4/0 Bronce 5/16 (05-0217-5)
+  Search query: "Bronce Hy Lock # 4/0 Bronce 5/16 product"
+  Found 31 candidate images
+  Selected: https://jrrefrigeracion.com.ar/webfiles/jrrefrigeracion/productos/89/1_1000x1000... (79KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a971/1775662101923-product.jpg
+
+[83] Splice Conector # 1/0 PINK (05-0301)
+  Search query: "05-0301 Splice Conector # 1/0 PINK product"
+  Found 32 candidate images
+  Selected: https://www.kimballmidwest.com/globalassets/products/large/22-655.jpg... (69KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a972/1775662104961-product.jpg
+
+[84] Splice Conector # 2/0 BLACK (05-0302)
+  Search query: "Aluminio Splice Conector # 2/0 BLACK product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/97bbb05a-361a-4472-881b-fee4993c76d2/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a973/1775662109204-product.jpg
+
+[85] Splice Conector # 3/0 ORANGE (05-0303)
+  Search query: "05-0303 Splice Conector # 3/0 ORANGE product"
+  Found 32 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z07Bpwfo5oy.JPG... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a974/1775662112160-product.jpg
+
+[86] Splice Conector # 4/0 PURPLE (05-0304)
+  Search query: "05-0304 Splice Conector # 4/0 PURPLE product"
+  Found 29 candidate images
+  Selected: https://www.kimballmidwest.com/globalassets/products/large/22-1074.jpg... (207KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a975/1775662115211-product.jpg
+
+[87] Splice Conector # 250 YELLOW (05-0305)
+  Search query: "05-0305 Splice Conector # 250 YELLOW 250 product"
+  Found 33 candidate images
+  Selected: https://www.kimballmidwest.com/globalassets/products/large/22-1075.jpg... (189KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a976/1775662118179-product.jpg
+
+[88] Splice Conector # 350 (05-0306)
+  Search query: "05-0306 Splice Conector # 350 350 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/0192de49-5317-4c4a-8714-841783b5ac05/... (102KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a977/1775662121511-product.jpg
+
+[89] Splice Conector # 500 BROWN (05-0307)
+  Search query: "05-0307 Splice Conector # 500 BROWN 500 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a978/1775662124315-product.jpg
+
+[90] Splice Conn Insulated #2 - 4 (05-0308-1)
+  Search query: "05-0308-1 Splice Conn Insulated #2 - 4 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/0997ca7e-739e-491b-98e1-b8f4e9889ae0/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a979/1775662127045-product.jpg
+
+[91] Splice Conn Insulated #2 - 2 (05-0308-2)
+  Search query: "05-0308-2 Splice Conn Insulated #2 - 2 product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/f88b5ae4-586e-41a6-9dba-aeb17729e178/... (41KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a97a/1775662130113-product.jpg
+
+[92] Splice Conn Insulated #1/0 - 2 (05-0308-3)
+  Search query: "05-0308-3 Splice Conn Insulated #1/0 - 2 product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a97b/1775662132987-product.jpg
+
+[93] Hy Seal Lug # 2 (05-0218)
+  Search query: "Aluminio Hy Seal Lug # 2 product"
+  Found 25 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Omni Cable LLC_5716501ac8c873ce2d3... (28KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a97c/1775662136021-product.jpg
+
+[94] Splice Conn Insulated #1/0 (05-0308-4)
+  Search query: "05-0308-4 Splice Conn Insulated #1/0 product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a97d/1775662138830-product.jpg
+
+[95] Splice Conn Insulated #4 -8 (05-0308-5)
+  Search query: "05-0308-5 Splice Conn Insulated #4 -8 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a97e/1775662141691-product.jpg
+
+[96] Splice Conn Insulated #2 - 6 (05-0308-6)
+  Search query: "05-0308-6 Splice Conn Insulated #2 - 6 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/b25733dc-57a9-4a72-a76d-f4b8d88e8231/... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a97f/1775662145033-product.jpg
+
+[97] Cinta Amarilla Peligro (05-0309)
+  Search query: "Peligro Cinta Amarilla Peligro 1000ft product"
+  Found 35 candidate images
+  Selected: https://m.media-amazon.com/images/I/71-qweUtEmL._SL1500_.jpg... (149KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a980/1775662148050-product.jpg
+
+[98] Cinta Anaranjada Peligro (05-0310)
+  Search query: "Peligro Cinta Anaranjada Peligro 1000ft product"
+  Found 35 candidate images
+  Selected: https://relymsa.com.uy/wp-content/uploads/2020/05/cinta-peligro-1-1-1000x1000.jp... (43KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a981/1775662151346-product.jpg
+
+[99] Split Bolt # 10 (05-0311-1)
+  Search query: "05-0311-1 Split Bolt # 10 product"
+  Found 35 candidate images
+  Selected: https://mobileimages.lowes.com/product/converted/783786/783786371921.jpg?size=pd... (48KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a982/1775662154510-product.jpg
+
+[100] Split Bolt 4-6 (05-0314)
+  Search query: "Bronce Split Bolt 4-6 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/7cd3c9c5-03b2-45a0-b4e7-74a8d1795634/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a984/1775662157704-product.jpg
+
+── Page 6 (20 products) ──
+
+[101] S&C SMU-20 -15kv Fuse Holder (05-60002)
+  Search query: "Material de Linea S&C SMU-20 -15kv Fuse Holder product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/61u7L2T76LL._AC_SL1500_.jpg... (15KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c1/1775662160598-product.jpg
+
+[102] Biberones #2  Pedestal URD 27 (05-BBURNDY-RYA2UCR)
+  Search query: "Material de Linea Biberones #2 Pedestal URD 27 product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/aefecccb-a... (155KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c2/1775662163458-product.jpg
+
+[103] Splice Conn Ins #1/0 -#1/0 (05-BURNDY-ES25R25R)
+  Search query: "Splice Conn Ins #1/0 -#1/0 product"
+  Found 29 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Wirexpress Div of Anixter Inc_PR15... (10KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c3/1775662167120-product.jpg
+
+[104] Splice Conn Ins #1/0 - # 2 (05-BURNDY-ES25R2R)
+  Search query: "Splice Conn Ins #1/0 - # 2 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c4/1775662170164-product.jpg
+
+[105] Splice Conn Ins #2 - #4 (05-BURNDY-ES2R4W)
+  Search query: "Splice Conn Ins #2 - #4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c5/1775662172873-product.jpg
+
+[106] Splice Conn Ins # 2 -#2 (05-BURNDY-ES2W2W)
+  Search query: "Splice Conn Ins # 2 -#2 product"
+  No images found
+  ✗ No image found
+
+[107] Splice Conn Ins #2 - #4 (05-BURNDY-ES2W4W)
+  Search query: "Splice Conn Ins #2 - #4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c7/1775662178413-product.jpg
+
+[108] Splice Conn Ins #6 #6 (05-BURNDY-ES4W4W)
+  Search query: "Splice Conn Ins #6 #6 product"
+  Found 28 candidate images
+  Selected: https://images.thdstatic.com/productImages/ef77cd31-ed85-4cc5-8051-e7946de15600/... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c8/1775662181511-product.jpg
+
+[109] Splice Conn Ins #4-#6 (05-BURNDY-ES4W6W)
+  Search query: "Splice Conn Ins #4-#6 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/c1ae7a1e-2d7e-4fe6-99f1-72847f2e4091/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9c9/1775662184453-product.jpg
+
+[110] Terminal Lug Doble #14-#1/0 (05-BURNDY-K2A25U)
+  Search query: "Terminal Lug Doble #14-#1/0 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/10adcb2c-cc96-4481-9910-e2d2fdb05900/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9ca/1775662188073-product.jpg
+
+[111] Crimpit Conn YC 1/0 - 2/0 (05-BURNDY1/0-2/0)
+  Search query: "Cobre Crimpit Conn YC 1/0 - 2/0 product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/fa81c51a-8... (870KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9cb/1775662190815-product.jpg
+
+[112] Crimpit Conn #10 a #10 (05-BURNDY10/10)
+  Search query: "Cobre Crimpit Conn #10 a #10 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/f1b0994c-91a1-4012-a3a4-c5279c6763c4/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9cc/1775662193936-product.jpg
+
+[113] Crimpit Conn #2 a #2 (05-BURNDY2/2)
+  Search query: "Cobre Crimpit Conn #2 a #2 product"
+  Found 31 candidate images
+  Selected: https://m.media-amazon.com/images/I/714HlTpgu6L._SL1312_.jpg... (220KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9cd/1775662197132-product.jpg
+
+[114] Crimpit Conn #2 a #4 (05-BURNDY2/4)
+  Search query: "Cobre Crimpit Conn #2 a #4 product"
+  Found 29 candidate images
+  Selected: https://static.vendaenlinea.co/productos/medium/jha-supply-sas_tubo-de-cobre-fle... (252KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9ce/1775662200530-product.jpg
+
+[115] Crimpit Conn 3/0 a 4/0 (05-BURNDY3/0-4/0)
+  Search query: "Cobre Crimpit Conn 3/0 a 4/0 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/49ffde62-71cc-43c9-a1db-75f5443e0ce0/... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9cf/1775662203740-product.jpg
+
+[116] Crimpit Conn #4 a #4 (05-BURNDY4/4)
+  Search query: "Cobre Crimpit Conn #4 a #4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/f5cf809a-aa05-4a6d-87dd-caf83cb6df4a/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9d0/1775662206518-product.jpg
+
+[117] Crimpit Conn #4 a #6 (05-BURNDY4/6)
+  Search query: "Cobre Crimpit Conn #4 a #6 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/6d6be358-d5e6-46b2-8697-40193a4b0ed0/... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9d1/1775662209226-product.jpg
+
+[118] Crimpit Conn #4 a #8 (05-BURNDY4/8)
+  Search query: "Cobre Crimpit Conn #4 a #8 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/096abc00-f895-44b1-8c87-31038a2d66f1/... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9d2/1775662212067-product.jpg
+
+[119] Banderas para Transformador 4 (05-FCB644N)
+  Search query: "Material de Linea Banderas para Transformador 4 product"
+  Found 32 candidate images
+  Selected: https://likinormas.enelcol.com.co/sites/default/files/media/cache/images/1050x10... (120KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9d4/1775662215592-product.jpg
+
+[120] Terminal Lug Doble #14- #2/0 (05-BURNDY-K2A26U)
+  Search query: "Terminal Lug Doble #14- #2/0 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/10adcb2c-cc96-4481-9910-e2d2fdb05900/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81a9d5/1775662218441-product.jpg
+
+── Page 7 (20 products) ──
+
+[121] Biberones #3/0 URD-27 (05-BURNDY-RYA27UCR)
+  Search query: "Material de Linea Biberones #3/0 URD-27 product"
+  Found 29 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/aefecccb-a... (155KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa01/1775662221749-product.jpg
+
+[122] Cable SO 6/3 600 Volt (06-0166)
+  Search query: "Cable Cable SO 6/3 600 Volt 600 product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/c0aecaf8-4204-4f22-b5ef-c2979c5304fc/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa13/1775662225043-product.jpg
+
+[123] Cable SO 2/3 600  Volt (06-0168)
+  Search query: "Cable Cable SO 2/3 600 Volt 600 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/76ef9783-81ac-4e2d-9938-944439e3bba2/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa15/1775662228318-product.jpg
+
+[124] Cable SO 2/4 600 Volt (06-0169)
+  Search query: "Cable Cable SO 2/4 600 Volt 600 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/76ef9783-81ac-4e2d-9938-944439e3bba2/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa16/1775662231285-product.jpg
+
+[125] Hy Seal Plug # 4/0 (05-BURNDY-YE28LH128)
+  Search query: "Hy Seal Plug # 4/0 product"
+  Found 33 candidate images
+  Selected: https://www.kimballmidwest.com/globalassets/products/large/4229X8.jpg... (101KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa17/1775662234426-product.jpg
+
+[126] Duplex 16/2 White SPT (06-0170)
+  Search query: "Cable Duplex 16/2 White SPT product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/3e3563ca-89e8-41c7-a682-c9aa9c8bf5ce/... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa18/1775662237850-product.jpg
+
+[127] Duplex 16/2 Brown (06-0171)
+  Search query: "Cable Duplex 16/2 Brown product"
+  Found 33 candidate images
+  Selected: https://electronicaparaestudiantes.com/2498-large_default/cable-duplex-16awg.jpg... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa19/1775662241183-product.jpg
+
+[128] Duplex 16/2 Oro (06-0172)
+  Search query: "Cable Duplex 16/2 Oro product"
+  Found 32 candidate images
+  Selected: https://electronicaparaestudiantes.com/2498-large_default/cable-duplex-16awg.jpg... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa1a/1775662244070-product.jpg
+
+[129] Duplex 18/2 Blanco (06-0174)
+  Search query: "Cable Duplex 18/2 Blanco product"
+  Found 28 candidate images
+  Selected: https://electroservimos.co/1254-large_default/cbd18-cable-duplex-n-18-awg-x-metr... (21KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa1b/1775662247214-product.jpg
+
+[130] Cable Welding #2 (06-0176-1)
+  Search query: "Cable Cable Welding #2 product"
+  Found 35 candidate images
+  Selected: https://image.made-in-china.com/2f0j00bFeoPZRdMiqH/EPDM-CPE-Rubber-CO2-50m-200-C... (61KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa1c/1775662250528-product.jpg
+
+[131] Cable Welding #  1/0 (06-0176-2)
+  Search query: "Cable Cable Welding # 1/0 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/23151e14-6a09-429a-bb1d-b0aab340acb1/... (45KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa1d/1775662253506-product.jpg
+
+[132] Cable Welding # 4/0 (06-0176-3)
+  Search query: "Cable Cable Welding # 4/0 1000 product"
+  Found 31 candidate images
+  Selected: https://5.imimg.com/data5/SELLER/Default/2025/5/507500477/AU/MV/YE/1421924/weldi... (68KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa1e/1775662257426-product.jpg
+
+[133] Cable Welding # 2/0 (06-0176-4)
+  Search query: "Cable Cable Welding # 2/0 product"
+  Found 27 candidate images
+  Selected: https://images.thdstatic.com/productImages/73e178d8-1c35-4598-b88e-255b6c9c6935/... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa1f/1775662260364-product.jpg
+
+[134] Conn Super Service 1/2 Air (06-0184-2)
+  Search query: "SJ Air Conn Super Service 1/2 Air product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/cf4ad7a2-a... (324KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa20/1775662263747-product.jpg
+
+[135] Conn Super Service 1 Air (06-0184-6)
+  Search query: "SJ Air Conn Super Service 1 Air product"
+  Found 34 candidate images
+  Selected: https://www.sjhairconditioning.co.uk/_webedit/cached-images/18-0-0-0-10000-10000... (94KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa21/1775662267599-product.jpg
+
+[136] Hy Seal Plug #2 (05-BURNDY-YE2CLH129)
+  Search query: "Hy Seal Plug #2 product"
+  Found 33 candidate images
+  Selected: https://products.sealfast.com/ImgMedium/2_NPTF-Male-Swivel_1.jpg... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa22/1775662270567-product.jpg
+
+[137] Conn Super Service 3/4 Air (06-0186)
+  Search query: "SJ Air Conn Super Service 3/4 Air product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/cf4ad7a2-a... (324KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa23/1775662273575-product.jpg
+
+[138] Wire Conector Rojo (06-0188)
+  Search query: "3M Wire Conector Rojo 100 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/3adf7b7a-9359-4918-a76c-0c8b6e62a5c1/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa24/1775662276572-product.jpg
+
+[139] Wire Conector Amarillo (06-0189)
+  Search query: "06-0189 Wire Conector Amarillo 100 product"
+  Found 33 candidate images
+  Selected: https://www.emisupply.com/media/catalog/product/cache/31f83fc52d35f89e87f3541ed4... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa25/1775662279424-product.jpg
+
+[140] Wire Conector Gris (06-0189-1)
+  Search query: "3M Wire Conector Gris 100pcs product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/bed0bd19-0096-4a5d-a71f-65510f4671fd/... (15KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa26/1775662282548-product.jpg
+
+── Page 8 (20 products) ──
+
+[141] Exp Orange 3/8 x 2 1/2 EACH (07-0007-15)
+  Search query: "Tornilleria Exp Orange 3/8 x 2 1/2 EACH product"
+  Found 34 candidate images
+  Selected: https://gt.epaenlinea.com/media/catalog/product/cache/3f8a07f91ed96197ac7613a4e8... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa4c/1775662285473-product.jpg
+
+[142] Drop In Anchor 3/8 (07-0034)
+  Search query: "Tornilleria Drop In Anchor 3/8 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/f763aba9-048f-4ba5-98e9-904c36acec27/... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa61/1775662288531-product.jpg
+
+[143] Drop In Anchor 1/2 (07-0035)
+  Search query: "Tornilleria Drop In Anchor 1/2 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/51396880-699e-4737-b56f-c4cef2e9f465/... (46KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa62/1775662291175-product.jpg
+
+[144] Drop In Tool 1/4 (07-0035-1)
+  Search query: "Tornilleria Drop In Tool 1/4 product"
+  Found 29 candidate images
+  Selected: https://fulkit-skateboards.com/4338-large_default/d-street-tornilleria-drop-thro... (25KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa63/1775662295095-product.jpg
+
+[145] Drop In Tool 3/8 (07-0035-2)
+  Search query: "Tornilleria Drop In Tool 3/8 product"
+  Found 32 candidate images
+  Selected: https://cf-t.com/media/catalog/product/cache/71dc07da46cd1a9d67b7d47451e6e708/h/... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa64/1775662298052-product.jpg
+
+[146] Espuma Poliuretano 330 ML (06-0198)
+  Search query: "06-0198 Espuma Poliuretano 330 ML 330 product"
+  Found 32 candidate images
+  Selected: https://ism-argentina.com/webfiles/insumas/productos/10067/1_1000x1000.jpg?17515... (115KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa65/1775662301400-product.jpg
+
+[147] Drop In Tool 1/2 (07-0035-3)
+  Search query: "Tornilleria Drop In Tool 1/2 product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/80f7cad5-4b50-4be6-b193-17d8791d928b/... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa66/1775662304296-product.jpg
+
+[148] Wedge Anchor 1/4 x 1-3/4 (07-0036)
+  Search query: "GE Wedge Anchor 1/4 x 1-3/4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/09d38bc5-7c7a-48d3-9a6d-a95a19417598/... (84KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa67/1775662307206-product.jpg
+
+[149] Wedge Anchor 1/4 x 2-1/4 (07-0037)
+  Search query: "GE Wedge Anchor 1/4 x 2-1/4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/355650f2-294b-464c-af66-d319e43d2ac6/... (66KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa68/1775662310102-product.jpg
+
+[150] Wedge Anchor 1/4 x 3 (07-0038)
+  Search query: "GE Wedge Anchor 1/4 x 3 product"
+  Found 26 candidate images
+  Selected: https://images.thdstatic.com/productImages/b4f49fe3-f6d5-4796-a23a-369012c4222a/... (41KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa69/1775662313000-product.jpg
+
+[151] Wedge Anchor 1/4" x 3-1/4" (07-0038-1)
+  Search query: "GE Wedge Anchor 1/4" x 3-1/4" product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/043cf262-4503-4819-b6a4-7ac2ab3c8c36/... (18KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa6a/1775662316176-product.jpg
+
+[152] Wedge Anchor 3/8 x 1-3/4 (07-0039)
+  Search query: "GE Wedge Anchor 3/8 x 1-3/4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/4bd42b42-10ba-4f61-bf90-d807f9bb7aca/... (57KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa6b/1775662318994-product.jpg
+
+[153] Wedge Anchor 3/8 x 2-1/4 (07-0040)
+  Search query: "GE Wedge Anchor 3/8 x 2-1/4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/09d38bc5-7c7a-48d3-9a6d-a95a19417598/... (31KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa6c/1775662321874-product.jpg
+
+[154] Wedge Anchor 3/8 x 2-3/4 (07-0040-1)
+  Search query: "GE Wedge Anchor 3/8 x 2-3/4 product"
+  Found 32 candidate images
+  Selected: https://cdn11.bigcommerce.com/s-8hu5swwqgx/images/stencil/1280x1280/products/140... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa6d/1775662325072-product.jpg
+
+[155] Wedge Anchor 3/8 x 3 (07-0041)
+  Search query: "GE Wedge Anchor 3/8 x 3 product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/755b035a-4b0f-4a2a-bd2a-5ee2a0e8b747/... (25KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa6e/1775662328412-product.jpg
+
+[156] Wedge Anchor 1/2 x 2- 3/4 (07-0043)
+  Search query: "GE Wedge Anchor 1/2 x 2- 3/4 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/09d38bc5-7c7a-48d3-9a6d-a95a19417598/... (84KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa6f/1775662331088-product.jpg
+
+[157] Espuma Puliuretano 750ml (06-0198-1)
+  Search query: "06-0198-1 Espuma Puliuretano 750ml 750ml product"
+  Found 33 candidate images
+  Selected: https://www.martinezescalada.com.ar/1836-large_default/espuma-poliuretano-pu-175... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa70/1775662333946-product.jpg
+
+[158] Wedge Anchor 1/2 x 3 3/4 (07-0044)
+  Search query: "GE Wedge Anchor 1/2 x 3 3/4 product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/09d38bc5-7c7a-48d3-9a6d-a95a19417598/... (84KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa71/1775662336739-product.jpg
+
+[159] Tornillo Bronce 1/ 4 x 3/4" (07-0051)
+  Search query: "Tornilleria Tornillo Bronce 1/ 4 x 3/4" product"
+  Found 32 candidate images
+  Selected: https://eltrompo.com.uy/mvdpanel_productos_img/BULON_BRONCE_HEXAGONAL_UNC_1_4_X_... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa72/1775662340121-product.jpg
+
+[160] Tornillo Bronce 1/ 4 x 1" (07-0052)
+  Search query: "Tornilleria Tornillo Bronce 1/ 4 x 1" product"
+  Found 32 candidate images
+  Selected: https://resources.claroshop.com/medios-plazavip/s2/18085/2733900/60c9679e01819-5... (93KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa73/1775662343224-product.jpg
+
+── Page 9 (20 products) ──
+
+[161] Tornillo Galv 3/8 x 1-1/2 " (07-0136)
+  Search query: "Tornilleria Tornillo Galv 3/8 x 1-1/2 " product"
+  Found 35 candidate images
+  Selected: https://ferreteriavidri.com/images/items/large/30098.jpg... (56KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aa9c/1775662345960-product.jpg
+
+[162] Tornillo 6/32 x 2" (07-0156)
+  Search query: "Tornilleria Tornillo 6/32 x 2" product"
+  Found 31 candidate images
+  Selected: https://m.media-amazon.com/images/I/71-YN7xv2KL._SL500_.jpg... (28KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab1/1775662348898-product.jpg
+
+[163] Tornillo 6/32 x 2-1/2" (07-0157)
+  Search query: "Tornilleria Tornillo 6/32 x 2-1/2" product"
+  Found 31 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Midwest Fastener Corp_77448xxab1f1... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab2/1775662352124-product.jpg
+
+[164] Lock Washer 1/4 Galv (07-0122-3)
+  Search query: "Tornilleria Lock Washer 1/4 Galv product"
+  Found 32 candidate images
+  Selected: https://images.homedepot-static.com/productImages/a46cd62f-ec47-4d4f-8c07-f15924... (50KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab3/1775662355060-product.jpg
+
+[165] Tornillo 6/32 x 3" (07-0158)
+  Search query: "Tornilleria Tornillo 6/32 x 3" product"
+  Found 32 candidate images
+  Selected: https://ferreteriavidri.com/images/items/large/29063.jpg... (57KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab4/1775662357835-product.jpg
+
+[166] Tornillo 6/32 x 4" (07-0159)
+  Search query: "Tornilleria Tornillo 6/32 x 4" product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/71mLwie2vIL._AC_.jpg... (102KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab5/1775662360648-product.jpg
+
+[167] Tornillo 8/32 x 1/2" (07-0160)
+  Search query: "Tornilleria Tornillo 8/32 x 1/2" product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/36ce244f-2eb4-49d1-8ee4-e4d6beb69b33/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab6/1775662363901-product.jpg
+
+[168] Tornillo 8/32 x 1" (07-0163)
+  Search query: "Tornilleria Tornillo 8/32 x 1" product"
+  Found 31 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/3/7/8/10378-large_default.jpg... (18KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab8/1775662366882-product.jpg
+
+[169] Tornillo 8/32 x 1-1/4" (07-0164)
+  Search query: "Tornilleria Tornillo 8/32 x 1-1/4" product"
+  Found 30 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/3/7/8/10378-large_default.jpg... (18KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aab9/1775662369600-product.jpg
+
+[170] Tornillo 8/32 x 1-1/2" (07-0165)
+  Search query: "Tornilleria Tornillo 8/32 x 1-1/2" product"
+  Found 30 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/3/3/2/10332-large_default.jpg... (21KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aaba/1775662372318-product.jpg
+
+[171] Tornillo 8/32 x 2" (07-0166)
+  Search query: "Tornilleria Tornillo 8/32 x 2" product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/718fKHyRpeL._AC_SL500_.jpg... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aabb/1775662375424-product.jpg
+
+[172] Tornillo 8/32 x 3" (07-0167)
+  Search query: "Tornilleria Tornillo 8/32 x 3" product"
+  Found 32 candidate images
+  Selected: https://cerraarchery.com/3341-large_default/tornillo-8-32-3-4-cabeza-cilindrica.... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aabc/1775662379256-product.jpg
+
+[173] Tornillo 8/32 x 2-1/2" (07-0168)
+  Search query: "Tornilleria Tornillo 8/32 x 2-1/2" product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/I/718fKHyRpeL._AC_SL500_.jpg... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aabd/1775662382045-product.jpg
+
+[174] Fender Washer 1/4 x 1-1/4 (07-0122-4)
+  Search query: "Tornilleria Fender Washer 1/4 x 1-1/4 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/381885e5-fb29-434b-b8c6-d4606850f8f3/... (21KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aabe/1775662385189-product.jpg
+
+[175] Tornillo 8/32 x 4" (07-0170)
+  Search query: "Tornilleria Tornillo 8/32 x 4" product"
+  Found 33 candidate images
+  Selected: https://cerraarchery.com/3341-large_default/tornillo-8-32-3-4-cabeza-cilindrica.... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aabf/1775662388392-product.jpg
+
+[176] Tornillo 10/32 x 1/2" (07-0172)
+  Search query: "Tornilleria Tornillo 10/32 x 1/2" product"
+  Found 31 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/0/8/2/10082-large_default.jpg... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aac0/1775662391124-product.jpg
+
+[177] Tornillo 10/32 x 3/4" (07-0173)
+  Search query: "Tornilleria Tornillo 10/32 x 3/4" product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/51poLeqm46L._AC_SL1000_.jpg... (33KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aac1/1775662393868-product.jpg
+
+[178] Tornillo 10/32 x 1" (07-0174)
+  Search query: "Tornilleria Tornillo 10/32 x 1" product"
+  Found 32 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/0/8/2/10082-large_default.jpg... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aac2/1775662396658-product.jpg
+
+[179] Tornillo 10/32 x 1-1/4" (07-0175)
+  Search query: "Tornilleria Tornillo 10/32 x 1-1/4" product"
+  Found 32 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/0/8/2/10082-large_default.jpg... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aac3/1775662399371-product.jpg
+
+[180] Tornillo 10/32 x 1-1/2" (07-0176)
+  Search query: "Tornilleria Tornillo 10/32 x 1-1/2" product"
+  Found 30 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/0/8/2/10082-large_default.jpg... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aac4/1775662402191-product.jpg
+
+── Page 10 (20 products) ──
+
+[181] Teck 8 x 1-1/4" (07-0196)
+  Search query: "Tornilleia Teck 8 x 1-1/4" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/11abaefb-51bd-45e1-a788-89921c2acd91/... (52KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aaed/1775662405105-product.jpg
+
+[182] Teck 10 x 1" (07-0202)
+  Search query: "Tornilleria Teck 10 x 1" product"
+  Found 34 candidate images
+  Selected: https://alltoolspr.com/cdn/shop/products/HO-071_5254ff8e-121e-4299-81be-31e8b299... (42KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aaf5/1775662408514-product.jpg
+
+[183] Tornillo Mariposa 3/8 x 3 (07-0213-3)
+  Search query: "Tornilleria Tornillo Mariposa 3/8 x 3 product"
+  Found 33 candidate images
+  Selected: https://toolstoremexico.com.mx/img/p/1/0/0/0/3/10003-thickbox_default.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aafa/1775662411503-product.jpg
+
+[184] Channel 15/8 x 13/16 NO HOLE (07-0214-1)
+  Search query: "Unistrut Channel 15/8 x 13/16 NO HOLE product"
+  Found 33 candidate images
+  Selected: https://unistrutstore.com/media/wysiwyg/P1000T-Unistrut-Slotted-Channel-1100px.j... (72KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aafd/1775662414374-product.jpg
+
+[185] End Cap Unustrut PVC Bajito (07-0214-4)
+  Search query: "Unistrud End Cap Unustrut PVC Bajito product"
+  Found 29 candidate images
+  Selected: https://www.fixfirm.com/product_images/Large/T461-4 PVC End Caps - Black or Whit... (166KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab00/1775662418124-product.jpg
+
+[186] Teck 10 x 1-1/2" (07-0204)
+  Search query: "Tornilleria Teck 10 x 1-1/2" product"
+  Found 30 candidate images
+  Selected: https://todominiclasico.com/4417-large_default/tornillo-10x12.jpg... (22KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab01/1775662421684-product.jpg
+
+[187] Spring Nut 1/4 " (07-0216)
+  Search query: "07-0216 Spring Nut 1/4 " product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/52a69c94-6b07-403d-89c5-176aca3a56ad/... (21KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab03/1775662424436-product.jpg
+
+[188] Spring Nut 3/8 " (07-0217)
+  Search query: "EMT Spring Nut 3/8 " product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/24de0fc3-b011-403a-a9e5-326f5c76ff27/... (45KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab04/1775662427304-product.jpg
+
+[189] Spring Nut 1/2 " (07-0218)
+  Search query: "07-0218 Spring Nut 1/2 " product"
+  Found 31 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/4a4f8c08-b44d-4bf5-82bb-5723f107375... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab05/1775662430179-product.jpg
+
+[190] Universal Clamp 3/4 " (07-0220)
+  Search query: "Unistrut Universal Clamp 3/4 " 730 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/1654d46a-60c3-4a1f-9f1c-555ae4e116be/... (58KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab07/1775662433392-product.jpg
+
+[191] Universal Clamp 1-1/4 " (07-0222)
+  Search query: "Unistrut Universal Clamp 1-1/4 " 261 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/1654d46a-60c3-4a1f-9f1c-555ae4e116be/... (58KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab09/1775662436127-product.jpg
+
+[192] Unistrut T Plate 4 Hole (07-0222-20)
+  Search query: "Unistrud Unistrut T Plate 4 Hole product"
+  Found 34 candidate images
+  Selected: https://web-ltd.co.uk/wp-content/uploads/2022/06/630cf0ad-2b66-459c-b6eb-4f96c09... (82KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab0a/1775662439775-product.png
+
+[193] Universal Clamp 2 " (07-0224)
+  Search query: "Unistrut Universal Clamp 2 " 416 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/1654d46a-60c3-4a1f-9f1c-555ae4e116be/... (58KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab0d/1775662442605-product.jpg
+
+[194] Universal Clamp 4 " (07-0227)
+  Search query: "Unistrut Universal Clamp 4 " product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/1654d46a-60c3-4a1f-9f1c-555ae4e116be/... (58KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab10/1775662445287-product.jpg
+
+[195] Right Angle Clamp 3/4 (07-0228-1)
+  Search query: "07-0228-1 Right Angle Clamp 3/4 product"
+  Found 34 candidate images
+  Selected: https://images.homedepot-static.com/productImages/605d1593-403b-4c86-b650-5e3cf3... (49KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab11/1775662448174-product.jpg
+
+[196] Caddy Clip 16M24 3/4-1'' (07-0228-3)
+  Search query: "07-0228-3 Caddy Clip 16M24 3/4-1'' product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/fb79ba9e-bfe8-4203-9c28-dbd772c855dd/... (31KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab13/1775662451486-product.jpg
+
+[197] Base Canal P/S 2 Tornillo 2060 (07-0229)
+  Search query: "EMT Base Canal P/S 2 Tornillo 2060 2060 product"
+  Found 33 candidate images
+  Selected: https://nikatto.com/2908-large_default/tornillo-de-cabeza-hexagonal-sae-grado-2-... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab16/1775662454413-product.jpg
+
+[198] Teck 12/24 x 1-1/4" Goma (07-0206)
+  Search query: "Tornilleria Teck 12/24 x 1-1/4" Goma product"
+  Found 28 candidate images
+  Selected: https://cdn11.bigcommerce.com/s-c41e51jmii/products/44711/images/103912/10004531... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab17/1775662457154-product.jpg
+
+[199] Unistrut Flat Angle 4 Hole (07-0229-2)
+  Search query: "Unistrud Unistrut Flat Angle 4 Hole product"
+  Found 35 candidate images
+  Selected: https://www.unistruthawaii.com/sites/default/files/styles/product_470x470/public... (207KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab19/1775662460308-product.png
+
+[200] Unistrut Splice Plate 4 Hole (07-0229-4)
+  Search query: "Unistrud Unistrut Splice Plate 4 Hole product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/61E0MOAnH5L.jpg... (105KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab1b/1775662464778-product.jpg
+
+── Page 11 (20 products) ──
+
+[201] J BOX 8 X 8 X 4 N1 (07-0271)
+  Search query: "07-0271 J BOX 8 X 8 X 4 N1 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/74ce724b-2977-4b9b-aad4-3f823cc2e642/... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab3f/1775662467865-product.jpg
+
+[202] J BOX 18 X 18 X 6 N3R (07-0286)
+  Search query: "METAL J BOX 18 X 18 X 6 N3R product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/31f1fadf-e682-4470-a852-0a9d47eba97d/... (36KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab54/1775662470802-product.jpg
+
+[203] J BOX 16 X 16 X 8 N1 (07-0287)
+  Search query: "07-0286 J BOX 16 X 16 X 8 N1 product"
+  Found 28 candidate images
+  Selected: https://images.thdstatic.com/productImages/4d274bee-c2f0-4261-8de7-8e0ad61ca733/... (18KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab55/1775662473773-product.jpg
+
+[204] J BOX 24 X 24 X 6 N3R (07-0292)
+  Search query: "07-0292 J BOX 24 X 24 X 6 N3R product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/635eca97-dc6c-4fb8-8a62-ef3b93c0a35e/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab56/1775662476803-product.jpg
+
+[205] Barrena IND. 1/64 (07-0293)
+  Search query: "Tornilleria Barrena IND. 1/64 product"
+  Found 34 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente1_998x998... (57KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab57/1775662480085-product.jpg
+
+[206] Barrena IND. 1/32 (07-0294)
+  Search query: "Tornilleria Barrena IND. 1/32 product"
+  Found 35 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente_998x998.... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab58/1775662482989-product.jpg
+
+[207] Barrena IND. 3/64 (07-0295)
+  Search query: "Tornilleria Barrena IND. 3/64 product"
+  Found 35 candidate images
+  Selected: https://www.lambrettalocomociones.com/3210-large_default/kit-amarre-nariz-escudo... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab59/1775662486778-product.jpg
+
+[208] Barrena IND 1/16 (07-0296)
+  Search query: "Tornilleria Barrena IND 1/16 product"
+  Found 35 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente1_998x998... (57KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab5a/1775662489496-product.jpg
+
+[209] Barrena IND. 13/64 (07-0305)
+  Search query: "Tornilleria Barrena IND. 13/64 product"
+  Found 33 candidate images
+  Selected: https://traktor.com.pl/118050-large_product/taladro-barrena-de-tierra-13-34-cm-a... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab5b/1775662493567-product.jpg
+
+[210] Barrena IND. 7/32 (07-0306)
+  Search query: "Tornilleria Barrena IND. 7/32 product"
+  Found 34 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente1_998x998... (57KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab5c/1775662496175-product.jpg
+
+[211] Barrena IND. 15/64 (07-0307)
+  Search query: "Tornilleria Barrena IND. 15/64 product"
+  Found 33 candidate images
+  Selected: https://traktor.com.pl/118058-large_product/taladro-barrena-de-tierra-15-38-cm-a... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab5d/1775662499476-product.jpg
+
+[212] Barrena IND. 1/4 (07-0308)
+  Search query: "Tornilleria Barrena IND. 1/4 product"
+  Found 33 candidate images
+  Selected: https://torniacero.com.do/wp-content/uploads/2022/09/TORNILLO-AUTOBARRENA-PUNTA-... (135KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab5e/1775662502966-product.png
+
+[213] Barrena IND. 17/64 (07-0309)
+  Search query: "Tornilleria Barrena IND. 17/64 product"
+  Found 34 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente_998x998.... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab5f/1775662505775-product.jpg
+
+[214] Barrena IND. 9/32 (07-0310)
+  Search query: "Tornilleria Barrena IND. 9/32 product"
+  Found 35 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente_998x998.... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab60/1775662508518-product.jpg
+
+[215] Barrena IND. 19/64 (07-0311)
+  Search query: "Tornilleria Barrena IND. 19/64 product"
+  Found 33 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente_998x998.... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab61/1775662511227-product.jpg
+
+[216] Barrena IND. 5/16 (07-0312)
+  Search query: "Tornilleria Barrena IND. 5/16 product"
+  Found 35 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente1_998x998... (57KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab62/1775662513855-product.jpg
+
+[217] Barrena IND. 21/64 (07-0313)
+  Search query: "Tornilleria Barrena IND. 21/64 product"
+  Found 35 candidate images
+  Selected: https://ferreteriavidri.com/images/items/large/59118.jpg... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab63/1775662516619-product.jpg
+
+[218] Barrena IND. 11/32 (07-0314)
+  Search query: "Tornilleria Barrena IND. 11/32 product"
+  Found 35 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente_998x998.... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab64/1775662519287-product.jpg
+
+[219] Barrena IND. 5/64 (07-0297)
+  Search query: "Tornilleria Barrena IND. 5/64 product"
+  Found 32 candidate images
+  Selected: https://juterstools.com.mx/ecommerce/793-large_default/tornillo-hexagonal-g5-pav... (98KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab65/1775662522573-product.jpg
+
+[220] Barrena IND. 23/64 (07-0315)
+  Search query: "Tornilleria Barrena IND. 23/64 product"
+  Found 35 candidate images
+  Selected: https://urreastore.com.mx/20664-large_default/broca-con-cobalto-de-acero-de-alta... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab66/1775662525477-product.jpg
+
+── Page 12 (20 products) ──
+
+[221] Step Drills 7/16-1 1/8 Trompo (07-0352)
+  Search query: "GX Step Drills 7/16-1 1/8 Trompo product"
+  Found 32 candidate images
+  Selected: http://www.homedepot.com/catalog/productImages/1000/09/09ae54b8-255a-40ba-992d-2... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ab92/1775662528577-product.jpg
+
+[222] J BOX 9 X 16 X 16 N1 (07-9X16X16)
+  Search query: "J BOX 9 X 16 X 16 N1 product"
+  Found 32 candidate images
+  Selected: https://www.webstaurantstore.com/images/products/extra_large/660850/2294448.jpg... (142KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aba2/1775662531497-product.jpg
+
+[223] Barrena Core Bit 5/16 x 4-3/4 (07-LCBPILOT)
+  Search query: "Tornilleria Barrena Core Bit 5/16 x 4-3/4 product"
+  Found 35 candidate images
+  Selected: https://gt.epaenlinea.com/media/catalog/product/cache/30664c2942134e85a6c4c14e31... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aba4/1775662534471-product.jpg
+
+[224] Portable Adapter GFCI Yellow (08-0021-1)
+  Search query: "Portable Adapter GFCI Yellow product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/65bdb247-2765-403e-9386-0ca229d1a51d/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aba5/1775662537400-product.jpg
+
+[225] Twist Lock L620P 20A (08-00214)
+  Search query: "Planta Twist Lock L620P 20A 520C product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/61D3NPNWoVL.jpg... (65KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aba6/1775662540220-product.jpg
+
+[226] Twist Lock L620R 20A (08-00216)
+  Search query: "Planta Twist Lock L620R 20A 620R product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/26316ce4-3a9e-50de-8f48-8ebc04a697f5/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aba8/1775662543022-product.jpg
+
+[227] Twist Lock L620C 20A (08-00217)
+  Search query: "Planta Twist Lock L620C 20A 250v product"
+  Found 31 candidate images
+  Selected: https://cdn11.bigcommerce.com/s-dylwc6/products/102131/images/262995/600x600_96d... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aba9/1775662546067-product.jpg
+
+[228] Plug Trailer 30A 2P 125V 83CC4 (08-00217-1)
+  Search query: "Eaton Plug Trailer 30A 2P 125V 83CC4 125V product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/7d24e6eb-2483-569f-b281-75707221b2f3/... (42KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abaa/1775662549135-product.jpg
+
+[229] Plate 2x4 Blank WH (08-00218)
+  Search query: "Enerlites Plate 2x4 Blank WH product"
+  Found 27 candidate images
+  Selected: https://m.media-amazon.com/images/I/51MldAMkijL._AC_SL1500_.jpg... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abab/1775662552093-product.jpg
+
+[230] Plate 2x4 Blank GY (08-00218-1)
+  Search query: "Enerlites Plate 2x4 Blank GY product"
+  Found 28 candidate images
+  Selected: https://cdn11.bigcommerce.com/s-20m8iccl8o/images/stencil/1280x1280/products/810... (300KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abac/1775662555817-product.png
+
+[231] Floor Box Round FB-02 (08-0023)
+  Search query: "Enerlites Floor Box Round FB-02 139 product"
+  Found 28 candidate images
+  Selected: https://m.media-amazon.com/images/I/71dGlPPZJDL.jpg... (153KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abad/1775662559337-product.jpg
+
+[232] Floor Box Plastic P&S (08-0024)
+  Search query: "Wiring Devices Floor Floor Box Plastic P&S product"
+  Found 33 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Hubbell Wiring Device-Kellems_WBPx... (22KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abae/1775662563170-product.jpg
+
+[233] Inverter Power Gris 2000 (08-0027)
+  Search query: "08-0027 Inverter Power Gris 2000 2000 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/713263be-03b1-4137-b629-5a5b3c65e24b/... (50KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abaf/1775662566370-product.jpg
+
+[234] Inverter Power Roja 2000 (08-0028)
+  Search query: "08-0028 Inverter Power Roja 2000 2000 product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/713263be-03b1-4137-b629-5a5b3c65e24b/... (50KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb0/1775662569353-product.jpg
+
+[235] Rabiza Twist Lock L1420 20ft (08-0029-1)
+  Search query: "Planta Rabiza Twist Lock L1420 20ft 1420 product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/I/71RyfxjnZYL._AC_SL1500_.jpg... (125KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb1/1775662572860-product.jpg
+
+[236] Barrena IND. 3/16 (07-0304)
+  Search query: "Tornilleria Barrena IND. 3/16 product"
+  Found 35 candidate images
+  Selected: https://depositoferretero.com/cdn/shop/products/11000012_Barrena_Frente_998x998.... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb2/1775662575634-product.jpg
+
+[237] Extension Electrica L1430 15ft (08-0029-2)
+  Search query: "Extensiones Extension Electrica L1430 15ft 1430 product"
+  Found 31 candidate images
+  Selected: https://ferreteriavidri.com/images/items/large/400420.jpg?v=1760015322... (36KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb3/1775662578455-product.jpg
+
+[238] Twist Lock L1420R 20A (08-0031)
+  Search query: "Planta Twist Lock L1420R 20A 1420R product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/4d5de172-2b42-4ebd-880a-c80fc5be2eb8/... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb4/1775662581339-product.jpg
+
+[239] Twist Lock L1420C 20A (08-0032)
+  Search query: "Planta Twist Lock L1420C 20A 1420C product"
+  Found 32 candidate images
+  Selected: https://images.homedepot-static.com/productImages/96e95701-49bc-43a1-8b10-f513a4... (44KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb5/1775662584192-product.jpg
+
+[240] Twist Lock L1420P 20A (08-0033)
+  Search query: "Planta Twist Lock L1420P 20A 1420P product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/87dccde5-dae1-46c0-a81b-1c35d808bbbc/... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abb6/1775662587071-product.jpg
+
+── Page 13 (20 products) ──
+
+[241] Switch Doble 1Single 1-3way WH (08-0067-1)
+  Search query: "Eaton Switch Doble 1Single 1-3way WH product"
+  Found 30 candidate images
+  Selected: https://images.homedepot-static.com/productImages/5211b2ac-624a-4bd0-86e8-28cf9e... (38KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abe0/1775662590062-product.jpg
+
+[242] Recep Surface Doble WH (08-0073-4)
+  Search query: "Wiring Devices Recep Surface Doble WH product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/4887f1ac-69bd-4df0-9905-029a87e75b29/... (93KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abf2/1775662592813-product.jpg
+
+[243] Twist Lock L1430P 30A (08-0044)
+  Search query: "Planta Twist Lock L1430P 30A 1430p product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/8d2637a8-d655-59da-b2eb-f943c28f0789/... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abf5/1775662596036-product.jpg
+
+[244] Recep Duplex 20A 125/250V IV (08-0075-3)
+  Search query: "Wiring Devices Recep Duplex 20A 125/250V IV 250V product"
+  Found 33 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Steiner Electric Company_Leviton54... (15KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abf6/1775662599524-product.jpg
+
+[245] Recep Duplex 20A 125/250V WH (08-0075-4)
+  Search query: "Wiring Devices Recep Duplex 20A 125/250V WH 125V-un product"
+  Found 32 candidate images
+  Selected: https://www.elliottelectric.com/Media/TR1307WB0X-EWD-0-5-LargeImage.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abf7/1775662602665-product.jpg
+
+[246] Recep Dryer 30A 3 Hilos (08-0075-6)
+  Search query: "Enerlites Recep Dryer 30A 3 Hilos 125-250 product"
+  Found 19 candidate images
+  Selected: https://m.media-amazon.com/images/I/61AC6CYcHHL._SL1500_.jpg... (62KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abf8/1775662605641-product.jpg
+
+[247] Recep 50A 3W 125/250 3890 (08-0075-7)
+  Search query: "Enerlites Recep 50A 3W 125/250 3890 125-250 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/1945796e-8c0b-4383-855f-e392bbf88a1e/... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abf9/1775662608684-product.jpg
+
+[248] Recep Dryer 30A 4 Hilos (08-0075-8)
+  Search query: "Enerlites Recep Dryer 30A 4 Hilos 125 product"
+  Found 14 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/88bf5fa6-0... (905KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abfa/1775662611645-product.jpg
+
+[249] Recep Duplex 15A/125 IV (08-0076)
+  Search query: "Enerlites Recep Duplex 15A/125 IV 125v product"
+  Found 27 candidate images
+  Selected: https://images.thdstatic.com/productImages/09986443-2464-452b-81bd-3be431d7aee4/... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abfb/1775662615393-product.jpg
+
+[250] Recep Duplex 15A/125 WH (08-0077)
+  Search query: "Enerlites Recep Duplex 15A/125 WH 125v product"
+  Found 27 candidate images
+  Selected: https://images.thdstatic.com/productImages/09986443-2464-452b-81bd-3be431d7aee4/... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abfc/1775662618166-product.jpg
+
+[251] Recep Duplex 15A TR IV (08-0078-2)
+  Search query: "Enerlites Recep Duplex 15A TR IV 61580-TR-I product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/0c751933-ce16-446d-b4ea-824a604c10e4/... (22KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abfd/1775662621334-product.jpg
+
+[252] Recep Duplex 15A 125/250V WH (08-0079)
+  Search query: "Wiring Devices Recep Duplex 15A 125/250V WH 125V product"
+  Found 35 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Promax Supply dba Acktify_ACK31250... (22KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abfe/1775662624445-product.jpg
+
+[253] Recep Single 20A/250V WH (08-0081)
+  Search query: "Enerlites Recep Single 20A/250V WH 250 product"
+  Found 34 candidate images
+  Selected: https://www.elliottelectric.com/Media/1876LA-EWD-0-8-LargeImage.jpg... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81abff/1775662627672-product.jpg
+
+[254] Twist Lock L1430C 30A (08-0044-1)
+  Search query: "Planta Twist Lock L1430C 30A 1430c product"
+  Found 27 candidate images
+  Selected: https://images.thdstatic.com/productImages/529a9251-c1f4-4141-a8e4-83684b04cda9/... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac00/1775662630728-product.jpg
+
+[255] Recep Dual Type 4.8 20A (08-0082-2)
+  Search query: "Wiring Devices Recep Dual Type 4.8 20A 62001-TR2USB-CC-W product"
+  Found 29 candidate images
+  Selected: https://manuals.plus/wp-content/uploads/2023/11/Enerlites-61000-TR2USB-CU-Series... (255KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac01/1775662633606-product.png
+
+[256] Sensor Techo WH MPC 50V-W (08-0082-3)
+  Search query: "Enerlites Sensor Techo WH MPC 50V-W product"
+  Found 30 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media/sc/dff86236-f207-4b4c-b715-65b3c... (296KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac02/1775662636942-product.jpg
+
+[257] Timer Wall Digital Programable (08-0082-5)
+  Search query: "Enerlites Timer Wall Digital Programable 101 product"
+  Found 29 candidate images
+  Selected: https://m.media-amazon.com/images/I/61QzX8mHgML._AC_UF894,1000_QL80_.jpg... (31KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac03/1775662640263-product.jpg
+
+[258] Dimmer LED Single Pole 3Way (08-0082-6)
+  Search query: "Enerlites Dimmer LED Single Pole 3Way 57302-w product"
+  Found 29 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/c9911781-079d-4ee1-87f2-785c089da53... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac04/1775662644180-product.jpg
+
+[259] Switch Deco 15A 120/277 IV (08-0083)
+  Search query: "Enerlites Switch Deco 15A 120/277 IV 120 product"
+  Found 25 candidate images
+  Selected: https://images.thdstatic.com/productImages/d97b2940-3197-4d3e-9f61-d49072be97bc/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac05/1775662646986-product.jpg
+
+[260] Switch Recep Deco 15A IV (08-0088-1)
+  Search query: "Wiring Devices Switch Recep Deco 15A IV product"
+  Found 32 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Steiner Electric Company_DecoraT56... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac08/1775662650518-product.jpg
+
+── Page 14 (20 products) ──
+
+[261] Plate 4x4 1-Deco 1-Duplex WH (08-0122-3)
+  Search query: "Enerlites Plate 4x4 1-Deco 1-Duplex WH 882131-W product"
+  Found 27 candidate images
+  Selected: https://m.media-amazon.com/images/I/71-xKqCnC3L.jpg... (154KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac31/1775662653381-product.jpg
+
+[262] Plate 4x4 Blank 8802 WH (08-0137)
+  Search query: "Enerlites Plate 4x4 Blank 8802 WH 8802-W product"
+  Found 25 candidate images
+  Selected: https://m.media-amazon.com/images/I/51MldAMkijL._AC_SL1500_.jpg... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac44/1775662656275-product.jpg
+
+[263] Plate 3G Blank 8803-I (08-0137-0)
+  Search query: "Enerlites Plate 3G Blank 8803-I 8803-I product"
+  Found 13 candidate images
+  Selected: https://m.media-amazon.com/images/I/51myvFX-JQL._AC_SX679_.jpg... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac45/1775662659530-product.jpg
+
+[264] Plate 3G Blank 8803-W (08-0137-2)
+  Search query: "Enerlites Plate 3G Blank 8803-W 8803-W product"
+  Found 20 candidate images
+  Selected: https://m.media-amazon.com/images/I/51myvFX-JQL._AC_SX679_.jpg... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac46/1775662662510-product.jpg
+
+[265] Plate 4x4 1-Blank 1-Switch WH (08-0138-1)
+  Search query: "Enerlites Plate 4x4 1-Blank 1-Switch WH 880111-W product"
+  Found 25 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/505d34d4-6... (422KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac48/1775662665283-product.jpg
+
+[266] Plate 4G Deco WH 8834-WH (08-0138-2)
+  Search query: "Enerlites Plate 4G Deco WH 8834-WH 8834-W product"
+  Found 27 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media/vc/ae587d5a-a3fc-4e5d-ba09-94af8... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac49/1775662668178-product.jpg
+
+[267] Plate 6G Deco Screwless WH (08-0138-3)
+  Search query: "Enerlites Plate 6G Deco Screwless WH 8836-W product"
+  Found 28 candidate images
+  Selected: https://images.thdstatic.com/productImages/4d266024-0707-4705-8e25-ab97bd665e3f/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac4a/1775662672229-product.jpg
+
+[268] Plate 5G Deco Switch 8835-W (08-0138-4)
+  Search query: "Enerlites Plate 5G Deco Switch 8835-W 8835-W product"
+  Found 27 candidate images
+  Selected: https://m.media-amazon.com/images/I/41cvdzAvozL.jpg... (28KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac4b/1775662675013-product.jpg
+
+[269] Plate 6G Deco Switch 8836-W (08-0138-5)
+  Search query: "Enerlites Plate 6G Deco Switch 8836-W 8836-W product"
+  Found 29 candidate images
+  Selected: https://m.media-amazon.com/images/I/71wgIWar-nL._AC_SL1500_.jpg... (81KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac4c/1775662677828-product.jpg
+
+[270] Plate 3G Deco Screwless WH (08-0140-3)
+  Search query: "Enerlites Plate 3G Deco Screwless WH 8833-W product"
+  Found 27 candidate images
+  Selected: https://images.thdstatic.com/productImages/fe8ea2cc-ddac-48a9-bde1-8714fc987329/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac4d/1775662681050-product.jpg
+
+[271] Plate 3G Single Switch 8813-W (08-0109)
+  Search query: "Enerlites Plate 3G Single Switch 8813-W 8813 product"
+  Found 19 candidate images
+  Selected: https://m.media-amazon.com/images/I/519phOgfPML._AC_SL1500_.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac4e/1775662684075-product.jpg
+
+[272] Detector Humo 9V Ionization (08-0141)
+  Search query: "Ionization Detector Humo 9V Ionization product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/8c5e319d-e014-47b3-9a39-3cf9caa503f7/... (9KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac4f/1775662687142-product.jpg
+
+[273] Detector Gas Prop/Monox KIDIE (08-0141-1)
+  Search query: "Kidie Detector Gas Prop/Monox KIDIE 0143-1 product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/4a5c24f4-c089-4979-a384-cae4ed078790/... (48KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac50/1775662690130-product.jpg
+
+[274] Detector Humo 9V/BackUp Conect (08-0142)
+  Search query: "Conector Detector Humo 9V/BackUp Conect 120V product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/541b34e4-551b-45fe-b719-7f279c63e7fc/... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac51/1775662692976-product.jpg
+
+[275] Detector Monoxido Carbono 9v (08-0143-1)
+  Search query: "08-0143-1 Detector Monoxido Carbono 9v product"
+  Found 30 candidate images
+  Selected: https://productos.sistemasincendio.com/408-large_default/co1224t-detector-de-mon... (367KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac52/1775662696365-product.jpg
+
+[276] Roseta Plastica Americana (08-0143-2)
+  Search query: "08-0143-2 Roseta Plastica Americana product"
+  Found 33 candidate images
+  Selected: https://fyeel.com.co/14704-large_default/roseta-jg-plafon-plastica.jpg... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac53/1775662699544-product.jpg
+
+[277] Roseta Porcelana Americana (08-0146-1)
+  Search query: "Wiring Devices Roseta Porcelana Americana product"
+  Found 29 candidate images
+  Selected: https://teslek.com.mx/1619-large_default/roseta-de-porcelana.jpg... (149KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac54/1775662702624-product.jpg
+
+[278] Roseta Con Cadena (08-0147)
+  Search query: "08-0147 Roseta Con Cadena product"
+  Found 30 candidate images
+  Selected: https://kjoyerias.com/wp-content/uploads/2023/08/1000233652.jpg... (121KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac55/1775662705644-product.jpg
+
+[279] Roseta Vitrina (08-0148)
+  Search query: "08-0148 Roseta Vitrina product"
+  Found 35 candidate images
+  Selected: https://mueblesbufalo.es/images/virtuemart/product/vitrina-1-puerta-2-cajones-vi... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac56/1775662709175-product.jpg
+
+[280] Roseta Con Recep (08-0149)
+  Search query: "Wiring Devices Roseta Con Recep product"
+  Found 33 candidate images
+  Selected: https://dojiw2m9tvv09.cloudfront.net/44838/product/new-template-photoroom-2023-0... (321KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac57/1775663737293-product.png
+
+── Page 15 (20 products) ──
+
+[281] Timer Electronico ET1105C (08-0208-1)
+  Search query: "Intermatic Timer Electronico ET1105C 120V product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/ec67f6c3-01c3-4a3b-8bae-4e27b6966c1d/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac81/1775663740972-product.jpg
+
+[282] Switch Recep 20A TR WH (08-20001)
+  Search query: "Wiring Devices Switch Recep 20A TR WH product"
+  Found 31 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Steiner Electric Company_Decora533... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac96/1775663744209-product.jpg
+
+[283] Power Adapter 30AMRV, Male (08-20002)
+  Search query: "Power Adapter 30AMRV, Male product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/d89c539a-a502-482d-a7ca-4da368772a24/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac97/1775663747190-product.jpg
+
+[284] Power Adapter 30a RV Female (08-20003)
+  Search query: "Power Adapter 30a RV Female product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/bec0a071-0f3f-45e4-a155-f9152621d08e/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac98/1775663750414-product.jpg
+
+[285] Surge Arrester Guard 120/240v (08-2AG2401C)
+  Search query: "GE Surge Arrester Guard 120/240v 120 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/f4f78990-f2f4-419c-b74e-b37928f16ad8/... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac99/1775663753314-product.jpg
+
+[286] Photocell Bracket AL645B (08-2C122)
+  Search query: "Wiring Devices Photocell Bracket AL645B 645B product"
+  Found 32 candidate images
+  Selected: https://www.nhp.com.au/public/assets/pim/MediumJPEG/10003/602657-Photoelectric-S... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac9a/1775663757987-product.jpg
+
+[287] Photocell Stem Mounting (08-2C4121)
+  Search query: "Wiring Devices Photocell Stem Mounting product"
+  Found 25 candidate images
+  Selected: https://images.thdstatic.com/productImages/04aff8b1-c5ab-46d3-b1d9-a9382515c868/... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac9b/1775663761462-product.jpg
+
+[288] Surge SQD TVSS 1 PH (08-0209-6)
+  Search query: "GE Surge SQD TVSS 1 PH product"
+  Found 32 candidate images
+  Selected: https://www.sselectricalsupply.com/cdn/shop/products/57_4fe90bcc-8ebb-4ae9-8eae-... (241KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac9c/1775663764892-product.jpg
+
+[289] Photocell Swivel 120-1000w (08-2C4221)
+  Search query: "Wiring Devices Photocell Swivel 120-1000w 120V product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/43553dfd-b860-4757-8019-1e0341e61f81/... (10KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac9d/1775663768636-product.jpg
+
+[290] Photocelll Twist Lock (08-2C6690)
+  Search query: "Wiring Devices Photocelll Twist Lock product"
+  Found 29 candidate images
+  Selected: https://images.homedepot-static.com/productImages/d31a2f0a-9432-4c33-9116-065cae... (58KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac9e/1775663771513-product.jpg
+
+[291] Pencil Swivel Control 120/277v (08-2L02186)
+  Search query: "Wiring Devices Pencil Swivel Control 120/277v 120 product"
+  Found 33 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Steiner Electric Company_lcxximgxx... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ac9f/1775663774690-product.jpg
+
+[292] Dimmer Slide Deco Lado WH (08-3000)
+  Search query: "Wiring Devices Dimmer Dimmer Slide Deco Lado WH product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/8e1f2d96-5ec6-49f9-91e9-3fe58195bd5e/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81aca0/1775663777600-product.jpg
+
+[293] Plate SS 4x4 1 Toggle Switch (08-84040-40)
+  Search query: "Leviton Plate SS 4x4 1 Toggle Switch product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/04e8143b-1699-45a3-afbb-58b74f38e693/... (38KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acb4/1775663780653-product.jpg
+
+[294] Plate SS 4x4 1 Single Recep (08-84092-40)
+  Search query: "Leviton Plate SS 4x4 1 Single Recep product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/9cc5ceaf-fc03-47d0-b4e4-c30232a846a7/... (38KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acb5/1775663783604-product.jpg
+
+[295] Plate 4x4 2-Recep Single WH (08-88052)
+  Search query: "Leviton Plate 4x4 2-Recep Single WH product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/3843dd06-0072-41ce-abaf-ee859c9e8630/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acb6/1775663786351-product.jpg
+
+[296] Plate 2x4 Jumbo Deco WH (08-8831O-W)
+  Search query: "Enerlites Plate 2x4 Jumbo Deco WH product"
+  Found 22 candidate images
+  Selected: http://sonicelectric.com/cdn/shop/products/enerlites-combination-two-gang-wall-p... (93KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acb7/1775663789286-product.png
+
+[297] Switch Deco 3way BK 93150-BK (08-90000)
+  Search query: "Wiring Devices Switch Deco 3way BK 93150-BK 93150-BK product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/e3f3a4dc-cf6a-4ddd-996a-be89528bd029/... (53KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acb8/1775663792562-product.jpg
+
+[298] 3 Speed Fan Slide 17017-F3-W (08-90001)
+  Search query: "Enerlites 3 Speed Fan Slide 17017-F3-W 17017-F3-W product"
+  Found 23 candidate images
+  Selected: https://images.thdstatic.com/productImages/fe9da284-7078-497c-8aa8-870d591fac3f/... (9KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acb9/1775663795465-product.jpg
+
+[299] Plate 2x4 Deco 8831-GY (08-90002)
+  Search query: "Enerlites Plate 2x4 Deco 8831-GY 8831 product"
+  Found 25 candidate images
+  Selected: https://images.thdstatic.com/productImages/2031a955-752d-493c-a4c9-8cb697c437d7/... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acba/1775663798538-product.jpg
+
+[300] Switch Deco W/Light Guide WH (08-91150-GL)
+  Search query: "Enerlites Switch Deco W/Light Guide WH 91150 product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/8e09d9cb-e916-4f43-a28a-bab5afa4469b/... (65KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81acbb/1775663801323-product.jpg
+
+── Page 16 (20 products) ──
+
+[301] GE Filler Plate TFH 1/2 (10-0046)
+  Search query: "GE GE Filler Plate TFH 1/2 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/235bff9e-2613-4114-ad49-bbceb5801bf5/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060cc47396962b81ade6/1775663804507-product.jpg
+
+[302] Enclosure Breaker 200 2P N-1 (10-EA2A2P200FA)
+  Search query: "Wiring Devices Enclosure Breaker 200 2P N-1 200 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/57c0e420-1407-44fa-bc4e-0379ac779d47/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81ae72/1775663807548-product.jpg
+
+[303] Enclosure Breaker 225A 3P N-3 (10-EA2A3P225)
+  Search query: "Wiring Devices Enclosure Breaker 225A 3P N-3 225A product"
+  Found 33 candidate images
+  Selected: https://cdn11.bigcommerce.com/s-ua39scqwbf/products/382607/images/1049725/s-l160... (23KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81ae73/1775663810608-product.jpg
+
+[304] Satco Backlit 2x2 65/596 (11-0175)
+  Search query: "Iluminacion Satco Backlit 2x2 65/596 596 product"
+  Found 27 candidate images
+  Selected: https://www.kroger.com/product/images/large/back/0004592365707?banner=harristeet... (58KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81ae8a/1775663814233-product.jpg
+
+[305] Satco 9W S11715 LED DW/GBL5K (11-0273)
+  Search query: "Satco Satco 9W S11715 LED DW/GBL5K 5000 product"
+  Found 33 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z_wvFwpcpEx_.JPG... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeae/1775663817469-product.jpg
+
+[306] Satco A19 W/Photocell  S11427 (11-0279)
+  Search query: "Satco Satco A19 W/Photocell S11427 11427 product"
+  Found 29 candidate images
+  Selected: https://cdnimg.webstaurantstore.com/images/products/large/846397/2917656.jpg... (83KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb0/1775663820436-product.jpg
+
+[307] Bombilla 40W Appliance Clear (11-0100)
+  Search query: "Satco Bombilla 40W Appliance Clear 3720 product"
+  Found 28 candidate images
+  Selected: https://www.kroger.com/product/images/large/front/0004592303765... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb1/1775663823670-product.jpg
+
+[308] Cadena Lampara  Gauge #14 (11-0282)
+  Search query: "GE Cadena Lampara Gauge #14 product"
+  Found 31 candidate images
+  Selected: https://mobileimages.lowes.com/product/converted/043168/043168403603xl.jpg... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb2/1775663826652-product.jpg
+
+[309] Satco 4ft T5/25w 3500K S9717 (11-0295)
+  Search query: "Satco Satco 4ft T5/25w 3500K S9717 835 product"
+  Found 25 candidate images
+  Selected: https://m.media-amazon.com/images/I/71nOB9iU11L._AC_SX679_.jpg... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb3/1775663829801-product.jpg
+
+[310] Satco Ballast 2/96 T8 120/277 (11-0347)
+  Search query: "Satco Satco Ballast 2/96 T8 120/277 120 product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/4e9069c3-f5f7-4052-9d04-1b8223a5afa4/... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb4/1775663832929-product.jpg
+
+[311] Satco A19 Dimming CCT (11-0349)
+  Search query: "Iluminacion Satco A19 Dimming CCT product"
+  Found 34 candidate images
+  Selected: https://www.kroger.com/product/images/large/bottom/0004592329839... (31KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb5/1775663835978-product.jpg
+
+[312] Satco 8' Multi W/CCT S11756 2P (11-0351)
+  Search query: "Satco Satco 8' Multi W/CCT S11756 2P 11756 product"
+  Found 25 candidate images
+  Selected: https://d3501hjdis3g5w.cloudfront.net/images/products/zoom/s11756008.jpg... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aeb6/1775663839104-product.jpg
+
+[313] Satco 15.5 A 19 LED 50K IND (11-0105)
+  Search query: "Satco Satco 15.5 A 19 LED 50K IND 28790 product"
+  Found 35 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z_wvFupcpEx_.JPG... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aebc/1775663842470-product.jpg
+
+[314] Satco Dimension Tape Chann 16F (11-64/152)
+  Search query: "Satco Satco Dimension Tape Chann 16F product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/738a4aa1-e3a3-40df-b858-70b192854222/... (100KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee0/1775663845312-product.jpg
+
+[315] Satco Dimension Tape Chann 16F (11-64/154)
+  Search query: "Satco Satco Dimension Tape Chann 16F product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/b7affbb0-7fc4-470b-bf4d-97fc375f7128/... (80KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee1/1775663848206-product.jpg
+
+[316] Satco Dimension Conect LShape (11-64/162)
+  Search query: "Satco Satco Dimension Conect LShape product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/35a77f88-a076-43ed-9078-56254051ee3b/... (84KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee2/1775663851173-product.jpg
+
+[317] Satco 2ft LED Ceiling Wrap (11-65/1088)
+  Search query: "Satco Satco 2ft LED Ceiling Wrap 1088 product"
+  Found 22 candidate images
+  Selected: https://images.thdstatic.com/productImages/f5eeee59-e4ee-45ae-8721-63668256fc3d/... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee3/1775663855884-product.jpg
+
+[318] Satco LED 4FT 39W Wrap (11-65/1211)
+  Search query: "Satco Satco LED 4FT 39W Wrap 120-277 product"
+  Found 16 candidate images
+  Selected: https://images.thdstatic.com/productImages/f5eeee59-e4ee-45ae-8721-63668256fc3d/... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee4/1775663858615-product.jpg
+
+[319] Satco 10'' LED Disk Light (11-65/1366)
+  Search query: "Satco Satco 10'' LED Disk Light 5000K product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/16531922-b187-436e-81c0-dabeaf9a213f/... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee5/1775663861514-product.jpg
+
+[320] Satco Canopy 40W 8.5'' 5K BZ (11-65/141)
+  Search query: "Satco Satco Canopy 40W 8.5'' 5K BZ 5000K product"
+  Found 32 candidate images
+  Selected: https://images.hdsupplysolutions.com/image/upload/d_no_image.gif,f_auto,fl_lossy... (19KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81aee6/1775663864680-product.jpg
+
+── Page 17 (20 products) ──
+
+[321] Satco Tubo F17T8/841/ENV (11-S8406)
+  Search query: "Satco Satco Tubo F17T8/841/ENV 841 product"
+  Found 33 candidate images
+  All candidates failed to download
+  ✗ No image found
+
+[322] GB Disconect F 12-10awg Yellow (13-GB-20-145F)
+  Search query: "GB GB Disconect F 12-10awg Yellow product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/cfbb451a-ce08-4f42-a59a-2ed38262bafa/... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b049/1775663870472-product.jpg
+
+[323] GB Disconect M 12-10Aawg (13-GB-20-145M)
+  Search query: "13-GB-20-145M GB Disconect M 12-10Aawg product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/31rYHDyD9-L._AC_.jpg... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b04a/1775663873263-product.jpg
+
+[324] Bullet Disconnect F 16-14awg (13-GB-20-163F)
+  Search query: "GB Bullet Disconnect F 16-14awg product"
+  Found 32 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z-p22-mcpIx_.JPG... (6KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b04b/1775663876376-product.jpg
+
+[325] Tape 3M 1400 Amarillo (12-0108)
+  Search query: "3M Tape 3M 1400 Amarillo 1400 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/92e27366-0b21-4a71-b09d-37d6d340a2f1/... (47KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b04c/1775663879291-product.jpg
+
+[326] Push On & Off Spst 10A 125VAC (13-GB-GSW-21)
+  Search query: "GB Push On & Off Spst 10A 125VAC 125VAC product"
+  Found 30 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Waldom Electronics_35-3454.jpg... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b089/1775663882827-product.jpg
+
+[327] Push On /Nom Off Spst 6 A120va (13-GB-GSW-22)
+  Search query: "GB Push On /Nom Off Spst 6 A120va 120va product"
+  Found 32 candidate images
+  Selected: https://kr.element14.com/productimages/large/en_GB/2614820-40.jpg... (35KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b08a/1775663886706-product.jpg
+
+[328] Push Off Norm On Spst 3A 120 V (13-GB-GSW-23)
+  Search query: "GB Push Off Norm On Spst 3A 120 V 120 product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/718BVWFaUYL._AC_SL1500_.jpg... (116KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b08b/1775663889776-product.jpg
+
+[329] GB Heat Shrink Tubing 1/2 4L (13-GB-HST-500)
+  Search query: "GB GB Heat Shrink Tubing 1/2 4L product"
+  Found 29 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/d478482d-7... (219KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a0/1775663892625-product.jpg
+
+[330] Die Ko Punch 1" (13-GB-KD1000B)
+  Search query: "GB Die Ko Punch 1" product"
+  Found 26 candidate images
+  Selected: https://images.thdstatic.com/productImages/bc2bacfb-8644-4776-8323-82be4cb53abc/... (81KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a1/1775663895729-product.jpg
+
+[331] Conduit Die 1 1/2 (13-GB-KD1500B)
+  Search query: "GB Conduit Die 1 1/2 product"
+  Found 31 candidate images
+  Selected: https://edaran.my/assets/img/product/a33a7b13d6fc6c9d1dce552c47585d64.png... (872KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a2/1775663901354-product.png
+
+[332] Conduit Die 2'' (13-GB-KD2000B)
+  Search query: "Herramienta Conduit Die 2'' product"
+  Found 30 candidate images
+  Selected: https://m.media-amazon.com/images/I/81zsQ4sJBWL._AC_SL1500_.jpg... (146KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a3/1775663904705-product.jpg
+
+[333] Aciento KO/ Punch 3" (13-GB-KD3000)
+  Search query: "Aciento KO/ Punch 3" product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/350ca071-f036-4692-96a9-977a4c113ff7/... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a4/1775663907510-product.jpg
+
+[334] Voltage Tester 50-250 vac/DC (13-GB-GDT-3100)
+  Search query: "GE Voltage Tester 50-250 vac/DC 250 product"
+  Found 24 candidate images
+  Selected: https://images.thdstatic.com/productImages/3cb103fc-b8ca-4443-bf76-734fac73f5c0/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a5/1775663910358-product.jpg
+
+[335] Die Ko Punch 1/2 (13-GB-KD500B)
+  Search query: "GB Die Ko Punch 1/2 product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/f2f82923-965e-4e0a-8320-5e43d9b1814c/... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a6/1775663913512-product.jpg
+
+[336] Die Ko Punch 3/4 (13-GB-KD750B)
+  Search query: "GB Die Ko Punch 3/4 product"
+  Found 30 candidate images
+  Selected: https://cdn.automationdirect.com/images/products/large/l_1097034.jpg... (107KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a7/1775663916636-product.jpg
+
+[337] Set Ko Punch 1/2 a 1-1/4 (13-GB-KOM50125)
+  Search query: "13-GB-KOM50125 Set Ko Punch 1/2 a 1-1/4 product"
+  Found 33 candidate images
+  Selected: https://mobileimages.lowes.com/product/converted/783310/783310347576.jpg... (117KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a8/1775663919693-product.jpg
+
+[338] Ratchet Ko Punch 1/2 - 2'' (13-GB-KOW-520)
+  Search query: "Ratchet Ko Punch 1/2 - 2'' product"
+  Found 29 candidate images
+  Selected: https://images.thdstatic.com/productImages/01ac1c4b-7a1d-4215-8fa8-601983bd661b/... (28KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0a9/1775663922733-product.jpg
+
+[339] Caja 2x4 Gypsum Gris (13-GB-RS14N)
+  Search query: "GB Caja 2x4 Gypsum Gris product"
+  Found 33 candidate images
+  Selected: https://construccionbim.com.mx/3679-large_default/caja-2-x-4-fs-1-ko-3-4.jpg... (107KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0be/1775663925924-product.jpg
+
+[340] Caja 4x4 Gypsum Gris (13-GB-RS25N)
+  Search query: "GB Caja 4x4 Gypsum Gris product"
+  Found 30 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/62ddfa1d-3714-43ef-b89d-3b0c2b165a5... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b0bf/1775663928730-product.jpg
+
+── Page 18 (20 products) ──
+
+[341] M Base 200A PV GALV (15-MBC-200APVGS)
+  Search query: "M Bank M Base 200A PV GALV 200A product"
+  Found 26 candidate images
+  Selected: https://i.ebayimg.com/images/g/gyMAAOSwHkhhwMZy/s-l1600.jpg... (453KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b160/1775663932059-product.jpg
+
+[342] Breaker Fino 20amp 1polo fino (15-GQP1/20-REMPLAZO)
+  Search query: "15-GQP1/20 Remplazo Breaker Fino 20amp 1polo fino product"
+  Found 34 candidate images
+  Selected: https://images.homedepot-static.com/productImages/0e6c65bf-cdda-4e8d-968e-c2fb80... (46KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b162/1775663935141-product.jpg
+
+[343] Driver DIM 150W Cob LED (17-0024)
+  Search query: "Iluminacion Driver DIM 150W Cob LED 150W product"
+  Found 34 candidate images
+  Selected: https://www.ukew.co.uk/image/cache/catalog/150w-led-driver-24v-constant-voltage-... (594KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b19b/1775663941119-product.png
+
+[344] Amplificador LED Cob RGB (17-0025)
+  Search query: "Iluminacion Amplificador LED Cob RGB product"
+  Found 35 candidate images
+  Selected: https://m.media-amazon.com/images/I/61jBLfNhP2L._AC_SL1100_.jpg... (84KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b19c/1775663944189-product.jpg
+
+[345] DC Female COB (17-0026)
+  Search query: "Iluminaion DC Female COB product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/bddd79cd-5... (175KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b19d/1775663947018-product.jpg
+
+[346] Down Light Luze O/B Round Wh (17-0067)
+  Search query: "Iluminacion Down Light Luze O/B Round Wh product"
+  Found 33 candidate images
+  Selected: https://masterled.es/7414-large_default/downlight-round-24w-panel.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b2/1775663950397-product.jpg
+
+[347] Down Light Luze O/B Round BK (17-0067-1)
+  Search query: "Iluminacion Down Light Luze O/B Round BK product"
+  Found 30 candidate images
+  Selected: https://images.homedepot-static.com/productImages/f5fd4b79-f850-4be6-be06-43e6a9... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b3/1775663953257-product.jpg
+
+[348] Down Light Luze O/B Square BK (17-0067-3)
+  Search query: "Iluminacion Down Light Luze O/B Square BK product"
+  Found 32 candidate images
+  Selected: https://www.netlighting.co.uk/46250-superlarge_default/outdoor-square-surface-mo... (45KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b4/1775663956638-product.jpg
+
+[349] Down Light Luze O/B Square Wh (17-0068)
+  Search query: "Iluminacion Down Light Luze O/B Square Wh product"
+  Found 34 candidate images
+  Selected: https://www.il-lumina.com/27735-large_default/square-led-downlight-4000k-12w-16c... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b5/1775663960203-product.jpg
+
+[350] Down Light Under 4w 5K WH (17-0069)
+  Search query: "Iluminacion Down Light Under 4w 5K WH 5500K product"
+  Found 31 candidate images
+  Selected: https://buyriteelectric.com/cdn/shop/files/47890-large_default_1024x1024.jpg?v=1... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b6/1775663963365-product.jpg
+
+[351] Down Light Under 4w 3K Wh (17-0069-1)
+  Search query: "Iluminacion Down Light Under 4w 3K Wh 3000K product"
+  Found 27 candidate images
+  Selected: https://images.thdstatic.com/productImages/d21fa6f1-5c6d-4f65-9072-dcf2a593aa96/... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b7/1775663966277-product.jpg
+
+[352] Down Light Under 4w 5K SS (17-0070)
+  Search query: "Iluminacion Down Light Under 4w 5K SS 5500K product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/I/41QTIuD0a0L.jpg... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b8/1775663969310-product.jpg
+
+[353] Down Light Under 4w 5K BK (17-0070-1)
+  Search query: "Iluminacion Down Light Under 4w 5K BK 5500K product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/72b65a31-cfad-4ab4-af0d-53815b55625c/... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1b9/1775663972294-product.jpg
+
+[354] Down Light Under 4w 3K BK (17-0070-2)
+  Search query: "Iluminacion Down Light Under 4w 3K BK 120V product"
+  Found 26 candidate images
+  Selected: https://www.prolighting.com/media/catalog/product/cache/f0c799716dfed20f9705287d... (103KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1ba/1775663975513-product.jpg
+
+[355] Door Sensor Cob Strip LED (17-0018)
+  Search query: "Iluminacion Door Sensor Cob Strip LED product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/71xpWP2hz-L._AC_SL1500_.jpg... (136KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1bb/1775663979112-product.jpg
+
+[356] Strip 8ft Vacio 2 Tubos (17-0071)
+  Search query: "Iluminacion Strip 8ft Vacio 2 Tubos product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/d61a33ae-52a6-4abf-80c5-5b8845fca8cd/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1bc/1775663982259-product.jpg
+
+[357] Strip 8ft Vacio 1 Tubos (17-0071-1)
+  Search query: "17-0071-1 Strip 8ft Vacio 1 Tubos product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/beab8c9f-7... (442KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1bd/1775663985142-product.jpg
+
+[358] Down Light Under 4w 3K SS (17-0072)
+  Search query: "Iluminacion Down Light Under 4w 3K SS 3000K product"
+  Found 32 candidate images
+  Selected: https://www.il-lumina.com/24247-large_default/empotrable-led-downlight-3w-alumin... (52KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1be/1775663989518-product.jpg
+
+[359] Driver COB 6A 72W 12V (17-0075)
+  Search query: "Iluminacion Driver COB 6A 72W 12V product"
+  Found 32 candidate images
+  Selected: https://cdn.shopify.com/s/files/1/0027/7600/6767/products/g-w-s-led-wholesale-le... (68KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1bf/1775663992782-product.jpg
+
+[360] Luze Strip LED Cob 5K 120V 64' (17-0077)
+  Search query: "Iluminacion Luze Strip LED Cob 5K 120V 64' 5000K product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/23f48019-c... (119KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b1c1/1775663995833-product.jpg
+
+── Page 19 (20 products) ──
+
+[361] Flat Panel AL ECO 2X4 5K (17-AL674716)
+  Search query: "Iluminacion Flat Panel AL ECO 2X4 5K 5000K product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/8d337a04-8598-4e3c-8f35-040178f68e1d/... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b237/1775663998736-product.jpg
+
+[362] LED Down Light 4w SS 3'' (17-ATI-LED)
+  Search query: "Iluminacion LED Down Light 4w SS 3'' product"
+  Found 35 candidate images
+  Selected: https://iglux.es/b2b/219-large_default/downlight-led-4w-blanco-6000k-redondo.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b24c/1775664003341-product.jpg
+
+[363] Legrand Multi Outlet 3ft Ivory (18-V206B)
+  Search query: "Wiremold Legrand Multi Outlet 3ft Ivory product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/c43caf2a-a7bf-4f3a-aad3-b04a7427366a/... (25KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b29d/1775664006359-product.jpg
+
+[364] Wiremold 2G Extra Deep Box IV (18-V5744-2)
+  Search query: "Wiremold Wiremold 2G Extra Deep Box IV product"
+  Found 32 candidate images
+  Selected: https://cdn.adiglobaldistribution.us/pim/500X500/10004/1038716989_lg.jpg... (31KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b29e/1775664009471-product.jpg
+
+[365] Pedestal Varilla Ground (18-WTVB600)
+  Search query: "PVC Pedestal Varilla Ground product"
+  Found 32 candidate images
+  Selected: https://www.holstens.uk/products/large/M8401_1.jpg?1700197552... (32KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b29f/1775664024565-product.jpg
+
+[366] Run Cap 10 X 370/440V (19-10X370-440)
+  Search query: "Contactor Run Cap 10 X 370/440V 370 product"
+  Found 35 candidate images
+  Selected: https://d3501hjdis3g5w.cloudfront.net/images/products/zoom/cap-1010440r-1.jpg... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a0/1775664027866-product.jpg
+
+[367] Run Cap 12.5 X 370/440V (19-125X370-440)
+  Search query: "Contactor Run Cap 12.5 X 370/440V 370 product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/71owDJ8mEQL.jpg... (178KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a1/1775664030892-product.jpg
+
+[368] Run Cap 20 X 370-440V (19-20X370-440)
+  Search query: "Contactor Run Cap 20 X 370-440V 370 product"
+  Found 34 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z0o2uwhcpEx_.JPG... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a2/1775664034374-product.jpg
+
+[369] Run Cap 25 X 370/440V (19-25X370-440)
+  Search query: "Contactor Run Cap 25 X 370/440V 370-440V product"
+  Found 34 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z0o2t0kcpEx_.JPG... (37KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a3/1775664037569-product.jpg
+
+[370] Wiremold PVC Tee 400 Wht (18-2200163)
+  Search query: "Wiremold Wiremold PVC Tee 400 Wht 400 product"
+  Found 30 candidate images
+  Selected: https://www.backstreet-surveillance.com/media/catalog/product/cache/507faf420f59... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a4/1775664041608-product.jpg
+
+[371] Digital Clamp AC/DC 1000V Ever (19-266)
+  Search query: "Everwell Digital Clamp AC/DC 1000V Ever 1000V product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/41XNY2zKj3L._SL500_.jpg... (18KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a5/1775664044646-product.jpg
+
+[372] Gallon Cleaner Non Acid. Red (19-3B1)
+  Search query: "19-3B1 Gallon Cleaner Non Acid. Red product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/c0be09db-cae4-41d7-b8c0-b34a31b057bf/... (25KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a6/1775664047585-product.jpg
+
+[373] Coil Cleaner Non Acid 32 OZ (19-3B32)
+  Search query: "Limpieza Coil Cleaner Non Acid 32 OZ product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/f3f95ad3-44b0-400c-90d9-d8d579e3a71d/... (25KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a7/1775664050443-product.jpg
+
+[374] Contactor 40A 3P/120V (19-40A-3P-110V)
+  Search query: "Contactor Contactor 40A 3P/120V 120V product"
+  Found 25 candidate images
+  Selected: https://m.media-amazon.com/images/I/61cqzQSIthL.jpg... (119KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a8/1775664053520-product.jpg
+
+[375] Refrigerante 410 (19-410)
+  Search query: "GE Refrigerante 410 410 product"
+  Found 31 candidate images
+  Selected: https://climalider.cl/cdn/shop/files/PRODUCTOSPAGINA_1000x1000px_15_600x.png?v=1... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2a9/1775664057225-product.png
+
+[376] Run Cap 55 X 370/440 (19-55X370-440)
+  Search query: "Contactor Run Cap 55 X 370/440 370 product"
+  No images found
+  ✗ No image found
+
+[377] Pilot Light RED (19-592713)
+  Search query: "Box Pilot Light RED product"
+  Found 33 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Z-xt8DkcpEx_.JPG... (68KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2ab/1775664062723-product.jpg
+
+[378] Run Cap 60+5 X 370/440 (19-605X370-440)
+  Search query: "Contactor Run Cap 60+5 X 370/440 370 product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/61Lhn019ImL.jpg... (100KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2ad/1775664065691-product.jpg
+
+[379] Wiremold PVC Caja Round Grande (18-2338A)
+  Search query: "Wiremold Wiremold PVC Caja Round Grande product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/88975203-6ad6-4c38-a4fb-20f436b9f4e5/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2af/1775664068723-product.jpg
+
+[380] Run Cap Oval 20+5 X 440 (19-APP-CAP205440)
+  Search query: "Contactor Run Cap Oval 20+5 X 440 440 product"
+  Found 32 candidate images
+  Selected: https://d3501hjdis3g5w.cloudfront.net/images/products/zoom/cap-205440-2.jpg... (25KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b2b2/1775664071871-product.jpg
+
+── Page 20 (20 products) ──
+
+[381] Run Cap SE 45 X 440/370V (19-SE4540DV)
+  Search query: "Contactor Run Cap SE 45 X 440/370V 4540DV product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/9dd5557d-f7ea-4490-80ec-61f5da493830/... (16KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b326/1775664074944-product.jpg
+
+[382] Run Cap 50 X 370-440V (19-SE5040)
+  Search query: "Contactor Run Cap 50 X 370-440V 5040DV product"
+  Found 35 candidate images
+  Selected: https://m.media-amazon.com/images/I/61wFpAX15HL.jpg... (114KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b327/1775664077860-product.jpg
+
+[383] Run Cap 5 X 370/440V (19-SE540DV)
+  Search query: "Contactor Run Cap 5 X 370/440V 440 product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/61ulWgSpxBL.jpg... (87KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b328/1775664080839-product.jpg
+
+[384] Ledvance Cobra Sky 150w 88793 (20-0008-2)
+  Search query: "Ledvance Ledvance Cobra Sky 150w 88793 120 product"
+  Found 31 candidate images
+  Selected: http://grupodjj.pe/wp-content/uploads/2024/09/7021000-LDV-FLOODLIGHT-COMPACT-150... (869KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b33d/1775664084718-product.jpg
+
+[385] Ledvance Linear Strip 4' 86401 (20-0009)
+  Search query: "Iluminacion Ledvance Linear Strip 4' 86401 86401 product"
+  Found 33 candidate images
+  Selected: https://www.electrosantomera.com/13055-superlarge_default/lineal-led-4w-4000k-le... (23KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b33e/1775664089767-product.jpg
+
+[386] Flat Panel Ledvance 2X4 62699 (20-0014)
+  Search query: "Iluminacion Flat Panel Ledvance 2X4 62699 120-277V product"
+  Found 22 candidate images
+  Selected: https://www.elliottelectric.com/Media/62699-SYL-0-4-LargeImage.jpg... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b33f/1775664093150-product.jpg
+
+[387] Ledvance LED Tube 8ft Frosted (20-42059)
+  Search query: "Iluminacion Ledvance LED Tube 8ft Frosted product"
+  Found 31 candidate images
+  Selected: https://cdn.shopify.com/s/files/1/0553/0605/9812/products/8ft_tube-frosted-lux-1... (28KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b354/1775664096219-product.jpg
+
+[388] Ledvance Flood 60W CCT (20-61328)
+  Search query: "Iluminacion Ledvance Flood 60W CCT 700 product"
+  Found 33 candidate images
+  Selected: https://www.mdoshea.ie/image/cache/catalog/S51226-3 ENDURA 10W LED FLOODLIGHT-10... (80KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b355/1775664099957-product.jpg
+
+[389] Run Cap 30+5 X 440/370 (19-SE88DV)
+  Search query: "Contactor Run Cap 30+5 X 440/370 440 product"
+  Found 33 candidate images
+  Selected: https://d3501hjdis3g5w.cloudfront.net/images/products/zoom/cap-305440-2.jpg... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b356/1775664102840-product.jpg
+
+[390] Ledvance Puff Ceiling 15W (20-62040)
+  Search query: "Iluminacion Ledvance Puff Ceiling 15W 1100 product"
+  Found 33 candidate images
+  Selected: https://www.materielelectrique.com/media/product_image/0007/97/629aee6733aec7d5b... (33KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b357/1775664106703-product.jpg
+
+[391] Flat Panel Ledvance Suspen Kit (20-62067)
+  Search query: "Iluminacion Flat Panel Ledvance Suspen Kit product"
+  Found 31 candidate images
+  Selected: https://www.ovalamp.com/7559-large_default/ledvance-panel-600-625-suspension-kit... (7KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b358/1775664110867-product.jpg
+
+[392] Ledvance UFO 200w Highbay 5A (20-62301)
+  Search query: "GE Ledvance UFO 200w Highbay 5A 200W product"
+  Found 33 candidate images
+  Selected: https://jawad-alsaffar.com/shop/93456-large_default/ufo-highbay-light-200w.jpg... (92KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b359/1775664114650-product.jpg
+
+[393] Flat Panel Ledvance 1x4 (20-62697)
+  Search query: "Iluminacion Flat Panel Ledvance 1x4 product"
+  Found 27 candidate images
+  Selected: https://revolveled.com/cdn/shop/products/1x44pk_1000x1000_b176d994-75ab-47b5-9d9... (145KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b35a/1775664118470-product.png
+
+[394] Ledvance Dual CCT DownLight 6 (20-62807)
+  Search query: "Ledvance Ledvance Dual CCT DownLight 6 product"
+  Found 28 candidate images
+  Selected: https://www.ledima.lt/image/cache/catalog/LED paneles/Ileidziamos/LEDVANCE/LEDVA... (77KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b35b/1775664123310-product.jpg
+
+[395] Ledvance Slim Downlight 4" (20-62883)
+  Search query: "Iluminacion Ledvance Slim Downlight 4" product"
+  Found 34 candidate images
+  Selected: https://www.tulampara.es/media/product/143325/1000x1000/ledvance-downlight-slim-... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b35c/1775664126928-product.jpg
+
+[396] Ledvance Slim downlight 6" 12w (20-62884)
+  Search query: "Iluminacion Ledvance Slim downlight 6" 12w product"
+  Found 34 candidate images
+  Selected: https://productimages.hepsiburada.net/s/315/550/110000309318851.jpg... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b35d/1775664129973-product.jpg
+
+[397] Ledvance Slim downlight 8" 18w (20-62885)
+  Search query: "Iluminacion Ledvance Slim downlight 8" 18w product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/51ImO+8DhIL._AC_SX679_.jpg... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b35e/1775664133253-product.jpg
+
+[398] Ledvance Micro Disk 4" (20-63054)
+  Search query: "Iluminacion Ledvance Micro Disk 4" product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/1e9cff2b-5017-42a5-b07b-7ea771500ed4/... (5KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b35f/1775664136344-product.jpg
+
+[399] Ledvance Micro Disk 6'' (20-63056)
+  Search query: "Iluminacion Ledvance Micro Disk 6'' product"
+  Found 28 candidate images
+  Selected: https://images.thdstatic.com/productImages/a781318c-cc5f-4527-a18d-b0929ae589db/... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b360/1775664139150-product.jpg
+
+[400] Ledvance Bullet Flood Selec BZ (20-63194)
+  Search query: "Iluminacion Ledvance Bullet Flood Selec BZ 63195 product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/91D5hKx6IKL._AC_SL1500_.jpg... (225KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b363/1775664142669-product.jpg
+
+── Page 21 (20 products) ──
+
+[401] TCT Hole Saw 1'' 25mm (24-0015)
+  Search query: "Tornilleria TCT Hole Saw 1'' 25mm product"
+  Found 34 candidate images
+  Selected: https://5.imimg.com/data5/SELLER/Default/2022/1/AD/GK/EZ/599423/tct-hole-saw-100... (77KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b3b2/1775664146026-product.jpg
+
+[402] Solar Light 300watts Flood (21-JD8300L)
+  Search query: "21-JD8300L Solar Light 300watts Flood 300watts product"
+  Found 35 candidate images
+  Selected: https://www.areaspy.co.ke/wp-content/uploads/2023/08/IMG_20230806_133750-scaled-... (79KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b3db/1775664150637-product.jpg
+
+[403] Chisel SDS Plus 3/4x10 (24-0062)
+  Search query: "24-0062 Chisel SDS Plus 3/4x10 product"
+  Found 25 candidate images
+  Selected: https://images.thdstatic.com/productImages/6c07c1c7-922b-4278-b8b8-98bf6a84bf28/... (18KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060dc47396962b81b3dc/1775664153604-product.jpg
+
+[404] Chiesel SDS Max Puntero (24-0080)
+  Search query: "24-0080 Chiesel SDS Max Puntero product"
+  Found 33 candidate images
+  Selected: https://stalco.pl/54755-large_default/cold-chisel-sds-max-25x600mm-stalco-perfec... (182KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f1/1775664157455-product.jpg
+
+[405] Chiesel SDS Max 1" (24-0081)
+  Search query: "24-0081 Chiesel SDS Max 1" product"
+  Found 30 candidate images
+  Selected: https://www.iccons.com.au/storage/products/1041600010001/large2x-Drilling_Heller... (350KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f2/1775664162791-product.jpg
+
+[406] K/O SEAL 1-1/4" Rubber Gasket (24-0338)
+  Search query: "K/O SEAL 1-1/4" Rubber Gasket product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/c9d561e4-948d-4bb6-922e-b97e8a956d45/... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f3/1775664165739-product.jpg
+
+[407] K/O SEAL 1-1/2" Rubber Gasket (24-0339)
+  Search query: "K/O SEAL 1-1/2" Rubber Gasket product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/c9d561e4-948d-4bb6-922e-b97e8a956d45/... (64KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f4/1775664168607-product.jpg
+
+[408] K/O SEAL 2" Rubber Gasket (24-0340)
+  Search query: "K/O SEAL 2" Rubber Gasket product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/386a1284-9... (313KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f5/1775664171374-product.jpg
+
+[409] K/O SEAL 2-1/2" Rubber Gasket (24-0441)
+  Search query: "K/O SEAL 2-1/2" Rubber Gasket product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/b0ddefd0-7... (291KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f6/1775664174490-product.jpg
+
+[410] K/O SEAL 3" Rubber Gasket (24-0442)
+  Search query: "K/O SEAL 3" Rubber Gasket product"
+  Found 33 candidate images
+  Selected: https://m.media-amazon.com/images/S/aplus-media-library-service-media/386a1284-9... (313KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f7/1775664177346-product.jpg
+
+[411] K/O SEAL 4" Rubber Gasket (24-0443)
+  Search query: "K/O SEAL 4" Rubber Gasket product"
+  Found 32 candidate images
+  Selected: https://images.homedepot-static.com/productImages/c24f4b15-9c42-4968-86b0-636aea... (34KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f8/1775664180417-product.jpg
+
+[412] Breaker EBA 150A 2P Lug to Lug (24-2P-150A)
+  Search query: "Schneider Breaker EBA 150A 2P Lug to Lug 150A product"
+  Found 26 candidate images
+  Selected: https://cdn11.bigcommerce.com/s-szu1e3trd3/images/stencil/1280x1280/products/228... (216KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3f9/1775664184197-product.png
+
+[413] Breaker EBA 200A 2P Lug to Lug (24-2P-200A)
+  Search query: "Schneider Breaker EBA 200A 2P Lug to Lug 200A product"
+  Found 28 candidate images
+  Selected: https://www.greentechrenewables.com/sites/default/files/product/images/ZZ0106001... (47KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3fa/1775664187546-product.jpg
+
+[414] Step Drill Titanium 3pc (24-3PCSTEPDRILL)
+  Search query: "Step Drill Titanium 3pc product"
+  Found 29 candidate images
+  Selected: https://products.blains.com/600/142/1423301.jpg... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3fb/1775664190512-product.jpg
+
+[415] Breaker DC 80A (24-500)
+  Search query: "Breaker Breaker DC 80A product"
+  Found 34 candidate images
+  Selected: https://www.zoro.com/static/cms/product/large/Emery Jensen Distribution LLC_3062... (61KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3fc/1775664193679-product.jpg
+
+[416] Adapter Spline Makita a SDS Pl (24-0085)
+  Search query: "Tornilleria Adapter Spline Makita a SDS Pl product"
+  No images found
+  ✗ No image found
+
+[417] Box Wather Proof 2.5.mm (24-586)
+  Search query: "Box Wather Proof 2.5.mm product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/a8bf4c56-e396-4161-bd88-ea574ebec21d/... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b3fe/1775664199624-product.jpg
+
+[418] Chisel Rod Group SDS MAX 3/4 (24-0087)
+  Search query: "24-0087 Chisel Rod Group SDS MAX 3/4 product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/d5f1c371-baee-4877-bcfd-cf9dd95a37b3/... (9KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b413/1775664203145-product.jpg
+
+[419] Barra Terminal 125A-600v (24-BT125/600V)
+  Search query: "24-Barterm125 Barra Terminal 125A-600v 125A-600v product"
+  Found 34 candidate images
+  Selected: https://aeliyamarine.net/wp-content/uploads/2025/06/Phoenix-Contact-600v-125a-Hi... (96KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b414/1775664206188-product.jpg
+
+[420] Barra Terminal 250amp-600v (24-BT250/600V)
+  Search query: "24-Barterm250 Barra Terminal 250amp-600v 250amp-600v product"
+  Found 20 candidate images
+  Selected: https://m.media-amazon.com/images/I/715cCA+Y8HL.jpg... (180KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b415/1775664209121-product.jpg
+
+── Page 22 (20 products) ──
+
+[421] BiMetal Hole Saw 3 3/4" Con 3" (24-HS12)
+  Search query: "Tornilleria BiMetal Hole Saw 3 3/4" Con 3" product"
+  Found 34 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/7abddfbc-db6b-4571-b589-9c1f798677a... (128KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b451/1775664213032-product.jpg
+
+[422] Heat Shrink 3/8 Black (24-HSTUBING1)
+  Search query: "GB Heat Shrink 3/8 Black product"
+  Found 31 candidate images
+  Selected: https://images.homedepot-static.com/productImages/21d403ff-11ac-4181-9388-e1e9b1... (40KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b452/1775664215993-product.jpg
+
+[423] Heat Shrink 3/8 Red (24-HSTUBING2)
+  Search query: "GB Heat Shrink 3/8 Red product"
+  Found 32 candidate images
+  Selected: https://m.media-amazon.com/images/I/81ghkrcgKML.jpg... (366KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b453/1775664219076-product.jpg
+
+[424] Heat Shrink 9/16 Black (24-HSTUBING3)
+  Search query: "Gb Heat Shrink 9/16 Black product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/7e1a18b9-1f8a-4a79-815b-698aba6b7801/... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b454/1775664222007-product.jpg
+
+[425] Conn Ins 3 polo #250MCM (24T3250)
+  Search query: "24-Taislado22 Conn Ins 3 polo #250MCM 250 product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/d2d8102e-c69e-4c0e-927c-aba575f2e960/... (66KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b47a/1775664224688-product.jpg
+
+[426] Conn Ins 3 polo #3/0 -6 (24T33/0)
+  Search query: "24-Taislado16 Conn Ins 3 polo #3/0 -6 product"
+  Found 16 candidate images
+  Selected: https://images.homedepot-static.com/productImages/82082784-7df7-4524-b343-6a902b... (41KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b47b/1775664227571-product.jpg
+
+[427] Conn Ins 4 polo #1/0 -4 (24-T41/0)
+  Search query: "24-Taislado6 Conn Ins 4 polo #1/0 -4 product"
+  Found 28 candidate images
+  Selected: https://www.elliottelectric.com/Media/LT250-CRS-0-4-LargeImage.jpg... (208KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b47d/1775664230445-product.jpg
+
+[428] Conn Ins 4 polo #2 -4 (24-T42)
+  Search query: "24-Taislado3 Conn Ins 4 polo #2 -4 product"
+  Found 27 candidate images
+  Selected: https://m.media-amazon.com/images/I/61krYcR5z2L._SL1500_.jpg... (114KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b47e/1775664233180-product.jpg
+
+[429] Conn Ins 4 polo #3/0 -4 (24-T43/0)
+  Search query: "24-Tailado17 Conn Ins 4 polo #3/0 -4 product"
+  Found 20 candidate images
+  Selected: https://uploads.vw-mms.de/system/production/images/vwn/083/504/images/4408ec36db... (453KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b47f/1775664236306-product.jpg
+
+[430] Conn Ins 4 polo #350 -4 (24-T4350)
+  Search query: "24-Taislado13 Conn Ins 4 polo #350 -4 350 product"
+  Found 28 candidate images
+  Selected: https://3d.nice-cdn.com/upload/image/product/large/default/ldo-motors-voron-24-3... (293KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b480/1775664239272-product.jpg
+
+[431] Conn Ins 4 polo #500 -4 (24-T4500)
+  Search query: "24-Taislado12 Conn Ins 4 polo #500 -4 500 product"
+  Found 31 candidate images
+  Selected: https://images.homedepot-static.com/productImages/56e5c3ee-ec7d-45d2-8281-7cc551... (59KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b481/1775664242201-product.jpg
+
+[432] Heat Shrink 1'' Red (24-HSTUBING9)
+  Search query: "GE Heat Shrink 1'' Red 125C product"
+  Found 33 candidate images
+  Selected: https://www.applianceelectronics.co.uk/product_pics/22401-large.jpg... (196KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b482/1775664245969-product.jpg
+
+[433] Text Receptaculo 120 volt (24-TEXT-RECEPTACULO)
+  Search query: "Wiring Devices Text Receptaculo 120 volt 120 product"
+  Found 27 candidate images
+  Selected: https://images.homedepot-static.com/productImages/cd287688-bd39-439b-a4d1-ca54de... (61KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b483/1775664249040-product.jpg
+
+[434] Spiral DrillTitanio 5/32 a 1/2 (24-TR00)
+  Search query: "Tornilleria Spiral DrillTitanio 5/32 a 1/2 product"
+  Found 35 candidate images
+  Selected: https://cdn.mscdirect.com/global/images/ProductImages/4359832-24.jpg... (154KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b484/1775664251925-product.jpg
+
+[435] Spiral DrillTitanio 5/32 a 3/4 (24-TR01)
+  Search query: "24-TR01 Spiral DrillTitanio 5/32 a 3/4 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/0a342334-24f0-4655-804d-f72e981818a4/... (36KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b485/1775664254832-product.jpg
+
+[436] Spiral Drill Titatio 5/32 11/4 (24-TR02)
+  Search query: "24-TR02 Spiral Drill Titatio 5/32 11/4 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/bd66d989-b635-423b-b6f3-5dde349b05e9/... (9KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b486/1775664257654-product.jpg
+
+[437] Spiral Drill Titanio1/4 X1-3/8 (24-TR1-3/8)
+  Search query: "Tornilleria Spiral Drill Titanio1/4 X1-3/8 product"
+  Found 32 candidate images
+  Selected: https://www.jharlen.com/images/product/large/15631.jpg... (29KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b487/1775664262143-product.jpg
+
+[438] Transfer Manu AC 32A 2P/400V (24-TRANSFER32A)
+  Search query: "Wiring Devices Transfer Manu AC 32A 2P/400V 400V product"
+  Found 33 candidate images
+  Selected: https://www.gewiss.com/content/dam/gwdam/product/GW/10/00/82/05/GW10008205.jpg.t... (92KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b488/1775664265663-product.jpg
+
+[439] Transfer Aut 100A 220V Asia (24-TRANSFERAUT220V)
+  Search query: "Wiring Devices Transfer Aut 100A 220V Asia 100A product"
+  Found 34 candidate images
+  Selected: https://m.media-amazon.com/images/I/61xvJxSgT0L.jpg... (123KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b489/1775664268532-product.jpg
+
+[440] Breaker Eaton CHF20A Doble (25-0001)
+  Search query: "Eaton Breaker Eaton CHF20A Doble product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/97865be1-5d8c-490b-be50-cdf04f56566c/... (13KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b48a/1775664271489-product.jpg
+
+── Page 23 (20 products) ──
+
+[441] Lutron Caseta Starter Dim Kit (784276091145)
+  Search query: "GE Lutron Caseta Starter Dim Kit product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/2521112a-7b9b-42d2-9d0b-68444c5961da/... (30KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b503/1775664274226-product.jpg
+
+[442] Aluminium Street Light 2000Lum (860010117095)
+  Search query: "Brazo Matthew20 Aluminium Street Light 2000Lum 000k product"
+  Found 34 candidate images
+  Selected: https://5.imimg.com/data5/SELLER/Default/2023/9/348677802/UK/CB/QW/2041014/alumi... (12KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b516/1775664277357-product.jpg
+
+[443] Sensor de  Movimiento w120v (883951412777-A)
+  Search query: "08-0045-5 Sensor de Movimiento w120v 120v product"
+  Found 34 candidate images
+  Selected: https://c-bienvenido.com/2243-large_default/sensor-de-movimiento-120v-lx-16a-bla... (74KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b51a/1775664280663-product.jpg
+
+[444] Switch Triple GEL 15A GY (GL-1400C-GY)
+  Search query: "GE Switch Triple GEL 15A GY product"
+  Found 21 candidate images
+  Selected: https://images.thdstatic.com/productImages/f0f846dd-921d-4c59-8236-2f31405d0501/... (54KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b52b/1775664284369-product.jpg
+
+[445] Splicing Kit 14-8 AWG (HST-WP)
+  Search query: "Splicing Kit 14-8 AWG 214-8 product"
+  Found 31 candidate images
+  Selected: https://paulbhardware.com/media/catalog/product/cache/306be0ea33a9bd9853274cfca8... (599KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b540/1775664287451-product.png
+
+[446] Lampara 2x4 LED 4 Tubos Vacia (IPD626)
+  Search query: "Iluminacion Lampara 2x4 LED 4 Tubos Vacia product"
+  Found 31 candidate images
+  Selected: https://gt.epaenlinea.com/media/catalog/product/cache/3f8a07f91ed96197ac7613a4e8... (9KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b541/1775664290722-product.jpg
+
+[447] Lampara 2x2 LED 4 Tubos Vacia (IPD639)
+  Search query: "Iluminacion Lampara 2x2 LED 4 Tubos Vacia product"
+  Found 34 candidate images
+  Selected: https://www.innovalighting.es/admin/resources/productos/fotos/197/800x600/lampar... (212KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b542/1775664294951-product.jpg
+
+[448] Lampara 2x4 LED C/Tubos (IPD652)
+  Search query: "Iluminacion Lampara 2x4 LED C/Tubos product"
+  Found 35 candidate images
+  Selected: https://www.innovalighting.es/admin/resources/productos/fotos/197/800x600/lampar... (212KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b543/1775664298205-product.jpg
+
+[449] Wraparound 4ft 2/32 Liteway (L01849)
+  Search query: "Iluminacion Wraparound 4ft 2/32 Liteway 100-277V product"
+  Found 30 candidate images
+  Selected: https://images.thdstatic.com/productImages/f87732cc-ffec-49bf-93df-2c01d6bc01b5/... (37KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b544/1775664301433-product.jpg
+
+[450] Pro Street 25w 3000 LM (LSD-SST-25W)
+  Search query: "Solar Brazo Pro Street 25w 3000 LM 000 product"
+  Found 33 candidate images
+  Selected: http://www.bestomart.com/cdn/shop/products/1000123185_grande.jpg?v=1686131799... (20KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b545/1775664304511-product.jpg
+
+[451] Lutron Switch Maestro 8A Wht (MA-S8AM-WH)
+  Search query: "Wiring Devices Lutron Switch Maestro 8A Wht product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/88728038-1e78-4ec6-a8bf-1a3f4ad0fa68/... (44KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b546/1775664307505-product.jpg
+
+[452] Max120 18W 1880lm (MUL-EL-SL-120WMAX)
+  Search query: "Solar Brazo Max120 18W 1880lm 120 product"
+  Found 34 candidate images
+  Selected: https://www.colonoconstruccion.com/images/catalog/products/7280353.jpg... (26KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b547/1775664310702-product.jpg
+
+[453] Pro Street 8w 850lm (MUL-LSD-SST-8WPRO)
+  Search query: "Solar Brazo Pro Street 8w 850lm 850 product"
+  Found 35 candidate images
+  Selected: https://sklep.normatech.pl/environment/cache/images/0_0_productGfx_13349.jpg... (62KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b548/1775664314601-product.jpg
+
+[454] Greenfield Armado 3/8 12/3w/g (P0G8503112C)
+  Search query: "Cable Armado Greenfield Armado 3/8 12/3w/g 6626 product"
+  Found 34 candidate images
+  Selected: https://www.iesacr.com/web/image/product.product/3558/image_1024/[1193122MX] CAB... (51KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b549/1775664318125-product.jpg
+
+[455] Recep Duplex 20A TR GY (883951611309)
+  Search query: "Enerlites Recep Duplex 20A TR GY 125v product"
+  Found 29 candidate images
+  Selected: https://m.media-amazon.com/images/I/81F07NU4zML.jpg... (401KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b54a/1775664321175-product.jpg
+
+[456] Cable SJ 18/2 300 Volt (P3008360)
+  Search query: "Cable Cable SJ 18/2 300 Volt 300 product"
+  Found 32 candidate images
+  Selected: https://images.thdstatic.com/productImages/aa433822-fb88-41af-9a9a-bbbeeda393b3/... (24KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b54b/1775664324380-product.jpg
+
+[457] Lutron Pico WL Control Wh (PJ2-2B-GWH-L01)
+  Search query: "Wiring Devices Lutron Pico WL Control Wh 434 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/25482544-4c2c-4e0f-ab3e-c2361c577aa8/... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b54c/1775664327336-product.jpg
+
+[458] Surge Protector Recep 15A (1) (QPN-12-1)
+  Search query: "GE Surge Protector Recep 15A (1) 120V product"
+  Found 31 candidate images
+  Selected: https://images.thdstatic.com/productImages/6d8f517d-08d9-461a-aee2-7fceb6c9bcb6/... (15KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b54d/1775664330124-product.jpg
+
+[459] Satco Emergency 60W S11469 (S11469)
+  Search query: "Satco Satco Emergency 60W S11469 11469 product"
+  Found 32 candidate images
+  Selected: https://www.kroger.com/product/images/large/bottom/0004592329839... (31KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b54e/1775664332932-product.jpg
+
+[460] Contactor 40A 2P/120V (SE2741M)
+  Search query: "19-SE2741M Contactor 40A 2P/120V 120V product"
+  Found 30 candidate images
+  Selected: https://s3.beijer-ref-us.cust.servinga.com/production/wit/media/4c/3f/0b/1750953... (41KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b54f/1775664337494-product.jpg
+
+── Page 24 (20 products) ──
+
+[461] Round Pop Up Floor Box Nickel (SO-961501-S)
+  Search query: "Enerlites Round Pop Up Floor Box Nickel product"
+  Found 22 candidate images
+  Selected: https://m.media-amazon.com/images/I/410iB6gRRAL._SL500_.jpg... (32KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5a1/1775664340448-product.jpg
+
+[462] Round Pop Up Floor USB Nickel (SO-961501-S-USB)
+  Search query: "Enerlites Round Pop Up Floor USB Nickel product"
+  Found 22 candidate images
+  Selected: https://m.media-amazon.com/images/I/410iB6gRRAL._SL500_.jpg... (32KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5a2/1775664343189-product.jpg
+
+[463] M Base 100A 5P Main 200A GAL (SO1467QUOTE)
+  Search query: "Quote EEMCO M Base 100A 5P Main 200A GAL 400AMP product"
+  Found 26 candidate images
+  Selected: https://images.thdstatic.com/productImages/b0a35d0a-4676-453d-ad96-1779b08ba428/... (17KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5a3/1775664345940-product.jpg
+
+[464] AL Backlit 2X4 CCT L1 (SO-AL674979)
+  Search query: "AL Backlit 2X4 CCT L1 product"
+  Found 29 candidate images
+  Selected: https://lazmediafiles.s3.us-east-2.amazonaws.com/images/products/MTX/145088-Meta... (109KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5a5/1775664348899-product.png
+
+[465] Cable THHN #6 Red-U (U06-0087)
+  Search query: "Cable Cable THHN #6 Red product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/7b4becf9-6d28-4ad4-a19e-35c6aa0f6a3c/... (39KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5de/1775664351873-product.jpg
+
+[466] Cable THHN #4 Red-U (U06-0091)
+  Search query: "Cable Cable THHN #4 Red product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/571d1e6c-26fa-4467-ac57-379a1106d963/... (38KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e2/1775664354730-product.jpg
+
+[467] Cable THHN #2 White-U (U06-0092)
+  Search query: "Cable Cable THHN #2 White 655 product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/d352afce-7a87-47ca-b2c8-920ecd84bcab/... (56KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e3/1775664357734-product.jpg
+
+[468] Cable THHN #2 Black-U (U06-0093)
+  Search query: "Cable Cable THHN #2 Black 000ft product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/113d2a01-858b-43d1-81ad-8ca0fe09ce30/... (49KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e4/1775664360570-product.jpg
+
+[469] Cable THHN #2 Green-U (U06-0094)
+  Search query: "Cable Cable THHN #2 Green 655 product"
+  Found 33 candidate images
+  Selected: https://images.thdstatic.com/productImages/de8d5e46-80d5-4a60-bea7-e7f90c5cdc62/... (50KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e5/1775664363294-product.jpg
+
+[470] Cable THHN #2 Red-U (U06-0095)
+  Search query: "Cable Cable THHN #2 Red product"
+  Found 34 candidate images
+  Selected: https://images.thdstatic.com/productImages/b954f2d9-25eb-47fe-b197-73c6f4b7ec56/... (11KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e6/1775664366127-product.jpg
+
+[471] Cable RHH # 4/0-U (U06-0113)
+  Search query: "Cable Cable RHH # 4/0 product"
+  Found 30 candidate images
+  Selected: https://image.made-in-china.com/2f0j00ijlbRNfnlCok/600-1000V-Copper-Xhhw-Xhhw-2-... (74KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e7/1775664369464-product.jpg
+
+[472] Switch Sencillo 15A 3Way IV (X001X6M8HT)
+  Search query: "Enerlites Switch Sencillo 15A 3Way IV 83150-I product"
+  Found 31 candidate images
+  Selected: https://m.media-amazon.com/images/I/81f7+c0GzYL._SL1500_.jpg... (154KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5e8/1775664372866-product.jpg
+
+[473] Plate 4x4 2-Duplex Recep GY (X0020YJTWF)
+  Search query: "Enerlites Plate 4x4 2-Duplex Recep GY 8822-GY product"
+  Found 23 candidate images
+  Selected: https://m.media-amazon.com/images/I/71xSnfzPPfL.jpg... (153KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5ea/1775664376282-product.jpg
+
+[474] Switch Sencillo 15A 4Way WH (X0029R40J5)
+  Search query: "Enerlites Switch Sencillo 15A 4Way WH 84150-W-F product"
+  Found 20 candidate images
+  Selected: https://m.media-amazon.com/images/I/318mTjj97qL._SL600_.jpg... (9KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5eb/1775664379231-product.jpg
+
+[475] Cable THHN #1/0-U (U06-0096)
+  Search query: "Cable Cable THHN #1/0 0431 product"
+  Found 35 candidate images
+  Selected: https://images.thdstatic.com/productImages/df8ee3eb-75e2-4505-95c5-0486be44fe3d/... (53KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5ec/1775664382320-product.jpg
+
+[476] Cable THHN #2/0-U (U06-0097)
+  Search query: "Cable Cable THHN #2/0 7416 product"
+  Found 33 candidate images
+  Selected: https://disensa.com.ec/producto/cable-thhn-2-0-19-hilos-100m-electrocables/91001... (209KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5ed/1775664385699-product.jpg
+
+[477] Cable THHN #3/0-U (U06-0098)
+  Search query: "Cable Cable THHN #3/0 product"
+  Found 31 candidate images
+  Selected: https://mobileimages.lowes.com/productimages/202f41a8-c80d-49a8-8c8c-7fb154d75be... (79KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5ee/1775664388530-product.jpg
+
+[478] Cable THHN #4/0-U (U06-0099)
+  Search query: "Cable Cable THHN #4/0 1021 product"
+  Found 34 candidate images
+  Selected: https://construccionbim.com.mx/849-large_default/cable-thhn-4-0-general-cable-me... (14KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5ef/1775664391400-product.jpg
+
+[479] Cable RHH # 10-U (U06-0105)
+  Search query: "Cable Cable RHH # 10 500 product"
+  Found 28 candidate images
+  Selected: https://image.made-in-china.com/2f0j00KcrlyCbaAJuf/1000mcm-Use-2-Rhw-2-or-Rhh-Co... (50KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5f0/1775664394167-product.jpg
+
+[480] Cable RHH # 6-U (U06-0107)
+  Search query: "Cable Cable RHH # 6 product"
+  Found 31 candidate images
+  Selected: https://image.made-in-china.com/155f0j00dpEolgKMZPci/XLPE-Insulated-Single-Condu... (8KB)
+  ✓ Uploaded: https://d2gzblg3wmeecj.cloudfront.net/products/6969060ec47396962b81b5f1/1775664423313-product.jpg
+
+=== Summary ===
+Success: 476
+Failed:  4
+Skipped: 0
+Log saved to: C:\Users\aivin\Downloads\multi-main\multi-main\scrape-log.json

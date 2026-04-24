@@ -4,6 +4,7 @@ import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import { logImportRun } from "@/lib/import-run-logger";
 import { processImportRows, ImportRow } from "@/lib/import-row-processor";
+import { filterUnchangedOps } from "@/lib/import-diff";
 import { verifySyncKey } from "@/lib/sync-agent-key";
 
 export const maxDuration = 60;
@@ -66,6 +67,12 @@ export async function POST(request: NextRequest) {
     const { bulkOps, opMeta, errors, skipped, newSkuNeedsAiCategorize } =
       processImportRows(rows);
 
+    // Skip rows whose price/cost/qty already match the DB — otherwise
+    // Mongoose's timestamps middleware makes every row count as
+    // "updated" even when nothing changed.
+    const { filteredOps, filteredMeta, unchangedSkus } =
+      await filterUnchangedOps(bulkOps, opMeta);
+
     let created = 0;
     let updated = 0;
     const skuActions: Array<{
@@ -76,10 +83,14 @@ export async function POST(request: NextRequest) {
       needsAiCategorize?: boolean;
     }> = [];
 
+    for (const sku of unchangedSkus) {
+      skuActions.push({ sku, action: "unchanged" });
+    }
+
     const BATCH_SIZE = 500;
-    for (let i = 0; i < bulkOps.length; i += BATCH_SIZE) {
-      const batch = bulkOps.slice(i, i + BATCH_SIZE);
-      const batchMeta = opMeta.slice(i, i + BATCH_SIZE);
+    for (let i = 0; i < filteredOps.length; i += BATCH_SIZE) {
+      const batch = filteredOps.slice(i, i + BATCH_SIZE);
+      const batchMeta = filteredMeta.slice(i, i + BATCH_SIZE);
       try {
         const result = await Product.bulkWrite(batch, { ordered: false });
         created += result.upsertedCount || 0;
@@ -120,6 +131,7 @@ export async function POST(request: NextRequest) {
       totalRows: rows.length,
       created,
       updated,
+      unchanged: unchangedSkus.length,
       skipped,
       pendingAiCategorize: newSkuNeedsAiCategorize,
       errors,
@@ -131,6 +143,7 @@ export async function POST(request: NextRequest) {
       success: errors.length < rows.length * 0.5,
       created,
       updated,
+      unchanged: unchangedSkus.length,
       skipped,
       totalRows: rows.length,
       pendingAiCategorize: newSkuNeedsAiCategorize,
