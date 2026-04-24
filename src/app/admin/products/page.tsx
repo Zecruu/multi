@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -123,7 +124,21 @@ const initialFormData: ProductFormData = {
 };
 
 export default function ProductsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  // Wrap in Suspense — Next 16 requires it for useSearchParams in
+  // client page components.
+  return (
+    <Suspense fallback={null}>
+      <ProductsPageInner />
+    </Suspense>
+  );
+}
+
+function ProductsPageInner() {
+  // Honor URL params so Sparky (and bookmarks) can deep-link into a
+  // pre-filtered view. e.g. /admin/products?search=SO
+  const urlParams = useSearchParams();
+  const initialSearch = urlParams?.get("search") ?? "";
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -135,9 +150,22 @@ export default function ProductsPage() {
 
   // Fetch products and categories on mount
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(1, showOutOfStock, initialSearch);
     fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Debounced server-side search when the user types. Runs only when
+  // searchQuery diverges from the initial URL-seeded value — avoids a
+  // redundant fetch on mount.
+  useEffect(() => {
+    if (searchQuery === initialSearch) return;
+    const t = setTimeout(() => {
+      fetchProducts(1, showOutOfStock, searchQuery);
+    }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
 
   const fetchCategories = async () => {
     try {
@@ -156,7 +184,11 @@ export default function ProductsPage() {
   const [showOutOfStock, setShowOutOfStock] = useState(false);
   const productsPerPage = 50;
 
-  const fetchProducts = async (page = 1, outOfStockOnly = showOutOfStock) => {
+  const fetchProducts = async (
+    page = 1,
+    outOfStockOnly = showOutOfStock,
+    search = searchQuery
+  ) => {
     try {
       setIsLoading(true);
       const params = new URLSearchParams({
@@ -165,6 +197,12 @@ export default function ProductsPage() {
       });
       if (outOfStockOnly) {
         params.set("outOfStock", "true");
+      }
+      // Push search to the server so we filter across all products, not
+      // just the current page. The existing client-side filter below still
+      // runs on the returned page for "type-to-refine" snappiness.
+      if (search) {
+        params.set("search", search);
       }
       const response = await fetch(`/api/products?${params.toString()}`);
       if (response.ok) {

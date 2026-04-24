@@ -29,7 +29,7 @@ async function tool_searchProducts(args: {
   status?: string;
   limit?: number;
 }) {
-  const { query, category, status, limit = 10 } = args;
+  const { query, category, status, limit = 25 } = args;
   const mongoQuery: Record<string, unknown> = {};
   if (query) {
     mongoQuery.$or = [
@@ -45,12 +45,33 @@ async function tool_searchProducts(args: {
     ];
   }
   if (status && status !== "all") mongoQuery.status = status;
-  const docs = await Product.find(mongoQuery)
-    .select("_id name sku price quantity status category categories brand isOnSale salePrice")
-    .limit(Math.min(Math.max(limit, 1), 50))
-    .lean();
+
+  const effectiveLimit = Math.min(Math.max(limit, 1), 200);
+
+  const [total, docs] = await Promise.all([
+    Product.countDocuments(mongoQuery),
+    Product.find(mongoQuery)
+      .select("_id name sku price quantity status category categories brand isOnSale salePrice")
+      .limit(effectiveLimit)
+      .lean(),
+  ]);
+
+  // Build a URL the user can click to open the admin products page with
+  // the same filter applied — useful when `total` exceeds what fits in a
+  // chat response.
+  const urlParams = new URLSearchParams();
+  if (query) urlParams.set("search", query);
+  if (category && category !== "all") urlParams.set("category", category);
+  if (status && status !== "all") urlParams.set("status", status);
+  const productsPageUrl = `/admin/products${
+    urlParams.toString() ? `?${urlParams.toString()}` : ""
+  }`;
+
   return {
-    count: docs.length,
+    total,
+    returned: docs.length,
+    truncated: total > docs.length,
+    productsPageUrl,
     products: docs.map((d) => ({
       id: String(d._id),
       name: d.name,
@@ -190,14 +211,15 @@ const TOOLS: Record<string, (args: Record<string, unknown>) => Promise<unknown>>
 const FUNCTION_DECLARATIONS = [
   {
     name: "search_products",
-    description: "Search products by text (name/SKU), category slug, and/or status. Returns up to `limit` matches.",
+    description:
+      "Search products by text (name/SKU), category slug, and/or status. Returns `total` (count of all matches in the database) and `products` (up to `limit` sample rows). When `truncated` is true, share `productsPageUrl` with the user so they can view the full filtered list on the admin products page. Always cite `total` (not `returned`) when the user asks 'how many'.",
     parametersJsonSchema: {
       type: "object",
       properties: {
         query: { type: "string", description: "free-text match against name and SKU" },
         category: { type: "string", description: "category slug, e.g. 'hand-tools'" },
         status: { type: "string", enum: ["active", "draft", "archived", "all"] },
-        limit: { type: "integer", minimum: 1, maximum: 50, default: 10 },
+        limit: { type: "integer", minimum: 1, maximum: 200, default: 25 },
       },
     },
   },
@@ -276,7 +298,8 @@ Guidelines:
 - When the admin names a category informally (e.g. "tools", "breakers"), call list_categories first to find the correct slug.
 - Prices are USD. Quantity is in units (pieces, rolls, etc).
 - When showing product lists, format as concise markdown tables or bullet lists with SKU, name, price, qty.
-- If a task would touch more than 20 products at once, stop and ask the admin to confirm the scope explicitly.`;
+- If a task would touch more than 20 products at once, stop and ask the admin to confirm the scope explicitly.
+- search_products returns \`total\` (real count in DB) and \`products\` (a sample). Always quote \`total\` when the admin asks how many. When \`truncated\` is true, include the \`productsPageUrl\` as a clickable markdown link so the admin can view all matches on the admin products page. Example: "Found **136** products matching 'SO'. Showing 50 here — [view all on products page](/admin/products?search=SO)."`;
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Route handler
