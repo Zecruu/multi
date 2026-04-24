@@ -44,3 +44,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scrape + debug artifacts
+scrape-log.json
+scrape-output*.log
+scripts/debug-*.js
+
+# Claude Code local state
+.claude/scheduled_tasks.lock
