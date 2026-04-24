@@ -4,22 +4,16 @@ import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import { logImportRun } from "@/lib/import-run-logger";
 import { processImportRows, ImportRow } from "@/lib/import-row-processor";
+import { verifySyncKey } from "@/lib/sync-agent-key";
 
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
-async function validateSyncKey(request: NextRequest): Promise<boolean> {
-  const syncKey = request.headers.get("x-sync-key");
-  if (!syncKey) return false;
-  const validKey = process.env.SYNC_AGENT_KEY;
-  if (!validKey) return false;
-  return syncKey === validKey;
-}
-
 export async function POST(request: NextRequest) {
-  if (!(await validateSyncKey(request))) {
+  const providedKey = request.headers.get("x-sync-key");
+  if (!(await verifySyncKey(providedKey))) {
     return NextResponse.json({ error: "Invalid or missing sync key" }, { status: 401 });
   }
 

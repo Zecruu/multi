@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import crypto from "crypto";
+import {
+  generateSyncKey,
+  getSyncKey,
+  setSyncKey,
+  verifySyncKey,
+} from "@/lib/sync-agent-key";
 
 export const dynamic = "force-dynamic";
 
@@ -23,50 +28,51 @@ async function getAdminUser() {
   }
 }
 
-// GET - Get sync agent info (version, download URL, sync key status).
+// GET - Sync agent info.
 //
-// Two callers hit this endpoint:
-//   1. The admin UI — authenticated via admin_session cookie.
-//   2. The sync agent's "Test Connection" action — sends x-sync-key header.
+// Two callers:
+//   1. Admin UI — authenticated via admin_session cookie.
+//   2. Sync agent Test Connection — sends x-sync-key header.
 // Either is sufficient.
 export async function GET(request: NextRequest) {
   const admin = await getAdminUser();
   const providedKey = request.headers.get("x-sync-key");
-  const expectedKey = process.env.SYNC_AGENT_KEY;
-  const hasValidSyncKey =
-    !!providedKey && !!expectedKey && providedKey === expectedKey;
+  const hasValidSyncKey = await verifySyncKey(providedKey);
 
   if (!admin && !hasValidSyncKey) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const syncKey = await getSyncKey();
+
   return NextResponse.json({
     version: "1.0.0",
-    hasSyncKey: !!expectedKey,
-    syncKeyPreview: expectedKey ? `${expectedKey.substring(0, 8)}...` : null,
+    hasSyncKey: !!syncKey,
+    syncKeyPreview: syncKey ? `${syncKey.substring(0, 8)}...` : null,
     downloadUrl: "https://github.com/Zecruu/multi-electric-sync/releases/latest",
     repo: "Zecruu/multi-electric-sync",
   });
 }
 
-// POST - Generate a new sync key
+// POST - Generate and persist a new sync key (admin only).
 export async function POST(request: NextRequest) {
   const admin = await getAdminUser();
   if (!admin || admin.role !== "admin") {
-    return NextResponse.json({ error: "Unauthorized - Admin only" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized - Admin only" },
+      { status: 401 }
+    );
   }
 
   const { action } = await request.json();
 
   if (action === "generate-key") {
-    // Generate a secure random key
-    const newKey = `mse_${crypto.randomBytes(32).toString("hex")}`;
-
-    // Note: In production, this should be saved to database or env management
-    // For now, return it to be manually set in .env
+    const newKey = generateSyncKey();
+    await setSyncKey(newKey, admin.name);
     return NextResponse.json({
       syncKey: newKey,
-      message: "Add this key to your .env file as SYNC_AGENT_KEY and to the agent's config.yaml",
+      message:
+        "Key saved. Paste it into the sync agent's Settings → Sync Key field, then restart the agent.",
     });
   }
 

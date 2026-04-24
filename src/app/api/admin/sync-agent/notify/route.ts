@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifySyncKey } from "@/lib/sync-agent-key";
 
 export const dynamic = "force-dynamic";
 
-async function validateSyncKey(request: NextRequest): Promise<boolean> {
-  const syncKey = request.headers.get("x-sync-key");
-  if (!syncKey) return false;
-  const validKey = process.env.SYNC_AGENT_KEY;
-  if (!validKey) return false;
-  return syncKey === validKey;
-}
-
 export async function POST(request: NextRequest) {
-  if (!(await validateSyncKey(request))) {
+  if (!(await verifySyncKey(request.headers.get("x-sync-key")))) {
     return NextResponse.json({ error: "Invalid sync key" }, { status: 401 });
   }
 

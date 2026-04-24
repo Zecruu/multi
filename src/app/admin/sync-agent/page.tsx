@@ -139,7 +139,7 @@ export default function SyncAgentPage() {
             Sync Key
           </CardTitle>
           <CardDescription>
-            The sync key authenticates the agent with the server. Generate one and add it to the agent&apos;s config.yaml file.
+            The sync key authenticates the agent with the server. Generate one here — it&apos;s saved automatically — then paste into the agent.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -155,7 +155,7 @@ export default function SyncAgentPage() {
           ) : (
             <Alert>
               <AlertDescription>
-                No sync key configured. Generate one below and add it as <code className="bg-muted px-1 rounded">SYNC_AGENT_KEY</code> in your server&apos;s environment variables.
+                No sync key configured. Generate one below — it&apos;s saved to the database automatically.
               </AlertDescription>
             </Alert>
           )}
@@ -178,8 +178,7 @@ export default function SyncAgentPage() {
                     </Button>
                   </div>
                   <div className="text-sm space-y-1">
-                    <p>1. Add to your server environment: <code className="bg-muted px-1 rounded">SYNC_AGENT_KEY={newSyncKey}</code></p>
-                    <p>2. Add to the agent&apos;s <code className="bg-muted px-1 rounded">config.yaml</code> under <code className="bg-muted px-1 rounded">api.sync_key</code></p>
+                    <p>Key saved to the server. Paste it into the sync agent&apos;s Settings → Sync Key field (or <code className="bg-muted px-1 rounded">config.yaml</code> under <code className="bg-muted px-1 rounded">api.sync_key</code>) and restart the agent.</p>
                   </div>
                 </AlertDescription>
               </Alert>
@@ -217,7 +216,7 @@ export default function SyncAgentPage() {
               number={2}
               icon={<Key className="h-4 w-4" />}
               title="Configure Sync Key"
-              description='Generate a sync key above, add it to your server environment variables, and paste it into the agent&apos;s config.yaml file under api.sync_key.'
+              description='Generate a sync key above (auto-saved to the server) and paste it into the agent&apos;s config.yaml file under api.sync_key.'
             />
             <Step
               number={3}
