@@ -416,93 +416,122 @@ Guidelines:
 type ChatTurn = { role: "user" | "model"; text: string };
 
 export async function POST(request: NextRequest) {
-  const admin = await requireAdmin();
-  if (!admin) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
+  // Outer catch so every failure path returns valid JSON — otherwise an
+  // unhandled throw produces an empty body and the client bombs with
+  // "Unexpected end of JSON input".
+  const toolCalls: Array<{ name: string; args: unknown; result: unknown }> = [];
+  try {
+    const admin = await requireAdmin();
+    if (!admin) {
+      return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    }
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "GEMINI_API_KEY not configured on the server" },
+        { status: 500 }
+      );
+    }
+
+    let body: { message: string; history?: ChatTurn[] };
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: "invalid json" }, { status: 400 });
+    }
+    const userMessage = (body.message || "").trim();
+    if (!userMessage)
+      return NextResponse.json({ error: "empty message" }, { status: 400 });
+
+    await connectDB();
+    const ai = new GoogleGenAI({ apiKey });
+
+    const contents: Array<{
+      role: string;
+      parts: Array<Record<string, unknown>>;
+    }> = [];
+    for (const h of body.history || []) {
+      contents.push({ role: h.role, parts: [{ text: h.text }] });
+    }
+    contents.push({ role: "user", parts: [{ text: userMessage }] });
+
+    for (let turn = 0; turn < MAX_TURNS; turn++) {
+      let response;
+      try {
+        response = await ai.models.generateContent({
+          model: MODEL,
+          contents,
+          config: {
+            systemInstruction: SYSTEM_INSTRUCTION,
+            tools: [{ functionDeclarations: FUNCTION_DECLARATIONS }],
+            toolConfig: {
+              functionCallingConfig: { mode: FunctionCallingConfigMode.AUTO },
+            },
+          },
+        });
+      } catch (err) {
+        console.error("[sparky] gemini error", err);
+        const msg = err instanceof Error ? err.message : String(err);
+        return NextResponse.json(
+          {
+            reply: `Gemini API error: ${msg}`,
+            toolCalls,
+            error: msg,
+          },
+          { status: 502 }
+        );
+      }
+
+      const candidate = response.candidates?.[0];
+      const parts = candidate?.content?.parts || [];
+      const fnCalls = parts.filter((p) => p.functionCall);
+
+      if (fnCalls.length === 0) {
+        const text = parts.map((p) => p.text || "").join("") || "(no response)";
+        return NextResponse.json({ reply: text, toolCalls });
+      }
+
+      contents.push({
+        role: "model",
+        parts: parts as unknown as Array<Record<string, unknown>>,
+      });
+
+      const responseParts: Array<Record<string, unknown>> = [];
+      for (const p of fnCalls) {
+        const call = p.functionCall!;
+        const impl = TOOLS[call.name as string];
+        let result: unknown;
+        if (!impl) {
+          result = { error: `unknown tool ${call.name}` };
+        } else {
+          try {
+            result = await impl((call.args || {}) as Record<string, unknown>, admin);
+          } catch (err) {
+            result = { error: err instanceof Error ? err.message : String(err) };
+          }
+        }
+        toolCalls.push({ name: call.name as string, args: call.args, result });
+        responseParts.push({
+          functionResponse: { name: call.name, response: result as object },
+        });
+      }
+      contents.push({ role: "user", parts: responseParts });
+    }
+
+    return NextResponse.json({
+      reply:
+        "I ran into a loop deciding how to answer that. Try rephrasing, or break the request into smaller steps.",
+      toolCalls,
+    });
+  } catch (err) {
+    console.error("[sparky] unexpected error", err);
     return NextResponse.json(
-      { error: "GEMINI_API_KEY not configured on the server" },
+      {
+        reply: "Sparky hit an unexpected error. Check the server logs.",
+        toolCalls,
+        error: err instanceof Error ? err.message : String(err),
+      },
       { status: 500 }
     );
   }
-
-  let body: { message: string; history?: ChatTurn[] };
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "invalid json" }, { status: 400 });
-  }
-  const userMessage = (body.message || "").trim();
-  if (!userMessage) return NextResponse.json({ error: "empty message" }, { status: 400 });
-
-  await connectDB();
-  const ai = new GoogleGenAI({ apiKey });
-
-  const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [];
-  for (const h of body.history || []) {
-    contents.push({ role: h.role, parts: [{ text: h.text }] });
-  }
-  contents.push({ role: "user", parts: [{ text: userMessage }] });
-
-  const toolCalls: Array<{ name: string; args: unknown; result: unknown }> = [];
-
-  for (let turn = 0; turn < MAX_TURNS; turn++) {
-    const response = await ai.models.generateContent({
-      model: MODEL,
-      contents,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-        tools: [{ functionDeclarations: FUNCTION_DECLARATIONS }],
-        toolConfig: {
-          functionCallingConfig: { mode: FunctionCallingConfigMode.AUTO },
-        },
-      },
-    });
-
-    const candidate = response.candidates?.[0];
-    const parts = candidate?.content?.parts || [];
-    const fnCalls = parts.filter((p) => p.functionCall);
-
-    if (fnCalls.length === 0) {
-      // Model gave a final text answer.
-      const text = parts.map((p) => p.text || "").join("") || "(no response)";
-      return NextResponse.json({ reply: text, toolCalls });
-    }
-
-    // Append the model turn (it issued function calls).
-    contents.push({
-      role: "model",
-      parts: parts as unknown as Array<Record<string, unknown>>,
-    });
-
-    // Run each function call locally and return results.
-    const responseParts: Array<Record<string, unknown>> = [];
-    for (const p of fnCalls) {
-      const call = p.functionCall!;
-      const impl = TOOLS[call.name as string];
-      let result: unknown;
-      if (!impl) {
-        result = { error: `unknown tool ${call.name}` };
-      } else {
-        try {
-          result = await impl((call.args || {}) as Record<string, unknown>, admin);
-        } catch (err) {
-          result = { error: err instanceof Error ? err.message : String(err) };
-        }
-      }
-      toolCalls.push({ name: call.name as string, args: call.args, result });
-      responseParts.push({
-        functionResponse: { name: call.name, response: result as object },
-      });
-    }
-    contents.push({ role: "user", parts: responseParts });
-  }
-
-  return NextResponse.json({
-    reply:
-      "I ran into a loop deciding how to answer that. Try rephrasing, or break the request into smaller steps.",
-    toolCalls,
-  });
 }

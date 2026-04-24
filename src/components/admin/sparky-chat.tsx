@@ -62,11 +62,24 @@ export function SparkyChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: msg, history: history.slice(-20) }),
       });
-      const data = await res.json();
+      // Parse defensively — a 504 or crashed function returns non-JSON
+      // and res.json() throws "Unexpected end of JSON input".
+      const rawText = await res.text();
+      let data: { reply?: string; error?: string; toolCalls?: ToolCall[] } = {};
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        data = { error: rawText?.slice(0, 200) || `HTTP ${res.status}` };
+      }
       if (!res.ok) {
         setHistory([
           ...next,
-          { role: "model", text: `**Error:** ${data.error || res.statusText}` },
+          {
+            role: "model",
+            text: `**Error (${res.status}):** ${
+              data.error || data.reply || res.statusText || "unknown"
+            }`,
+          },
         ]);
       } else {
         const calls = (data.toolCalls || []) as ToolCall[];
