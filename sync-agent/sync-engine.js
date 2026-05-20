@@ -83,6 +83,11 @@ class SyncEngine {
       awaitWriteFinish: { stabilityThreshold: 3000, pollInterval: 500 },
     });
 
+    // Track in-flight uploads so the watcher's `add` event and the
+    // periodic scan can't both queue the same file (which produced two
+    // ImportRun rows per real upload — the second being a no-op).
+    this.inFlight = new Set();
+
     this.watcher.on('add', (filePath) => {
       if (this._isValidFile(filePath)) {
         this._log('info', `New file detected: ${path.basename(filePath)}`);
@@ -305,6 +310,21 @@ class SyncEngine {
 
   async _processFile(filePath) {
     if (this.processing) return;
+
+    // Per-file in-flight guard — survives across the brief window when
+    // this.processing has reset but the file hash hasn't been written.
+    if (this.inFlight && this.inFlight.has(filePath)) {
+      this._log('debug', `Skipping concurrent processFile for ${path.basename(filePath)}`);
+      return;
+    }
+
+    // File may have been moved/deleted between scheduling and execution.
+    if (!fs.existsSync(filePath)) {
+      this._log('debug', `File gone, skipping: ${path.basename(filePath)}`);
+      return;
+    }
+
+    if (this.inFlight) this.inFlight.add(filePath);
     this.processing = true;
 
     const fileName = path.basename(filePath);
@@ -313,6 +333,7 @@ class SyncEngine {
     // Skip already processed
     if (this.state.processedFiles[fileHash]) {
       this._log('debug', `Already processed: ${fileName}`);
+      if (this.inFlight) this.inFlight.delete(filePath);
       this.processing = false;
       return;
     }
@@ -323,6 +344,7 @@ class SyncEngine {
       const ageDays = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60 * 24);
       if (ageDays > this.config.processing.skip_older_than_days) {
         this._log('info', `Skipping old file (${ageDays.toFixed(1)} days): ${fileName}`);
+        if (this.inFlight) this.inFlight.delete(filePath);
         this.processing = false;
         return;
       }
@@ -368,6 +390,7 @@ class SyncEngine {
         };
         this._saveState();
         this._moveProcessedFile(filePath);
+        if (this.inFlight) this.inFlight.delete(filePath);
         this.processing = false;
         this.stats.status = 'watching';
         this.onStatus('Watching for files...');
@@ -464,6 +487,7 @@ class SyncEngine {
       });
     }
 
+    if (this.inFlight) this.inFlight.delete(filePath);
     this.processing = false;
     this.stats.status = 'watching';
     this.onStatus('Watching for files...');
@@ -492,7 +516,7 @@ class SyncEngine {
         ...form.getHeaders(),
         'content-length': form.getLengthSync(),
         'x-sync-key': this.config.api.sync_key,
-        'x-agent-version': '1.1.2',
+        'x-agent-version': '1.1.3',
       },
       body: form,
       timeout: 120000,

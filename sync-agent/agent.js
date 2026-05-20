@@ -31,7 +31,7 @@ const AGENT_DIR = path.dirname(process.execPath.includes('node') ? __filename : 
 const CONFIG_PATH = path.join(AGENT_DIR, 'config.yaml');
 const DEFAULT_CONFIG_PATH = path.join(AGENT_DIR, 'config.default.yaml');
 const STATE_PATH = path.join(AGENT_DIR, '.sync-state.json');
-const VERSION = '1.1.2';
+const VERSION = '1.1.3';
 
 // ── Logger ──────────────────────────────────────────────────────────────────
 
