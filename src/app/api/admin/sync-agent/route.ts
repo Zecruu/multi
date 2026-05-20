@@ -45,11 +45,16 @@ export async function GET(request: NextRequest) {
 
   const syncKey = await getSyncKey();
 
+  // Keep this in sync with sync-agent/package.json on every release.
+  const LATEST_VERSION = "1.1.3";
   return NextResponse.json({
-    version: "1.0.0",
+    version: LATEST_VERSION,
     hasSyncKey: !!syncKey,
     syncKeyPreview: syncKey ? `${syncKey.substring(0, 8)}...` : null,
-    downloadUrl: "https://github.com/Zecruu/multi-electric-sync/releases/latest",
+    // Direct .exe download — bypasses the GitHub release page and grabs
+    // the installer in one click.
+    downloadUrl: `https://github.com/Zecruu/multi-electric-sync/releases/download/v${LATEST_VERSION}/MultiElectric-Sync-Setup-${LATEST_VERSION}.exe`,
+    releasesUrl: "https://github.com/Zecruu/multi-electric-sync/releases/latest",
     repo: "Zecruu/multi-electric-sync",
   });
 }
