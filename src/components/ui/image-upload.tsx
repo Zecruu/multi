@@ -51,9 +51,9 @@ export function ImageUpload({
   }, []);
 
   const validateFile = (file: File): string | null => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif"];
     if (!allowedTypes.includes(file.type)) {
-      return "Invalid file type. Allowed: JPEG, PNG, WebP, GIF";
+      return "Invalid file type. Allowed: JPEG, PNG, WebP, GIF, AVIF";
     }
     if (file.size > maxSizeMB * 1024 * 1024) {
       return `File size exceeds ${maxSizeMB}MB limit`;
@@ -233,7 +233,7 @@ export function ImageUpload({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif"
+          accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
           multiple
           onChange={handleFileSelect}
           className="hidden"
@@ -252,7 +252,7 @@ export function ImageUpload({
               Drag and drop images here, or click to browse
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              PNG, JPG up to {maxSizeMB}MB. First image will be the primary.
+              PNG, JPG, WebP, GIF, or AVIF up to {maxSizeMB}MB. First image will be the primary.
             </p>
             <Button
               type="button"

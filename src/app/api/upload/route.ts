@@ -18,10 +18,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate content type
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif",
+      "image/avif",
+    ];
     if (!allowedTypes.includes(contentType)) {
       return NextResponse.json(
-        { error: "Invalid file type. Allowed: JPEG, PNG, WebP, GIF" },
+        { error: "Invalid file type. Allowed: JPEG, PNG, WebP, GIF, AVIF" },
         { status: 400 }
       );
     }
@@ -29,16 +35,10 @@ export async function POST(request: NextRequest) {
     const productKey = generateImageKey(productId || "temp", filename);
 
     if (!isS3Configured()) {
-      const key = `uploads/${productKey}`;
-      const uploadUrl = new URL(
-        `/api/upload/local?key=${encodeURIComponent(key)}`,
-        request.url
-      ).toString();
-
-      return NextResponse.json({
-        uploadUrl,
-        key,
-      });
+      return NextResponse.json(
+        { error: "S3 upload is not configured on the server" },
+        { status: 500 }
+      );
     }
 
     const key = productKey;

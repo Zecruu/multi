@@ -45,9 +45,6 @@ export async function deleteFromS3(key: string): Promise<void> {
 }
 
 export function getImageUrl(key: string): string {
-  if (key.startsWith("uploads/")) {
-    return `/${key}`;
-  }
   if (CLOUDFRONT_DOMAIN) {
     return `https://${CLOUDFRONT_DOMAIN}/${key}`;
   }
