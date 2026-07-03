@@ -51,14 +51,6 @@ export function AdminHeader() {
   const [latestNotification, setLatestNotification] = useState<Notification | null>(null);
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
 
-  useEffect(() => {
-    fetchAdminUser();
-    fetchNotifications();
-    // Poll for new notifications every 30 seconds
-    const interval = setInterval(fetchNotifications, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
   const fetchAdminUser = async () => {
     try {
       const response = await fetch("/api/admin/me");
@@ -99,6 +91,21 @@ export function AdminHeader() {
       console.error("Failed to fetch notifications:", error);
     }
   };
+
+  useEffect(() => {
+    const initialFetch = window.setTimeout(() => {
+      void fetchAdminUser();
+      void fetchNotifications();
+    }, 0);
+    // Poll for new notifications every 30 seconds
+    const interval = window.setInterval(() => {
+      void fetchNotifications();
+    }, 30000);
+    return () => {
+      window.clearTimeout(initialFetch);
+      window.clearInterval(interval);
+    };
+  }, []);
 
   const handleNotificationClick = (notification: Notification) => {
     router.push(`/admin/orders?order=${notification.orderId}`);
@@ -283,7 +290,7 @@ export function AdminHeader() {
                 <User className="w-4 h-4 mr-2" />
                 Perfil
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push("/admin/settings")}>
+              <DropdownMenuItem onClick={() => router.push("/admin/account-settings")}>
                 Configuración
               </DropdownMenuItem>
               <DropdownMenuSeparator />

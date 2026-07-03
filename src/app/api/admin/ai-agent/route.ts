@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
 import SparkyAction from "@/models/SparkyAction";
+import { hasAdminPanelAccess } from "@/lib/admin-roles";
 
 const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
 const MAX_TURNS = 8;
@@ -14,7 +15,7 @@ async function requireAdmin(): Promise<{ name: string; role: string } | null> {
   if (!sessionCookie) return null;
   try {
     const data = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
-    if (data.role !== "admin") return null;
+    if (!hasAdminPanelAccess(data.role)) return null;
     return {
       name: data.name || data.username || "Admin",
       role: data.role,

@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { ADMIN_PANEL_ROLES } from "@/lib/admin-roles";
 
 export function AdminSidebar() {
   const pathname = usePathname();
@@ -32,21 +33,21 @@ export function AdminSidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   const userRole = session?.user?.role;
-  const isAdmin = userRole === "admin";
+  const adminPanelRoles = [...ADMIN_PANEL_ROLES];
 
   // Navigation items - some are conditional based on role
   const navigation = [
-    { name: "Dashboard", href: "/admin", icon: LayoutDashboard, roles: ["admin", "gerente", "employee"] },
-    { name: "Clients", href: "/admin/clients", icon: Users, roles: ["admin", "gerente", "employee"] },
-    { name: "Products", href: "/admin/products", icon: Package, roles: ["admin", "gerente", "employee"] },
-    { name: "Import Products", href: "/admin/import-products", icon: FileUp, roles: ["admin", "gerente", "employee"] },
-    { name: "Imports & Sparky", href: "/admin/imports", icon: FileSpreadsheet, roles: ["admin", "gerente", "employee"] },
-    { name: "Orders", href: "/admin/orders", icon: ShoppingCart, roles: ["admin", "gerente", "employee"] },
-    { name: "Reviews & Reputation", href: "/admin/reviews", icon: Star, roles: ["admin", "gerente", "employee"] },
-    { name: "Ledger", href: "/admin/ledger", icon: BookOpen, roles: ["admin", "gerente", "employee"] },
+    { name: "Dashboard", href: "/admin", icon: LayoutDashboard, roles: adminPanelRoles },
+    { name: "Clients", href: "/admin/clients", icon: Users, roles: adminPanelRoles },
+    { name: "Products", href: "/admin/products", icon: Package, roles: adminPanelRoles },
+    { name: "Import Products", href: "/admin/import-products", icon: FileUp, roles: adminPanelRoles },
+    { name: "Imports & Sparky", href: "/admin/imports", icon: FileSpreadsheet, roles: adminPanelRoles },
+    { name: "Orders", href: "/admin/orders", icon: ShoppingCart, roles: adminPanelRoles },
+    { name: "Reviews & Reputation", href: "/admin/reviews", icon: Star, roles: adminPanelRoles },
+    { name: "Ledger", href: "/admin/ledger", icon: BookOpen, roles: adminPanelRoles },
     { name: "Team", href: "/admin/team", icon: UserCog, roles: ["admin"] },
-    { name: "History", href: "/admin/history", icon: History, roles: ["admin", "gerente", "employee"] },
-    { name: "Account Settings", href: "/admin/account-settings", icon: User, roles: ["admin", "gerente", "employee"] },
+    { name: "History", href: "/admin/history", icon: History, roles: adminPanelRoles },
+    { name: "Account Settings", href: "/admin/account-settings", icon: User, roles: adminPanelRoles },
     { name: "Sync Agent", href: "/admin/sync-agent", icon: RefreshCw, roles: ["admin"] },
     { name: "Store Settings", href: "/admin/store-settings", icon: Store, roles: ["admin"] },
   ];

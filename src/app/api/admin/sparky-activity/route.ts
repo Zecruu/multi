@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import connectDB from "@/lib/mongodb";
 import ActivityLog from "@/models/ActivityLog";
+import { hasAdminPanelAccess } from "@/lib/admin-roles";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,7 @@ async function requireAdmin() {
   if (!sessionCookie) return null;
   try {
     const data = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
-    if (!["admin", "gerente", "employee"].includes(data.role)) return null;
+    if (!hasAdminPanelAccess(data.role)) return null;
     return data;
   } catch {
     return null;

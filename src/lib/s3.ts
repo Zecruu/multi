@@ -12,6 +12,15 @@ const s3Client = new S3Client({
 const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME!;
 const CLOUDFRONT_DOMAIN = process.env.CLOUDFRONT_DOMAIN;
 
+export function isS3Configured(): boolean {
+  return Boolean(
+    process.env.AWS_REGION &&
+      process.env.AWS_ACCESS_KEY_ID &&
+      process.env.AWS_SECRET_ACCESS_KEY &&
+      process.env.AWS_S3_BUCKET_NAME
+  );
+}
+
 export async function getPresignedUploadUrl(
   key: string,
   contentType: string
@@ -36,6 +45,9 @@ export async function deleteFromS3(key: string): Promise<void> {
 }
 
 export function getImageUrl(key: string): string {
+  if (key.startsWith("uploads/")) {
+    return `/${key}`;
+  }
   if (CLOUDFRONT_DOMAIN) {
     return `https://${CLOUDFRONT_DOMAIN}/${key}`;
   }

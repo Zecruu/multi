@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from "react";
 import { Upload, X, Image as ImageIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export interface UploadedImage {
   url: string;
@@ -19,6 +20,7 @@ interface ImageUploadProps {
   maxImages?: number;
   maxSizeMB?: number;
   disabled?: boolean;
+  productId?: string;
 }
 
 export function ImageUpload({
@@ -27,6 +29,7 @@ export function ImageUpload({
   maxImages = 5,
   maxSizeMB = 5,
   disabled = false,
+  productId,
 }: ImageUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -67,11 +70,13 @@ export function ImageUpload({
         body: JSON.stringify({
           filename: file.name,
           contentType: file.type,
+          productId,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to get upload URL");
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to get upload URL");
       }
 
       const { uploadUrl, key } = await response.json();
@@ -86,7 +91,8 @@ export function ImageUpload({
       });
 
       if (!uploadResponse.ok) {
-        throw new Error("Failed to upload to S3");
+        const detail = await uploadResponse.text().catch(() => "");
+        throw new Error(detail || "Failed to upload image");
       }
 
       // Get the CloudFront URL
@@ -108,6 +114,7 @@ export function ImageUpload({
       };
     } catch (error) {
       console.error("Upload error:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to upload image");
       return null;
     }
   };
@@ -128,6 +135,7 @@ export function ImageUpload({
       const error = validateFile(file);
       if (error) {
         console.error(error);
+        toast.error(error);
         continue;
       }
 

@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPresignedUploadUrl, generateImageKey } from "@/lib/s3";
+import {
+  getPresignedUploadUrl,
+  generateImageKey,
+  isS3Configured,
+} from "@/lib/s3";
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,7 +26,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const key = generateImageKey(productId || "temp", filename);
+    const productKey = generateImageKey(productId || "temp", filename);
+
+    if (!isS3Configured()) {
+      const key = `uploads/${productKey}`;
+      const uploadUrl = new URL(
+        `/api/upload/local?key=${encodeURIComponent(key)}`,
+        request.url
+      ).toString();
+
+      return NextResponse.json({
+        uploadUrl,
+        key,
+      });
+    }
+
+    const key = productKey;
     const uploadUrl = await getPresignedUploadUrl(key, contentType);
 
     return NextResponse.json({

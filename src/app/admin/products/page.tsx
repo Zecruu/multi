@@ -298,7 +298,7 @@ function ProductsPageInner() {
         salePrice: product.salePrice?.toString() || "",
       });
       
-      setProductImages(product.images?.map((img: any) => ({
+      setProductImages(product.images?.map((img: Product["images"][number]) => ({
         url: img.url,
         key: img.key,
         isPrimary: img.isPrimary,
@@ -566,6 +566,7 @@ function ProductsPageInner() {
                   onImagesChange={setProductImages}
                   maxImages={5}
                   maxSizeMB={5}
+                  productId={editingProductId || undefined}
                   disabled={isSubmitting}
                 />
               </div>

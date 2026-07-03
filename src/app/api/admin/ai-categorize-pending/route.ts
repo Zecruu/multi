@@ -5,6 +5,7 @@ import connectDB from "@/lib/mongodb";
 import Product from "@/models/Product";
 import Category from "@/models/Category";
 import ActivityLog from "@/models/ActivityLog";
+import { hasAdminPanelAccess } from "@/lib/admin-roles";
 
 export const maxDuration = 60;
 
@@ -15,7 +16,7 @@ async function requireAdmin() {
   if (!sessionCookie) return false;
   try {
     const data = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
-    return data.role === "admin";
+    return hasAdminPanelAccess(data.role);
   } catch {
     return false;
   }

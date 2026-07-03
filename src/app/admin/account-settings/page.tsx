@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,12 +10,17 @@ import { Separator } from "@/components/ui/separator";
 import { User, Mail, Lock, Loader2, Save, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
+type AdminUser = {
+  id?: string;
+  name: string;
+  email: string;
+  role: string;
+};
+
 export default function AccountSettingsPage() {
-  const sessionResult = useSession();
-  const session = sessionResult?.data;
-  const status = sessionResult?.status;
-  const update = sessionResult?.update;
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSavingPassword, setIsSavingPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -26,33 +30,48 @@ export default function AccountSettingsPage() {
   const [passwords, setPasswords] = useState({ new: "", confirm: "" });
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/admin/login");
-    } else if (session?.user) {
-      setProfile({
-        name: session.user.name || "",
-        email: session.user.email || "",
-      });
+    async function fetchAdminUser() {
+      try {
+        const response = await fetch("/api/admin/me");
+        if (!response.ok) {
+          router.push("/admin/login");
+          return;
+        }
+
+        const data = await response.json();
+        setAdminUser(data.user);
+        setProfile({
+          name: data.user?.name || "",
+          email: data.user?.email || "",
+        });
+      } catch {
+        toast.error("Failed to load account settings");
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }, [status, session, router]);
+
+    fetchAdminUser();
+  }, [router]);
 
   const handleSaveProfile = async () => {
     if (!profile.name.trim()) {
       toast.error("Name is required");
       return;
     }
+
     try {
       setIsSavingProfile(true);
-      const response = await fetch("/api/user/settings", {
+      const response = await fetch("/api/admin/account-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: profile.name }),
       });
+      const data = await response.json();
       if (response.ok) {
         toast.success("Profile updated successfully");
-        if (update) await update({ name: profile.name });
+        if (data.user) setAdminUser(data.user);
       } else {
-        const data = await response.json();
         toast.error(data.error || "Failed to update profile");
       }
     } catch {
@@ -75,9 +94,10 @@ export default function AccountSettingsPage() {
       toast.error("Passwords do not match");
       return;
     }
+
     try {
       setIsSavingPassword(true);
-      const response = await fetch("/api/user/password", {
+      const response = await fetch("/api/admin/account-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ newPassword: passwords.new }),
@@ -96,7 +116,7 @@ export default function AccountSettingsPage() {
     }
   };
 
-  if (status === "loading" || status === "unauthenticated") {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -117,7 +137,9 @@ export default function AccountSettingsPage() {
             <User className="w-5 h-5" />
             Profile Information
           </CardTitle>
-          <CardDescription>Update your name and view your account email.</CardDescription>
+          <CardDescription>
+            Update your name and view your {adminUser?.role || "admin"} account email.
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -4,6 +4,7 @@ import connectDB from "@/lib/mongodb";
 import SparkyAction from "@/models/SparkyAction";
 import Product from "@/models/Product";
 import ActivityLog from "@/models/ActivityLog";
+import { hasAdminPanelAccess } from "@/lib/admin-roles";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,7 @@ async function requireAdmin() {
   if (!sessionCookie) return null;
   try {
     const data = JSON.parse(Buffer.from(sessionCookie.value, "base64").toString());
-    if (!["admin", "gerente"].includes(data.role)) return null;
+    if (!hasAdminPanelAccess(data.role)) return null;
     return data;
   } catch {
     return null;
